@@ -1,3 +1,0 @@
-Currently pyodbc information and its bug list are maintained at the project's Google Code "project page":http://code.google.com/p/pyodbc
-
-There is a "pyodbc group":http://groups.google.com/group/pyodbc available for questions, suggestions, etc.
