@@ -10,7 +10,7 @@ Make a connection using a DSN. Since DSNs usually don't store passwords, you'll 
 cnxn = pyodbc.connect('DSN=test;PWD=password')
 cursor = cnxn.cursor()
 ```
-There are lots of options when connecting, so see the [pyodbc.connect()](../module#connect) function and the [Connecting to databases](../Connecting-to-databases) Wiki section for more details.
+There are lots of options when connecting, so see the [pyodbc.connect()](module#connectconnectionstring-kwargs) function and the [Connecting to databases](Connecting-to-databases) Wiki section for more details.
 
 ### Selecting Some Data
 #### Select Basics
