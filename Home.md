@@ -14,10 +14,11 @@
   * [Row](Row)
   * [Exceptions](Exceptions)
 * [Data type conversions from Python to ODBC and back](Data-Types)
+* [Managing database transactions](Database-Transaction-Management)
 * [Features beyond the DB API](Features-beyond-the-DB-API)
 * [Unicode](Unicode)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
 
-Please note, until May 2015, pyodbc used to be hosted at Google Code: https://code.google.com/p/pyodbc/
+Please note, until May 2015, pyodbc was hosted at Google Code: https://code.google.com/p/pyodbc/
 
-There is also a pyodbc group: http://groups.google.com/group/pyodbc available for questions, suggestions, etc.
+There is also a pyodbc group: http://groups.google.com/group/pyodbc available for questions, coding advice, etc., but pyodbc bugs should be raised in the Issues section here. Always include a full description of the bug, with as much contextual information as you can.
