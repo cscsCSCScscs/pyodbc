@@ -83,27 +83,6 @@ Register an output converter function that will be called whenever a value with 
 
 Removes all output converter functions.
 
-### Database Transaction Management When AutoCommit is False
-
-When using pyodbc with `autocommit=False`, it is important to understand that database transactions are never explicitly opened.  A database transaction is implicitly opened when a Connection object is created, with `pyodbc.connect()`. That database transaction is then either committed or rolled-back by explicitly calling `commit()` or `rollback()` on the connection, at which point a new database transaction is implicitly opened. Bear in mind, each database transaction may include the effects of just one SQL statement or multiple SQL statements, each executed using the `Cursor.execute()` function.  Hence, the equivalent of the following SQL:
-```
-BEGIN TRANSACTION
-  UPDATE T1 SET ...
-  DELETE FROM T1 WHERE ...
-  INSERT INTO T1 VALUES ...
-COMMIT TRANSACTION
-```
-in Python would be:
-```python
-cnxn = pyodbc.connect('mydsn', autocommit=False)
-crsr = cnxn.cursor()
-crsr.execute("UPDATE T1 SET ...")
-crsr.execute("DELETE FROM T1 WHERE ...")
-crsr.execute("INSERT INTO T1 VALUES ...")
-cnxn.commit()
-```
-As you can see, transactions are managed at the Connection level, not the Cursor level.  Cursors are merely vehicles to execute SQL statements and manage their results.  There is a convenience function `commit()` on the Cursor object but that simply calls `commit()` on the cursor's parent Connection object.  When `commit()` is called on a connection, all executed SQL statements from ALL the cursors on that connection are committed together (similarly for `rollback()`).  In the event that a Connection object goes out of scope before it is closed, it is automatically deleted by Python, and a `rollback()` is issued on the connection as part of the deletion process.
-
 ### Connection objects and the Python context manager syntax
 The Python context manager syntax can be used with Connection objects, and the following code:
 ```python
