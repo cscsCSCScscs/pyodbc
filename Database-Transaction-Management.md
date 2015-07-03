@@ -1,0 +1,31 @@
+Those of you who come from a database background will be familiar with the idea of database transactions, where a series of SQL statements are committed (or rolled back) together all in one go. This is crucial if you need to make multiple updates to a database, where each update would leave the database in an inconsistent state if committed separately (albeit temporarily). The classic example of this is processing a check, where money is transferred from one bank account to another - one as a debit and one a credit. It's important that both the debit and credit are committed together on both accounts (or not at all), otherwise there will be a inconsistency within the database.
+
+Note, this section is only relevant where `autocommit` is set to False (the default) on the pyodbc connection. When `autocommit` is set to True, a commit is automatically issued after every SQL statement executed on that connection.  This is done by the database itself, not pyodbc. In other words, every SQL statement is essentially run within its own database transaction.
+
+When using pyodbc with `autocommit=False`, it is important to understand that you never explicitly open a database transaction in your Python code. Instead, a database transaction is implicitly opened when a Connection object is created with `pyodbc.connect()`. That database transaction is then either committed or rolled-back by explicitly calling `commit()` or `rollback()` on the connection, at which point a new database transaction is implicitly opened. Naturally, each database transaction may include just one SQL statement or multiple SQL statements, where each of those SQL statements is executed using the `Cursor.execute()` function.  Hence, the equivalent of the following SQL:
+```sql
+BEGIN TRANSACTION
+  UPDATE T1 SET ...
+  DELETE FROM T1 WHERE ...
+  INSERT INTO T1 VALUES ...
+COMMIT TRANSACTION
+BEGIN TRANSACTION
+  INSERT INTO T2 VALUES ...
+  INSERT INTO T3 VALUES ...
+COMMIT TRANSACTION
+```
+in Python would be:
+```python
+cnxn = pyodbc.connect('mydsn', autocommit=False)
+crsr = cnxn.cursor()
+crsr.execute("UPDATE T1 SET ...")
+crsr.execute("DELETE FROM T1 WHERE ...")
+crsr.execute("INSERT INTO T1 VALUES ...")
+cnxn.commit()
+crsr.execute("INSERT INTO T2 VALUES ...")
+crsr.execute("INSERT INTO T3 VALUES ...")
+cnxn.commit()
+```
+As you can see, no database transaction is ever explicitly opened in Python but they are explicitly committed. Also, it's important to remember that transactions are managed only at the Connection level, not the Cursor level.  Cursors are merely vehicles to execute SQL statements and manage their results, nothing more.  (Yes, there is a convenience function `commit()` on the Cursor object but that simply calls `commit()` on the cursor's parent Connection object.)  That also means that when `commit()` is called on a connection, all the executed SQL statements from ALL the cursors on that connection are committed together (ditto for `rollback()`).
+
+Finally, when a connection is closed (with the `close()` function), a rollback is always issued on the connection just in case. In the event that a Connection object goes out of scope before it is closed (e.g. if an exception occurs), the Connection object is automatically deleted by Python, and a rollback is issued on the connection as part of the deletion process.
