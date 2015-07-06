@@ -135,7 +135,7 @@ print('%s users' % row.user_count)
 If there is only 1 value you need, you can put the fetch of the row and the extraction of the first column all on one line:
 ```python
 count = cursor.execute("select count(*) from users").fetchone()[0]
-print('%s users' % count)
+print('{} users'.format(count))
 ```
 This will not work if the first column can be NULL! In that case, fetchone() will return None and you'll get a cryptic error about NoneType not supporting indexing. If there is a default value, often you can use ISNULL or COALESCE to convert NULLs to default values directly in the SQL:
 ```python
