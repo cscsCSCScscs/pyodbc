@@ -1,7 +1,11 @@
 ### 3.0.10 - 2015-04-29
-Fix for 64-bit int problems and decimal problems.
+Binary distributions for OS X and Windows are now uploaded to PyPI and can now be installed using pip. Source distributions are also uploaded and can be used by other platforms to compile. (PyPI only allows binary uploads for OS X and Windows.)
 
-Fix for issue [#42](https://github.com/mkleehammer/pyodbc/issues/42).
+Moved the project from Google Code hosting to GitHub. (Google is closing its open source hosting.)
+
+Fixed potential load failure.
+
+Fixed decimal and int issues on 64-bit linux.
 
 ### 3.0.9 - 2015-04-26
 Fix Windows compile error.
