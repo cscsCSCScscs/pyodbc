@@ -7,11 +7,7 @@ Fixed potential load failure.
 
 Fixed decimal and int issues on 64-bit linux.
 
-### 3.0.9 - 2015-04-26
-Fix Windows compile error.
-
-### 3.0.8 - 2015-04-24
-Assume unixODBC on OS X.
+Assume unixODBC rather than iODBC on OS X.
 
 ### 3.0.7 - 2013-05-19
 Added context manager support to Cursor.
