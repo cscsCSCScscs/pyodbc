@@ -6,6 +6,7 @@
   * [Microsoft SQL Server from Windows](Connecting-to-SQL-Server-from-Windows)
   * [Microsoft SQL Server from Red Hat or CentOS](Connecting-to-SQL-Server-from-RHEL-or-Centos)
   * [MySQL](Connecting-to-MySQL)
+  * [Microsoft Access](Connecting-to-Microsoft-Access)
   * [Microsoft Excel](Connecting-to-Microsoft-Excel)
 * [pyodbc objects](Objects)
   * [The pyodbc module itself](Module)
