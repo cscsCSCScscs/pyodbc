@@ -120,16 +120,16 @@ This is not yet supported since there is no way for pyodbc to determine which pa
 You will need to call stored procedures using execute(). You can use your database's format or the ODBC escape format.
 
 #### tables(table=None, catalog=None, schema=None, tableType=None)
-Creates a result set of tables in the database that match the given criteria.
+Returns an iterator for generating information about the tables in the database that match the given criteria.
 
-The table, catalog, and schema interpret the '' and '%' characters as wildcards. The escape character is driver specific, so use Connection.searchescape.
+The table, catalog, and schema interpret the '_' and '%' characters as wildcards. The escape character is driver specific, so use Connection.searchescape.
 
 Each row has the following columns. See the [SQLTables](https://msdn.microsoft.com/en-us/library/ms711831.aspx) documentation for more information.
 
 1. table_cat: The catalog name.
-1. table_schema: The schema name.
+1. table_schem: The schema name.
 1. table_name: The table name.
-1. table_type: One of TABLE, VIEW, SYSTEM TABLE, GLOBAL TEMPORARY, LOCAL TEMPORARY, ALIAS, SYNONYM, or a data source-specific type name.
+1. table_type: One of the string values 'TABLE', 'VIEW', 'SYSTEM TABLE', 'GLOBAL TEMPORARY', 'LOCAL TEMPORARY', 'ALIAS', 'SYNONYM', or a datasource specific type name.
 1. remarks: A description of the table.
 ```python
 for row in cursor.tables():
