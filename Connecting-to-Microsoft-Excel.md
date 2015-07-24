@@ -1,11 +1,19 @@
-The Excel driver does not support transactions, so you will need to use the `autocommit` keyword:
-```python
-cnxn = pyodbc.connect('DSN=test', autocommit=True)
-```
+Opening a connection to a Microsoft Excel spreadsheet (e.g. \*.xls) is achieved using the Microsoft Excel driver, typically called "Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)". Unfortunately, this driver is available only on Windows, not Unix. Check if you have this driver on your PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC), and then click on the "Drivers" tab. The Excel driver will be listed there, if it is installed. It may have a slightly different name.
 
+The Microsoft Excel driver does not support transactions, so you must set `autocommit` to True on the connection or else you will get an error, e.g.:
+```
+cnxn = pyodbc.connect(r'DRIVER={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)};DBQ=C:\path\to\myspreadsheet.xls;')
+crsr = cnxn .cursor()
+for worksheet in crsr.tables():
+    print(worksheet)
+```
 Excel defaults to a read-only connection, so if you want to update the spreadsheet include `ReadOnly=0` in your connection string:
 ```python
-cnxn = pyodbc.connect('Driver={Microsoft Excel Driver (.xls)};Dbq=C:\MyExcel.xls;ReadOnly=0', autocommit=True)
+cnxn = pyodbc.connect('Driver={Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)};DBQ=C:\path\to\myspreadsheet.xls;ReadOnly=0', autocommit=True)
 ```
 
 Be careful of the data types in your Excel spreadsheet.  The Excel driver uses the most common data type from the first 8 rows of the spreadsheet to determine the data type of each column.  So if you have 5 numbers and 3 text values in the first rows of a column, the column will be considered numeric, and the 3 text values will be returned as NULL!
+
+Also, the driver may treat the first row of the worksheet as the column names, rather than data, so be aware of this.
+
+Overall though, it has to be said, Excel is not best suited for being accessed with an ODBC connection, so you may want to consider using some other Python module instead of pyodbc, for example [xlrd](https://pypi.python.org/pypi/xlrd).
