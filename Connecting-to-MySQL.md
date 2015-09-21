@@ -1,5 +1,13 @@
 The official reference is here: http://dev.mysql.com/doc/connector-odbc/en/index.html
 
+Alternatively to official ODBC driver you may download [MySQL ODBC driver](https://www.devart.com/odbc/mysql/download.html) from Devart company which is perfectly working with the latest pyODBC and MySQL versions. 
+
+MySQL ODBC connection string example:
+```
+Login Prompt=False;User ID=root;Password=root;Data Source=localhost;Database=test
+```
+  
+
 #### Unicode
 If you are using UTF8 in your database and are getting results like "\x0038", you probably need to add "CHARSET=UTF8" to your connection string.
 
