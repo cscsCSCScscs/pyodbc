@@ -41,3 +41,15 @@ rpm -ivh oracle-instantclient11.2-devel-11.2.0.3.0-1.x86_64.rpm
 ```
 Install basic first, odbc is dependent on it.
 
+Oracle installs the library in /usr/lib/oracle/11.2/client64/lib.
+set the library path, add it to the profile (as required)
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/oracle/11.2/client64/lib
+```
+
+### Test the Connection
+Try the connection to your database with something like this:
+```bash
+python -c "import pyodbc; print(pyodbc.connect('DRIVER=MyOracle;DBQ=x.x.x.x:1521/orcl;UID=myuid;PWD=mypwd'))"
+```
+DBQ format:Host:Port/<oracle instance>
