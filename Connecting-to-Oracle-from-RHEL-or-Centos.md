@@ -1,10 +1,11 @@
-Use Oracle instant client on RHEL to connect to Oracle database. CentOS is derived from Red Hat so the driver works for CentOS as well. This driver uses unixODBC as its driver manager. The driver and driver manager must be installed globally on your server (don't try installing in a Python virtual environment), as follows:
+Use Oracle instant client on RHEL to connect to Oracle database. CentOS is derived from Red Hat so the driver works for CentOS as well. This driver uses unixODBC as its driver manager. The driver and driver manager must be installed globally(as root) on your server:
 
 #### Install unixODBC
 
 See http://www.unixodbc.org/ for reference.
 
 Use the latest unixODBC version 2.3.4 (preferred). Download the source, http://www.unixodbc.org/download.html
+
 As root,
 ```bash
 cd <Download Folder>
@@ -15,22 +16,17 @@ cd unixODBC-2.3.4/
 make 1> mk_std.log 2> make_err.log
 sudo make install 1> mki_std.log 2> mki_err.log
 ```
-Add the oracle entry to obdcinst.ini
-```bash
-[Oracle]
-Description=Oracle Unicode driver
-Driver=/usr/lib/oracle/11.2/client64/lib/libsqora.so.11.1
-UsageCount=1
-FileUsage=1
-```
-#### Install the Microsoft ODBC Driver for Linux
+
+#### Install the Oracle Instant Client (ODBC Driver) for Linux
 
 See http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html for reference.
 
 Choose the Instant Client Downloads for Linux x86-64
-http://www.oracle.com/technetwork/database/features/instant-client/index-097480.html
+http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html
 
-Download: oracle-instantclient11.2-devel-11.2.0.3.0-1.x86_64.rpm , oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm, oracle-instantclient11.2-basic-11.2.0.4.0-1.x86_64.rpm (if you need 12c instant client choose the appropriate ones)
+Download: oracle-instantclient11.2-devel-11.2.0.3.0-1.x86_64.rpm , oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm, oracle-instantclient11.2-basic-11.2.0.4.0-1.x86_64.rpm 
+
+Note: If you need 12c instant client choose the appropriate basic, odbc and devel rpms.
 
 As root,
 ```bash
@@ -39,7 +35,6 @@ rpm -ivh oracle-instantclient11.2-basic-11.2.0.4.0-1.x86_64.rpm
 rpm -ivh oracle-instantclient11.2-odbc-11.2.0.3.0-1.x86_64.rpm
 rpm -ivh oracle-instantclient11.2-devel-11.2.0.3.0-1.x86_64.rpm
 ```
-Install basic first, odbc is dependent on it.
 
 Oracle installs the library in /usr/lib/oracle/11.2/client64/lib.
 set the library path, add it to the profile (as required)
@@ -47,9 +42,25 @@ set the library path, add it to the profile (as required)
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/oracle/11.2/client64/lib
 ```
 
-### Test the Connection
+##### Test Oracle Driver installation
+```
+dltest /usr/lib/oracle/11.2/client64/lib/libsqora.so.11.1
+#SUCCESS: Loaded /usr/lib/oracle/11.2/client64/lib/libsqora.so.11.1
+```
+
+Add the oracle entry to obdcinst.ini
+```bash
+[MyOracle]
+Description=Oracle Unicode driver
+Driver=/usr/lib/oracle/11.2/client64/lib/libsqora.so.11.1
+UsageCount=1
+FileUsage=1
+```
+
+
+### Test the Connection using pyodbc
 Try the connection to your database with something like this:
 ```bash
 python -c "import pyodbc; print(pyodbc.connect('DRIVER=MyOracle;DBQ=x.x.x.x:1521/orcl;UID=myuid;PWD=mypwd'))"
 ```
-DBQ format:Host:Port/<oracle instance>
+DBQ format:Host:Port/"oracle instance"
