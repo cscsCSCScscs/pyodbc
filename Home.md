@@ -5,6 +5,7 @@
 * [Connecting to databases](Connecting-to-databases)
   * [Microsoft SQL Server from Windows](Connecting-to-SQL-Server-from-Windows)
   * [Microsoft SQL Server from Red Hat or CentOS](Connecting-to-SQL-Server-from-RHEL-or-Centos)
+  * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [MySQL](Connecting-to-MySQL)
   * [Microsoft Access](Connecting-to-Microsoft-Access)
   * [Microsoft Excel](Connecting-to-Microsoft-Excel)
