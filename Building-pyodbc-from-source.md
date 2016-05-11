@@ -28,13 +28,13 @@ If the version cannot be determined for some reason, you will see a warning abou
 ### Operating Systems
 
 #### Windows
-On Windows, you must use the appropriate Microsoft Visual C++ compiler for the version of pyodbc you wish to compile.  This is a Python requirement, not a pyodbc one.
+On Windows, you must use the appropriate Microsoft Visual C++ compiler for the version of pyodbc you wish to compile.  This is a Python requirement, not a pyodbc one. This page on the Python wiki provides information about compiling Python code on Windows: https://wiki.python.org/moin/WindowsCompilers
 
 To build Python 2.4 or 2.5 versions, you will need the Visual Studio 2003 .NET compiler. Unfortunately there is no free version of this.
 
-For Python 2.6 or 2.7, use the Visual C++ 2008 compiler. There is a free version of this, Visual C++ 2008 Express.
+For Python 2.6, 2.7, 3.0, 3.1 and 3.2, use the Visual C++ 2008 compiler. There is a free version of this, Visual C++ 2008 Express.
 
-For Python 3.0 to 3.4, use the Visual C++ 2010 compiler. There is a free version of this, Visual C++ 2010 Express, although that version does not inherently allow 64-bit builds to be compiled. To compile 64-bit builds with Visual C++ 2010 Express, follow these instructions: http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/
+For Python 3.3 and 3.4, use the Visual C++ 2010 compiler. There is a free version of this, Visual C++ 2010 Express, although that version does not inherently allow 64-bit builds to be compiled. To compile 64-bit builds with Visual C++ 2010 Express, follow these instructions: http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/
 
 Once the build has been compiled, you can create a Windows installer executable by running:
 
