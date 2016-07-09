@@ -10,5 +10,3 @@ for table_name in crsr.tables(tableType='TABLE'):
 ```
 
 This code will succeed under 32-bit Python if it finds a 32-bit version of the MS Access driver installed, and likewise for 64 bit Python and 64-bit Access. A Microsoft Access driver is typically installed with Microsoft Office, and matches the 32/64 bitness of that Office installation. It may or may not be possible to install additionally the other 32 or 64 bit MS Access driver (that doesn't match the Office installation). Search for details.
-
- that matches the 32/64 bitness of the Python version being used. The MS Access driver is typically installed with Microsoft Office, and corresponds to the 32/64 bitness of the Office version installed. If 
