@@ -4,7 +4,7 @@ Here is an example of how to open an MS Access database:
 
 ```python
 cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\path\to\db\mydb.mdb;UID=myusername;PWD=mypassword;')
-crsr = conn.cursor()
+crsr = cnxn.cursor()
 for table_name in crsr.tables(tableType='TABLE'):
     print(table_name)
 ```
