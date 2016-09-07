@@ -1,10 +1,10 @@
-Microsoft provide a database driver specifically for Red Hat Enterprise (https://msdn.microsoft.com/en-us/library/hh568451.aspx) to connect to SQL Server.  CentOS is derived from Red Hat so the driver works for CentOS as well.  This driver uses unixODBC as its driver manager, not FreeTDS or iODBC.  The driver and driver manager must be installed globally on your server (don't try installing in a Python virtual environment), as follows:
+Microsoft provide a database driver specifically for Red Hat Enterprise to connect to SQL Server (https://msdn.microsoft.com/en-us/library/hh568451.aspx).  CentOS is derived from Red Hat so that driver will usually work with CentOS as well.  Note, this Microsoft driver uses unixODBC as its driver manager, not FreeTDS or iODBC, and the driver and driver manager must be installed globally on your server, as follows (don't try installing them in a Python virtual environment, it'll end in tears):
 
 #### Install unixODBC
 
 See http://msdn.microsoft.com/en-us/library/hh568449.aspx for reference.
 
-Microsoft specifies that unixODBC version 2.3.0 should be installed with their driver.  You should be aware that version 2.3.0 has some significant bugs in it, particularly when making multiple connections to the same database. That specific issue (see "Driver version was not being held when a second connection was made to the driver" on http://www.unixodbc.org/), fixed in 2.3.1, can cause segmentation faults in your Python code. Hence, if you are using multiple concurrent database connections, you may want to consider installing the latest version of unixODBC instead, (version 2.3.2 as of April 2015). The rest of these instructions assume that is the case.
+Microsoft specifies that unixODBC version 2.3.0 should be installed with their driver.  However, you should be aware that version 2.3.0 has some significant bugs in it, particularly when making multiple connections to the same database. That specific issue can cause segmentation faults in your Python code. See "Driver version was not being held when a second connection was made to the driver" on http://www.unixodbc.org/. This was fixed in version 2.3.1. Hence, if you are using multiple concurrent database connections, you may want to consider installing the latest version of unixODBC instead, (version 2.3.2 as of April 2015). The rest of these instructions assume that is the case.
 ```bash
 # download and unzip the unixODBC driver
 curl -O 'ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-2.3.2.tar.gz'
@@ -27,7 +27,7 @@ sudo ln -s libodbccr.so.2   libodbccr.so.1
 sudo ln -s libodbcinst.so.2 libodbcinst.so.1
 sudo ln -s libodbc.so.2     libodbc.so.1
 ```
-Check the unixODBC installation with the following:
+Check the unixODBC installation with the following commands, which should all return useful information:
 ```bash
 ls -l /usr/lib64/libodbc*
 odbc_config --version --longodbcversion --cflags --ulen --libs --odbcinstini --odbcini
@@ -48,7 +48,7 @@ cd msodbcsql-11.0.2270.0
 sudo ./install.sh install --accept-license --force 1> install_std.log 2> install_err.log
 ```
 
-Check the msodbc installation with the following:
+Check the msodbc installation with the following commands, which should all return useful information:
 
 ```bash
 ls -l /opt/microsoft/msodbcsql/lib64/
