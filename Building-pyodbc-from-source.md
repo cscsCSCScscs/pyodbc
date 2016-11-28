@@ -46,3 +46,9 @@ To build on other operating systems, use the gcc compiler.
 On Linux, pyodbc is typically built using the unixODBC headers, so you will need unixODBC and its headers installed. On a RedHat/CentOS/Fedora box, this means you would need to install unixODBC-devel:
 
 `yum install unixODBC-devel`
+
+On Fedora, you may see this error: `gcc: error: /usr/lib/rpm/redhat/redhat-hardened-cc1: No such file or directory`.  You'll need to install the `redhat-rpm-config` package.
+
+```
+sudo dnf install redhat-rpm-config
+```
