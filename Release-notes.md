@@ -1,3 +1,9 @@
+### 4.0.1 / 2017-01-13
+Bug fixes.
+
+### 4.0.0 / 2016-12-30
+Unicode handling rewritten for correctness.
+
 ### 3.0.10 - 2015-04-29
 Binary distributions for OS X and Windows are now uploaded to PyPI and can now be installed using pip. Source distributions are also uploaded and can be used by other platforms to compile. (PyPI only allows binary uploads for OS X and Windows.)
 
