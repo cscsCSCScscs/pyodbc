@@ -1,6 +1,12 @@
 ### Introduction
 The following features are beyond the requirements of [DB API 2.0](https://www.python.org/dev/peps/pep-0249/). They are intended to provide a very Python-like, convenient programming experience, but you should not use them if your code needs to be portable between DB API modules. (Though I hope future DB API specifications will adopt some of these features.)
 
+### fetchval
+
+The fetchval() convenience method returns the first column of the first row if there are results, otherwise it returns None.
+
+    count = cursor.execute('select count(*) from users').fetchval()
+
 ### Access Values By Name
 The DB API specifies that results must be tuple-like, so columns are normally accessed by indexing into the sequence (e.g. `row[0]`) and pyodbc supports this. However, columns can also be accessed by name:
 ```python
