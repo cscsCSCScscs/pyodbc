@@ -4,14 +4,28 @@ Alternatively to official ODBC driver you may download [MySQL ODBC driver](https
 
 MySQL ODBC connection string example:
 ```
-Login Prompt=False;User ID=root;Password=root;Data Source=localhost;Database=test
+Login Prompt=False;User ID=root;Password=root;Data Source=localhost;Database=test;CHARSET=UTF8
 ```
   
+### Encodings
 
-#### Unicode
-If you are using UTF8 in your database and are getting results like "\x0038", you probably need to add "CHARSET=UTF8" to your connection string.
+MySQL uses a single encoding for all text data which you will need to configure after connecting.  The example below is for UTF-8:
 
-#### Errors on OS/X
+```
+# Python 2.7
+cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+cnxn.setencoding(str, encoding='utf-8')
+cnxn.setencoding(unicode, encoding='utf-8', ctype=pyodbc.SQL_CHAR)
+
+# Python 3.x
+cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+cnxn.setencoding(encoding='utf-8')
+```
+
+You may need to add the CHARSET keyword to your connection string.
+
+### Socket Errors on OS/X
+
 Some MySQL ODBC drivers have the wrong socket path on OS/X, causing an error like "Can't connect to local MySQL server through socket /tmp/mysql.sock". To connect, determine the correct path and pass it to the driver using the 'socket' keyword.
 
 Run `mysqladmin version` and look for the Unix socket entry:
