@@ -1,3 +1,9 @@
+# Deprecated
+
+Please go to the project's [Release Notes](https://github.com/mkleehammer/pyodbc/releases) page.  This page will not be maintained and will be deleted in the near future.  It was created before GitHub officially supported releases.
+
+# Archive
+
 ### 4.0.2 / 2017-01-19
 
 Fixed parsing of decimal/numeric columns.  Because most drivers fail to create binary decimal structures pyodbc uses text.  The configured encodings were not being used for this.
