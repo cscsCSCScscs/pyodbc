@@ -1,5 +1,4 @@
 ## Table of Contents
-* [Release notes](Release-Notes)
 * [Installing pyodbc](Install)
 * [Getting started](Getting-started)
 * [Connecting to databases](Connecting-to-databases)
@@ -21,6 +20,4 @@
 * [Unicode](Unicode)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
 
-Please note, until May 2015, pyodbc was hosted at Google Code: https://code.google.com/p/pyodbc/
-
-There is also a pyodbc group: http://groups.google.com/group/pyodbc available for questions, coding advice, etc., but pyodbc bugs should be raised in the Issues section here. Always include a full description of the bug, with as much contextual information as you can.
+[Release notes](https://github.com/mkleehammer/pyodbc/releases) have been moved from the Wiki now that GitHub supports releases.  The [old archived page](Release-Notes) will eventually be removed.
