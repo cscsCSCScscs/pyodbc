@@ -1,5 +1,3 @@
-# Unicode
-
 ## TL;DR
 
 By default, pyodbc uses UTF-16LE and SQL_C_WCHAR for reading and writing all Unicode as
