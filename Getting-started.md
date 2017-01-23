@@ -184,6 +184,25 @@ row = cursor.execute("select count(*) as user_count from users").fetchone()
 print('%s users' % row.user_count)
 ```
 
+#### Formatting Long SQL Statements
+
+There are many ways of formatting a Python string that makes up a long SQL statement. Using the triple-quote string format is the obvious way of doing this. Doing so does create a string with lots of blank space on the left, but white-space (including tabs and newlines) should be ignored by database SQL engines. If you still want to remove spaces on the left though, you can use the function [`dedent()`](https://docs.python.org/3/library/textwrap.html#textwrap.dedent) in the built-in `textwrap` module. For example:
+
+```python
+import textwrap
+. . .
+sql = textwrap.dedent("""
+    select a.date_of_birth,
+           a.email,
+           b.city
+    from person as a
+    left outer join address as b on b.address_id = a.address_id
+    where a.status = 'active'
+      and a.name = ?
+""")
+rows = cursor.execute(sql, 'John Smith').fetchall()
+```
+
 #### fetchval
 
 If you are selecting a single value you can use the `fetchval` convenience method.  If the statement generates a row, it returns the value of the first column of the first row.  If there are no rows, None is returned:
