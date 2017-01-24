@@ -103,6 +103,12 @@ merging the system one.
 
 On Windows, these will be the ones defined in the [ODBC Data Source Administrator](https://msdn.microsoft.com/en-us/library/ms188691.aspx).  On Unix, these will be the ones defined in the user's odbc.ini file (typically ~/.odbc.ini) and/or the system odbc.ini file (typically /etc/odbc.ini).
 
+## drivers
+
+    drivers() -> [ Driver_Name ]
+
+Returns a list of ODBC Drivers that are available to pyodbc. On Windows this list will be specific to the "platform" under which the Python script is running (i.e., 64-bit or 32-bit).
+
 ## TimeFromTicks
 
     t = pyodbc.TimeFromTicks(tics)
