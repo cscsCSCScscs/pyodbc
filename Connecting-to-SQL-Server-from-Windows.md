@@ -15,13 +15,6 @@ or, in Python:
 ```python
 conn = pyodbc.connect(r'DRIVER={SQL Server Native Client 11.0};SERVER=test;DATABASE=test;UID=user;PWD=password')
 ```
-Alternative to Microsoft ODBC drivers you can download and use latest [SQL Server ODBC driver](https://www.devart.com/odbc/sqlserver/download.html) from Devart company which is tested and perfectly working with the latest versions of pyODBC and SQL Server. 
-
-This driver connection string will look like:
-```
-Login Prompt=False;Data Source=DBMSSQL;Initial Catalog=master;User ID=sa
-```
-
 You can find out what drivers you have on your Windows PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC).  In the pop-up window, click on the Drivers tab.
 
 It's generally best to use the latest drivers you have, regardless of the version of SQL Server you are connecting to, because the drivers are largely backwards-compatible.  However you may prefer to use the specific driver for your SQL Server instance.
