@@ -6,16 +6,26 @@ There are actually many SQL Server ODBC drivers written and distributed by Micro
 * {SQL Native Client} - released with SQL Server 2005 (also known as version 9.0)
 * {SQL Server Native Client 10.0} - released with SQL Server 2008
 * {SQL Server Native Client 11.0} - released with SQL Server 2012
+* {ODBC Driver 11 for SQL Server} - supports SQL Server 2005 through 2014
+* {ODBC Driver 13 for SQL Server} - supports SQL Server 2005 through 2016
+
+Note that the "SQL Server Native Client ..." and earlier drivers are deprecated and should not be used for new development.
 
 The connection strings for all these drivers are essentially the same, for example:
 ```
-DRIVER={SQL Server Native Client 11.0};SERVER=test;DATABASE=test;UID=user;PWD=password
+DRIVER={ODBC Driver 11 for SQL Server};SERVER=test;DATABASE=test;UID=user;PWD=password
 ```
 or, in Python:
 ```python
-conn = pyodbc.connect(r'DRIVER={SQL Server Native Client 11.0};SERVER=test;DATABASE=test;UID=user;PWD=password')
+conn = pyodbc.connect(
+    r'DRIVER={SQL Server Native Client 11.0};'
+    r'SERVER=test;'
+    r'DATABASE=test;'
+    r'UID=user;'
+    r'PWD=password'
+    )
 ```
-You can find out what drivers you have on your Windows PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC).  In the pop-up window, click on the Drivers tab.
+You can find out what drivers are available to your Python script by inspecting the list of driver names returned by `pyodbc.drivers()`. You can also navigate to Control Panel -> Administrative Tools -> Data Sources (ODBC) and inspect the "Drivers" tab in the ODBC Administrator application (odbcad32.exe), but be aware that there are separate 32-bit and 64-bit versions of the ODBC Administrator.
 
 It's generally best to use the latest drivers you have, regardless of the version of SQL Server you are connecting to, because the drivers are largely backwards-compatible.  However you may prefer to use the specific driver for your SQL Server instance.
 
@@ -33,10 +43,20 @@ Attributes in the connection string will override any attributes in the DSN.
 ### Other connection attributes
 You can connect to your SQL Server instance using a trusted connection, i.e. without providing a login name and password, by using the Trusted_Connection attribute, e.g.:
 ```python
-conn = pyodbc.connect(r'DRIVER={SQL Server};SERVER=test;DATABASE=test;Trusted_Connection=True;')
+conn = pyodbc.connect(
+    r'DRIVER={ODBC Driver 11 for SQL Server};'
+    r'SERVER=test;'
+    r'DATABASE=test;'
+    r'Trusted_Connection=True;'
+    )
 ```
 
 Adding the APP keyword allows you to provide a descriptive label (of up to 128 characters) for your database connection which is very handy for database administrators, e.g.:
 ```python
-conn = pyodbc.connect(r'DSN=mynewdsn;UID=user;PWD=password;APP=Daily Incremental Backup;')
+conn = pyodbc.connect(
+    r'DSN=mynewdsn;'
+    r'UID=user;'
+    r'PWD=password;'
+    r'APP=Daily Incremental Backup;'
+    )
 ```
