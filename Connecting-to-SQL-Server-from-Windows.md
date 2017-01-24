@@ -18,7 +18,7 @@ DRIVER={ODBC Driver 11 for SQL Server};SERVER=test;DATABASE=test;UID=user;PWD=pa
 or, in Python:
 ```python
 conn = pyodbc.connect(
-    r'DRIVER={SQL Server Native Client 11.0};'
+    r'DRIVER={ODBC Driver 11 for SQL Server};'
     r'SERVER=test;'
     r'DATABASE=test;'
     r'UID=user;'
