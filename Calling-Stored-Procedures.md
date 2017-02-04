@@ -15,7 +15,7 @@ crsr.execute("{CALL usp_UpdateFirstName (?,?)}", params)
 
 ### Output Parameters and Return Values
 
-Because pyodbc does not have `.callproc` we need to use a workaround for retrieving the values of output parameters and return values. The specific method will depend on what your specific ODBC driver supports, but for Microsoft's ODBC drivers for SQL Server we can use an "anonymous code block" to EXEC the stored procedure and then SELECT the output parameters and/or return values. For example, for the SQL Server stored procedure
+Because pyodbc does not have `.callproc` we need to use a workaround for retrieving the values of output parameters and return values. The specific method will depend on what your particular ODBC driver supports, but for Microsoft's ODBC drivers for SQL Server we can use an "anonymous code block" to EXEC the stored procedure and then SELECT the output parameters and/or return values. For example, for the SQL Server stored procedure
 
 ```sql
 CREATE PROCEDURE [dbo].[test_for_pyodbc] 
