@@ -17,6 +17,7 @@
   * [Exceptions](Exceptions)
 * [Data type conversions from Python to ODBC and back](Data-Types)
 * [Managing database transactions](Database-Transaction-Management)
+* [Calling Stored Procedures](Calling-Stored-Procedures)
 * [Features beyond the DB API](Features-beyond-the-DB-API)
 * [Unicode](Unicode)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
