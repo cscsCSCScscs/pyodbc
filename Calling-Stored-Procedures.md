@@ -1,4 +1,4 @@
-pyodbc does not currently implement the optional `.callproc` method (although it has been [requested](https://github.com/mkleehammer/pyodbc/issues/184)). However, ODBC defines a [{CALL ...} escape sequence](https://msdn.microsoft.com/en-us/library/ms403294.aspx) that should be supported by well-behaved ODBC drivers.
+pyodbc does not currently implement the optional `.callproc` method (it is being [investigated](https://github.com/mkleehammer/pyodbc/issues/184)). However, ODBC defines a [{CALL ...} escape sequence](https://msdn.microsoft.com/en-us/library/ms403294.aspx) that should be supported by well-behaved ODBC drivers.
 
 For example, to call a stored procedure named "usp_NoParameters" that takes no parameters, we can do
 
