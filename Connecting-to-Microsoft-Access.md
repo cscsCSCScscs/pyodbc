@@ -1,12 +1,29 @@
-Opening a connection to a Microsoft Access database (e.g. \*.mdb) is achieved using the Microsoft Access driver "Microsoft Access Driver (\*.mdb, \*.accdb)".  Unfortunately, this driver is available only on Windows, not Unix.  Check if you have this driver on your PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC), and then click on the "Drivers" tab.  The Access driver will be listed there, if it is installed.
+Microsoft only produces Access ODBC drivers for the Windows platform. Third-party vendors may produce Access ODBC drivers for non-Windows platforms.
+
+There are actually two (2) Access ODBC drivers from Microsoft:
+
+1. `Microsoft Access Driver (*.mdb)` - This is the older 32-bit "Jet" ODBC driver. It is included as a standard part of a Windows install. It only works with `.mdb` (not `.accdb`) files. It is also officially deprecated.
+
+2. `Microsoft Access Driver (*.mdb, *.accdb)` - This is the newer "ACE" ODBC driver. It is not included with Windows, but it is normally included as part of a Microsoft Office install. It is also available as a free stand-alone "redistributable" install for machines without Microsoft Office. There are separate 64-bit and 32-bit versions of the "ACE" Access Database Engine (and drivers), and normally one has **either** the 64-bit version **or** the 32-bit version installed. (It is possible to force both versions to exist on the same machine but it is not recommended as it can "break" Office installations. Therefore, if you already have Microsoft Office it is *highly recommended* that you use a Python environment that matches the "bitness" of the Office install.)
+
+The easiest way to check if one of the Microsoft Access ODBC drivers is available to your Python environment (on Windows) is to do
+
+```python
+>>> import pyodbc
+>>> [x for x in pyodbc.drivers() if x.startswith('Microsoft Access Driver')]
+```
+
+If you see an empty list then you are running 64-bit Python and you need to install the 64-bit version of the "ACE" driver. If you only see `['Microsoft Access Driver (*.mdb)']` and you need to work with an `.accdb` file then you need to install the 32-bit version of the "ACE" driver.
 
 Here is an example of how to open an MS Access database:
 
 ```python
-cnxn = pyodbc.connect(r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\path\to\db\mydb.mdb;UID=myusername;PWD=mypassword;')
+conn_str = (
+    r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
+    r'DBQ=C:\path\to\mydb.accdb;'
+    )
+cnxn = pyodbc.connect(conn_str)
 crsr = cnxn.cursor()
 for table_name in crsr.tables(tableType='TABLE'):
     print(table_name)
 ```
-
-This code will succeed under 32-bit Python if it finds a 32-bit version of the MS Access driver installed, and likewise for 64 bit Python and 64-bit Access. A Microsoft Access driver is typically installed with Microsoft Office, and matches the 32/64 bitness of that Office installation. It may or may not be possible to install additionally the other 32 or 64 bit MS Access driver (that doesn't match the Office installation). Search for details.
