@@ -1,6 +1,6 @@
-Microsoft only produces Access ODBC drivers for the Windows platform. Third-party vendors may produce Access ODBC drivers for non-Windows platforms.
+Microsoft only produces Access ODBC drivers for the Windows platform. Third-party vendors may be able to provide Access ODBC drivers for non-Windows platforms.
 
-There are actually two (2) Access ODBC drivers from Microsoft:
+There are actually two (2) different Access ODBC drivers from Microsoft:
 
 1. `Microsoft Access Driver (*.mdb)` - This is the older 32-bit "Jet" ODBC driver. It is included as a standard part of a Windows install. It only works with `.mdb` (not `.accdb`) files. It is also officially deprecated.
 
@@ -27,3 +27,6 @@ crsr = cnxn.cursor()
 for table_name in crsr.tables(tableType='TABLE'):
     print(table_name)
 ```
+# Compatibility issue with Python 3
+
+There is an [outstanding issue](https://github.com/mkleehammer/pyodbc/issues/84) regarding problems working with Access databases via pyodbc under Python 3.x. Until that issue is resolved, consider using Python 2.7 to manipulate Access databases with pyodbc.
