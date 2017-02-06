@@ -27,6 +27,6 @@ crsr = cnxn.cursor()
 for table_name in crsr.tables(tableType='TABLE'):
     print(table_name)
 ```
-# Compatibility issue with Python 3
+### Compatibility issue with Python 3
 
 There is an [outstanding issue](https://github.com/mkleehammer/pyodbc/issues/84) regarding problems working with Access databases via pyodbc under Python 3.x. Until that issue is resolved, consider using Python 2.7 to manipulate Access databases with pyodbc.
