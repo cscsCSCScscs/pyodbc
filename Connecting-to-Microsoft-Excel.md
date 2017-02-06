@@ -1,4 +1,19 @@
-Opening a connection to a Microsoft Excel spreadsheet (e.g. \*.xls) is achieved using the Microsoft Excel driver, typically called "Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)". Unfortunately, this driver is available only on Windows, not Unix. Check if you have this driver on your PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC), and then click on the "Drivers" tab. The Excel driver will be listed there, if it is installed. It may have a slightly different name.
+Opening a connection to a Microsoft Excel spreadsheet (e.g. \*.xls) is achieved using the Microsoft Excel driver, typically called "Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)". Unfortunately, this driver is available only on Windows, not Unix. 
+
+The easiest way to check if the driver is available to your Python environment (on Windows) is to use
+
+```python
+>>> import pyodbc
+>>> [x for x in pyodbc.drivers() if x.startswith('Microsoft Excel Driver')]
+```
+
+The resulting list will show any matching drivers, e.g.,
+
+```none
+['Microsoft Excel Driver (*.xls)', 'Microsoft Excel Driver (*.xls, *.xlsx, *.xlsm, *.xlsb)']
+```
+
+You can also check for the driver on your PC by navigating to Control Panel -> Administrative Tools -> Data Sources (ODBC), and then click on the "Drivers" tab. The Excel driver will be listed there, if it is installed. It may have a slightly different name. Note also that there are separate 32-bit and 64-bit versions of the ODBC Administrator utility (odbcad32.exe).
 
 The Microsoft Excel driver does not support transactions, so you must set `autocommit` to True on the connection or else you will get an error, e.g.:
 ```
