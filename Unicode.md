@@ -41,7 +41,7 @@ format.  This is compatible with pyodbc 3.x.
     cnxn.setencoding(str, encoding='raw')
 
 
-#### MySQL, PostgreSQL, and Teradata
+#### MySQL and PostgreSQL
 
 These databases tend to use a single encoding and do not differentiate between "SQL_CHAR" and
 "SQL_WCHAR".  Therefore you must configure them to encode Unicode data as UTF-8 and to decode
@@ -64,6 +64,27 @@ sure if this is necessary.
     # MySQL
     cstring = 'DSN=mydsn;CharSet=utf8'
     cnxn = pyodbc.connect(cstring)
+
+#### Teradata
+
+First, if you are using Teradata on macOS, you are going to have to build pyodbc yourself using
+iODBC.  Hopefully they will compile their driver against unixODBC sometime.
+
+If you are using UTF-8, most of the lines will be similar to other databases, but unfortunately
+the metadata on **macOS** (this may not be necessary on Linux) will return metadata (column
+names) in UTF-32LE.
+
+    # Python 2.7
+    cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+    cnxn.setencoding(str, encoding='utf-8')
+    cnxn.setencoding(unicode, encoding='utf-8')
+
+    # Python 3.x
+    cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-32le')
+    cnxn.setencoding(encoding='utf-8')
 
 
 ## Details
@@ -137,6 +158,10 @@ This sets the encoding used when reading a buffer from the database and converti
 
 `sqltype` controls which SQL type being configured: `pyodbc.SQL_CHAR` or `pyodbc.SQL_WCHAR`.
 Use SQL_CHAR to configure the encoding when reading a SQL_CHAR buffer, etc.
+
+There is also a special constant, `pyodbc.SQL_WMETADATA`, for configuring how column names are
+read.  You would expect drivers to return them the same way they return data, but that's rarely
+the case.
 
 When a buffer is being read, the driver will tell pyodbc whether it is a SQL_CHAR or SQL_WCHAR
 buffer.  However, pyodbc can request the data be converted to either of these formats.  Most of

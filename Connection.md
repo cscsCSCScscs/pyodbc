@@ -83,7 +83,106 @@ Register an output converter function that will be called whenever a value with 
 
 Removes all output converter functions.
 
+#### setencoding
+
+    # Python 2
+    cnxn.setencoding(type, encoding=None, ctype=None)
+
+    # Python 3
+    cnxn.setencoding(encoding=None, ctype=None)
+
+Sets the text encoding for SQL statements and text parameters.
+
+###### type
+
+The text type to configure.  In Python 2 there are two text types: `str` and `unicode` which
+can be configured indivually.  Python 3 only has `str` (which is Unicode), so the parameter is
+not needed.
+
+
+###### encoding
+
+The encoding to use.  This must be a valid Python encoding that converts text to `bytes`
+(Python 3) or `str` (Python 2).
+
+###### ctype
+
+The C data type to use when passing data: `pyodbc.SQL_CHAR` or `pyodbc.SQL_WCHAR`.
+
+If not provided, `SQL_WCHAR` is used for "utf-16", "utf-16le", and "utf-16be".  `SQL_CHAR` is
+used for all other encodings.
+
+The defaults are:
+
+Python version | type | encoding | ctype
+-------------- | ---- | -------- | -----
+Python 2 | str | utf-8 | SQL_CHAR
+Python 2 | unicode | utf-16le | SQL_WCHAR
+Python 3 | unicode | utf-16le | SQL_WCHAR
+
+If your database driver communicates with only UTF-8 (often MySQL and PostgreSQL), try the
+following:
+
+      # Python 2
+      cnxn.setencoding(str, encoding='utf-8')
+      cnxn.setencoding(unicode, encoding='utf-8')
+
+      # Python 3
+      cnxn.setencoding(encoding='utf-8')
+
+In Python 2.7, the value "raw" can be used as special encoding for `str` objects.  This will
+pass the string object's bytes as-is to the database.  This is not recommended as you need to
+make sure that the internal format matches what the database expects.
+
+#### setdecoding
+
+      # Python 2
+      cnxn.setdecoding(sqltype, encoding=None, ctype=None, to=None)
+
+      # Python 3
+      cnxn.setdecoding(sqltype, encoding=None, ctype=None)
+
+Sets the text decoding used when reading `SQL_CHAR` and `SQL_WCHAR` from the database.
+
+##### sqltype
+
+The SQL type being configured: `pyodbc.SQL_CHAR` or `pyodbc.SQL_WCHAR`.
+
+There is a special flag, `pyodbc.SQL_WMETADATA`, for configuring the decoding of column names
+from SQLDescribeColW.
+
+##### encoding
+
+The Python encoding to use when decoding the data.
+
+##### ctype
+
+The C data type to request from SQLGetData: `pyodbc.SQL_CHAR` or `pyodbc.SQL_WCHAR`.
+
+##### to
+
+The Python 2 text data type to be returned: `str` or `unicode`.  If not provided (recommended),
+whatever type the codec returns is returned.  (This parameter is not needed in Python 3 because
+the only text data type is `str`.)
+
+The defaults are:
+
+Python version | type | encoding | ctype
+-------------- | ---- | -------- | -----
+Python 2 | str | utf-8 | SQL_CHAR
+Python 2 | unicode | utf-16le | SQL_WCHAR
+Python 2 | unicode | utf-16le | SQL_WMETADATA
+Python 3 | unicode | utf-16le | SQL_WCHAR
+Python 3 | unicode | utf-16le | SQL_WMETADATA
+
+In Python 2.7, the value "raw" can be used as special encoding for `SQL_CHAR` values.  This
+will create a `str` object directly from the bytes from the database with no conversion.string
+object's bytes as-is to the database.  This is not recommended as you need to make sure that
+the internal format matches what the database sends.
+
+
 ### Connection objects and the Python context manager syntax
+
 The Python context manager syntax can be used with Connection objects, and the following code:
 ```python
 with pyodbc.connect('mydsn') as cnxn:
