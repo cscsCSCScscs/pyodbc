@@ -27,9 +27,12 @@ crsr = cnxn.cursor()
 for table_name in crsr.tables(tableType='TABLE'):
     print(table_name)
 ```
-### Compatibility issue with Python 3
 
-There is an [outstanding issue](https://github.com/mkleehammer/pyodbc/issues/84) regarding problems working with Access databases via pyodbc under Python 3.x. Until that issue is resolved, consider using Python 2.7 to manipulate Access databases with pyodbc.
+## Unit Tests
+
+There are unit tests for Python 2 and 3: tests2\accesstests.py and tests3\accesstests.py
+
+For each, you need to pass in the name of an access file that can be used.  Empty ones you can test with are provided: tests2\empty.mdb and tests2\empty.accdb.
 
 ## Access Info
 
