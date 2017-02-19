@@ -9,6 +9,7 @@
   * [MySQL](Connecting-to-MySQL)
   * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [PostgreSQL](Connecting-to-PostgreSQL)
+  * [Teradata](Connecting-to-Teradata)
 * [pyodbc objects](Objects)
   * [The pyodbc module itself](Module)
   * [Connection](Connection)
