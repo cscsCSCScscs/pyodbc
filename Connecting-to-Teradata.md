@@ -16,3 +16,8 @@ cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
 cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-32le')
 cnxn.setencoding(encoding='utf-8')
 ```
+
+
+### Testing
+
+You can download a free version of Teradata Express in VMWare images.  This can also be [used in VirtualBox](http://techathlon.com/how-to-run-a-vmdk-file-in-oracle-virtualbox/).
