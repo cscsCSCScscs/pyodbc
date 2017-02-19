@@ -18,6 +18,12 @@ A Boolean that controls whether column names in result rows are lowercased. This
 any time and affects queries executed after the change. The default is `False`. This can be
 useful when database columns have inconsistent capitalization.
 
+### native_uuid
+
+A Boolean that determines whether SQL_GUID columns are returned as text (`False`, the default)
+or `uuid.UUID` (True) objects.  The default is False for backwards compatibility, but this may
+change in a future release.
+
 ### pooling
 
 A Boolean indicating whether connection pooling is enabled. This is a global (HENV) setting, so
