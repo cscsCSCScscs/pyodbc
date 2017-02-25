@@ -111,9 +111,9 @@ On Windows, these will be the ones defined in the [ODBC Data Source Administrato
 
 ## drivers
 
-    drivers() -> [ Driver_Name ]
+    drivers() -> [ DriverName1, DriverName2, ... DriverNameN ]
 
-_(Windows only)_ Returns a list of ODBC Drivers that are available to pyodbc. This list will be specific to the "platform" under which the Python script is running (i.e., 64-bit or 32-bit).
+Returns a list of ODBC Drivers that are available to pyodbc. On Windows this list will be specific to the "platform" under which the Python script is running (i.e., 64-bit or 32-bit).
 
 ## TimeFromTicks
 
