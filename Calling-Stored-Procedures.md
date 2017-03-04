@@ -1,4 +1,6 @@
-pyodbc does not currently implement the optional `.callproc` method (it is being [investigated](https://github.com/mkleehammer/pyodbc/issues/184)). However, ODBC defines a [{CALL ...} escape sequence](https://msdn.microsoft.com/en-us/library/ms403294.aspx) that should be supported by well-behaved ODBC drivers.
+pyodbc does not currently implement the optional `.callproc` method. (It has been [investigated](https://github.com/mkleehammer/pyodbc/issues/184).) 
+
+However, ODBC defines a [{CALL ...} escape sequence](https://msdn.microsoft.com/en-us/library/ms403294.aspx) that should be supported by well-behaved ODBC drivers.
 
 For example, to call a stored procedure named "usp_NoParameters" that takes no parameters, we can do
 
@@ -66,7 +68,7 @@ to produce this:
 [('Output parameter value: You said "Burma!".', )]
 ```
 
-(Notice that the result set(s) created by the stored procedure are returned first, followed by the result set returned by the SELECT statement in the anonymous code block passed to the pyodbc `.execute` method.)
+Notice that the result set(s) created by the stored procedure are returned first, followed by the result set with the output parameter(s) as returned by the SELECT statement in the anonymous code block passed to the pyodbc `.execute` method.
 
 Similarly, for a SQL Server stored procedure with a RETURN value we can use something like this:
 
