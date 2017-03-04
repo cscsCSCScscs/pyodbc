@@ -17,10 +17,11 @@
   * [Row](Row)
   * [Exceptions](Exceptions)
 * [Data type conversions from Python to ODBC and back](Data-Types)
+* [Unicode](Unicode)
 * [Managing database transactions](Database-Transaction-Management)
 * [Calling Stored Procedures](Calling-Stored-Procedures)
 * [Features beyond the DB API](Features-beyond-the-DB-API)
-* [Unicode](Unicode)
+* [Tips and Tricks by Database Platform](Tips-and-Tricks-by-Database-Platform)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
 
 [Release notes](https://github.com/mkleehammer/pyodbc/releases) have been moved from the Wiki now that GitHub supports releases.  The [old archived page](Release-Notes) will eventually be removed.
