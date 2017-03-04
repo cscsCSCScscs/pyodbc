@@ -117,7 +117,7 @@ These are optional in the API and are not supported.
 #### callproc(procname [,parameters])
 This is not yet supported since there is no way for pyodbc to determine which parameters are input, output, or both.
 
-You will need to call stored procedures using execute(). You can use your database's format or the ODBC escape format.
+You will need to call stored procedures using execute(). You can use your database's format or the ODBC escape format. For more information, see the [Calling Stored Procedures](https://github.com/mkleehammer/pyodbc/wiki/Calling-Stored-Procedures) page.
 
 #### tables(table=None, catalog=None, schema=None, tableType=None)
 Returns an iterator for generating information about the tables in the database that match the given criteria.
