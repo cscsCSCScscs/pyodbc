@@ -24,16 +24,16 @@ conn_str = (
     )
 cnxn = pyodbc.connect(conn_str)
 crsr = cnxn.cursor()
-for table_name in crsr.tables(tableType='TABLE'):
-    print(table_name)
+for table_info in crsr.tables(tableType='TABLE'):
+    print(table_info.table_name)
 ```
 
 ## Unit Tests
 
-There are unit tests for Python 2 and 3: tests2\accesstests.py and tests3\accesstests.py
+There are unit tests for Python 2 and 3: `tests2\accesstests.py` and `tests3\accesstests.py`
 
-For each, you need to pass in the name of an access file that can be used.  Empty ones you can test with are provided: tests2\empty.mdb and tests2\empty.accdb.
+For each, you need to pass in the name of an access file that can be used.  Empty ones you can test with are provided: `tests2\empty.mdb` and `tests2\empty.accdb`.
 
 ## Access Info
 
-[Microsoft Access Specifications and Limitations](http://webcheatsheet.com/sql/access_specification.php)
+[Microsoft Access Specifications and Limitations](http://office.microsoft.com/en-ca/access-help/access-2010-specifications-HA010341462.aspx)
