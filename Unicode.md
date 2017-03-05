@@ -7,7 +7,7 @@ you can consolidate your connection string and configuration:
 
     def connect():
         cnxn = pyodbc.connect(_connection_string)
-        cnxn.setencoding('utf-8')
+        cnxn.setencoding('utf-8')  # (Python 3.x syntax)
         return cnxn
 
 ### Configuring Specific Databases
