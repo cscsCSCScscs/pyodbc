@@ -20,7 +20,9 @@ Access DDL does not support `CREATE DATABASE` (or similar). If you need to creat
 
 #### Limitations of the Access ODBC driver
 
-The Access ODBC driver is not able to fully support some of the "complex" column types like "(multi-valued) Lookup" fields and "Attachment" fields. In some cases the ODBC driver can read values from such a column, but is unable to perform INSERT/UPDATE/DELETE operations. If you need to perform such tasks then you may need to use .NET (possibly [IronPython](https://github.com/IronLanguages/main/releases)) and Access DAO (Data Access Objects).
+The Access ODBC driver is not able to fully support some of the "complex" column types like "(multi-valued) Lookup" fields and "Attachment" fields. In some cases the ODBC driver can read values from such a column, but is unable to perform INSERT/UPDATE/DELETE operations. If you have to perform such tasks then you may need to use [Access DAO](https://msdn.microsoft.com/en-us/library/office/dn124645.aspx) (Data Access Objects), perhaps in conjunction with [IronPython](https://github.com/IronLanguages/main/releases).
+
+There is a list of more general Microsoft Access specifications and limitations [here](http://office.microsoft.com/en-ca/access-help/access-2010-specifications-HA010341462.aspx).
 
 ### Microsoft SQL Server
 
