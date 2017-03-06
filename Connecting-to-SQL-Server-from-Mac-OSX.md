@@ -20,7 +20,7 @@ host = mssqlhost.xyz.com
 port = 1433
 tds version = 8.0
 ```
-There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac.  A TDS version of 8.0 should be OK but bear in mind you might need a different value for older versions of SQL Server.  Test the connection using the `tsql` utility, e.g. `tsql -S MYMSSQL -U myuser -P mypassword`.  If this works, you should see the following:
+There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac (e.g. using [Docker](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)).  A TDS version of 8.0 should be OK but bear in mind you might need a different value for older versions of SQL Server.  Test the connection using the `tsql` utility, e.g. `tsql -S MYMSSQL -U myuser -P mypassword`.  If this works, you should see the following:
 
 ```
 locale is "en_US.UTF-8"
