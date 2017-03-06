@@ -6,6 +6,7 @@
   * [Microsoft Excel](Connecting-to-Microsoft-Excel)
   * [Microsoft SQL Server from Windows](Connecting-to-SQL-Server-from-Windows)
   * [Microsoft SQL Server from Red Hat or CentOS](Connecting-to-SQL-Server-from-RHEL-or-Centos)
+  * [Microsoft SQL Server from Mac OSX](Connecting-to-SQL-Server-from-Mac-OSX)
   * [MySQL](Connecting-to-MySQL)
   * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [PostgreSQL](Connecting-to-PostgreSQL)
