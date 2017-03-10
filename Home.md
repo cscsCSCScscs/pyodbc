@@ -23,6 +23,7 @@
 * [Calling Stored Procedures](Calling-Stored-Procedures)
 * [Features beyond the DB API](Features-beyond-the-DB-API)
 * [Tips and Tricks by Database Platform](Tips-and-Tricks-by-Database-Platform)
+* [Drivers and Driver Managers](Drivers-and-Driver-Managers)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
 
 [Release notes](https://github.com/mkleehammer/pyodbc/releases) have been moved from the Wiki now that GitHub supports releases.  The [old archived page](Release-Notes) will eventually be removed.
