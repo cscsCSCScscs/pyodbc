@@ -29,3 +29,7 @@ There is a list of more general Microsoft Access specifications and limitations 
 #### Stored Procedures with output parameters and/or return values
 
 See the [Calling Stored Procedures](https://github.com/mkleehammer/pyodbc/wiki/Calling-Stored-Procedures) page for an example of how to use a bit of T-SQL to retrieve these values.
+
+#### Connecting to a named instance of SQL Server from a Linux client
+
+Microsoft's SQL Server ODBC Driver for Linux is unable to resolve SQL Server instance names. However, if the SQL Browser service is running on the target machine we can use the (free) third-party [sqlserverport](https://github.com/gordthompson/sqlserverport) module to look up the TCP port based on the instance name.
