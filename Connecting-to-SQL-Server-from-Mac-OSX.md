@@ -18,9 +18,18 @@ The `freetds.conf` file is usually located in directory `/usr/local/etc/`.  Howe
 [MYMSSQL]
 host = mssqlhost.xyz.com
 port = 1433
-tds version = 8.0
+tds version = 7.3
 ```
-There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac (e.g. using [Docker](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)).  A TDS version of 8.0 should be OK but bear in mind you might need a different value for older versions of SQL Server.  Test the connection using the `tsql` utility, e.g. `tsql -S MYMSSQL -U myuser -P mypassword`.  If this works, you should see the following:
+There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac (e.g. using [Docker](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)).  A TDS version of 7.3 should be OK for SQL Server 2008 and newer, but bear in mind that
+
+* you might need a different value for older versions of SQL Server
+* TDS version 8.0 is just an alias for TDS version 7.1, so
+  * TDS version "8.0" is **not** newer than TDS versions 7.2, 7.3, or 7.4, and
+  * specifying TDS version "8.0" is discouraged because of possible future compatibility issues.
+
+  (For more information on TDS protocol versions see [Choosing a TDS protocol version](http://www.freetds.org/userguide/choosingtdsprotocol.htm).)
+
+Test the connection using the `tsql` utility, e.g. `tsql -S MYMSSQL -U myuser -P mypassword`.  If this works, you should see the following:
 
 ```
 locale is "en_US.UTF-8"
