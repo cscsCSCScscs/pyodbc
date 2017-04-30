@@ -87,6 +87,24 @@ names) in UTF-32LE.
     cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-32le')
     cnxn.setencoding(encoding='utf-8')
 
+#### Exasol
+
+When using [Exasol](http://www.exasol.com/) you need to set the encoding for all the `SQL_CHAR`,
+`SQL_WCHAR`, `SQL_WMETADATA` and Python's strings as UTF-8:
+
+    # Python 2.7
+    cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-8')
+    cnxn.setencoding(str, encoding='utf-8')
+    cnxn.setencoding(unicode, encoding='utf-8')
+
+    # Python 3.x
+    cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
+    cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-8')
+    cnxn.setencoding(encoding='utf-8')
+
 
 ## Details
 
