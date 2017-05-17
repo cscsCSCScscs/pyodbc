@@ -47,7 +47,7 @@ conn = pyodbc.connect(
     r'DRIVER={ODBC Driver 11 for SQL Server};'
     r'SERVER=test;'
     r'DATABASE=test;'
-    r'Trusted_Connection=True;'
+    r'Trusted_Connection=yes;'
     )
 ```
 
