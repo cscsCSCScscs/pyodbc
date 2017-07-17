@@ -2,7 +2,9 @@
 
 Typically, pyodbc is installed like any other Python package by running:
 
-`pip install pyodbc`
+~~~
+pip install pyodbc
+~~~
 
 from a Windows DOS prompt or Unix shell.  See the pip [documentation](https://pip.pypa.io/en/latest/user_guide.html "pip user guide") for more details about the pip utility.
 
@@ -10,14 +12,29 @@ As always when installing modules, you should consider using [Python virtual env
 
 Binary wheels are released for most versions on Windows and macOS.
 
-#### Installing on Linux
+### Installing on Linux
 
-When installing pyodbc on Linux, `pip` will download and compile the pyodbc source code. This requires that some related source files from unixODBC be available for the compile to succeed. On Ubuntu systems, all you need to do is run
+When installing pyodbc on Linux, `pip` will download and compile the pyodbc source code. This requires that some related components and source files be available for the compile to succeed. 
 
-`sudo apt install unixodbc-dev`
+#### Ubuntu 16.04
 
-before attempting
+On Ubuntu systems, all you need to do is run
 
-`pip install pyodbc`
+~~~
+sudo apt install python3-pip  # or `sudo apt install python-pip` for Python 2.x
+sudo apt install unixodbc-dev
+sudo pip3 install pyodbc  # or `sudo pip install pyodbc` for Python 2.x
+~~~
 
-(Other Linux distributions may require a slightly different command to install the unixODBC development components.)
+#### CentOS 7
+
+From a clean minimal install of CentOS 7, the following steps were required:
+
+~~~
+sudo yum install epel-release
+sudo yum install python-pip
+sudo yum install gcc-c++
+sudo yum install python-devel
+sudo yum install unixODBC-devel
+sudo pip install pyodbc
+~~~
