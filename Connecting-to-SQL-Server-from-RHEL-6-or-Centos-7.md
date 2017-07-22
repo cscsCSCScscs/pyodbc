@@ -45,7 +45,7 @@ Trace       = No
 Server      = 10.100.1.10
 
 # register the SQL Server database DSN information in /etc/odbc.ini
-sudo odbcinst -i -s -f /home/pyuser/odbcadd.txt -l
+sudo odbcinst -i -s -f /home/user/odbcadd.txt -l
 
 # check the DSN installation with:
 cat /etc/odbc.ini
