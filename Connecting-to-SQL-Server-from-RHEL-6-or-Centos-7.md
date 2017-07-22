@@ -4,6 +4,8 @@ Microsoft provide database drivers specifically for Red Hat Enterprise to connec
 sudo su 
 curl https://packages.microsoft.com/config/rhel/6/prod.repo > /etc/yum.repos.d/mssql-release.repo
 
+exit
+
 # Uninstall if already installed Unix ODBC driver
 sudo yum remove unixODBC-utf16 unixODBC-utf16-devel #to avoid conflicts
 
@@ -32,6 +34,13 @@ sudo ln -s libodbcinst.so.2 libodbcinst.so.1
 
 sudo ln -s libodbc.so.2     libodbc.so.1
 
+# Set the path for unixODBC
+export ODBCINI=/usr/local/etc/odbc.ini
+
+export ODBCSYSINI=/usr/local/etc
+
+source ~/.bashrc
+
 # Prepare a temp file for defining the DSN to your database server
 vi /home/user/odbcadd.txt
 
@@ -52,10 +61,6 @@ cat /etc/odbc.ini
 
 should contain a section called [MyMSSQLServer]
 
-# Set the path for unixODBC
-export ODBCINI=/usr/local/etc/odbc.ini
-
-export ODBCSYSINI=/usr/local/etc
 
 # install the python driver for database connection
 pip install pypyodbc
