@@ -37,8 +37,11 @@ vi /home/user/odbcadd.txt
 
 [MyMSSQLServer]
 Driver      = ODBC Driver 13 for SQL Server
+
 Description = My MS SQL Server
+
 Trace       = No
+
 Server      = 10.100.1.10
 
 # register the SQL Server database DSN information in /etc/odbc.ini
