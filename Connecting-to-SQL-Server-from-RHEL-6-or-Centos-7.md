@@ -1,13 +1,13 @@
 Microsoft provide database drivers specifically for Red Hat Enterprise to connect to SQL Server (https://msdn.microsoft.com/en-us/library/hh568451.aspx). CentOS is derived from Red Hat so the same driver will usually work with CentOS just as well. Version 13.0 works with Red Hat 6 and 7. The following instructions are for version 13 only.
 
+# Add the RHEL 6 library for Centos-7 of MSSQL driver. Centos7 uses RHEL-6 Libraries.
 sudo su 
-#Add the RHEL 6 library for Centos-7 of MSSQL driver. Centos7 uses RHEL-6 Libraries.
 curl https://packages.microsoft.com/config/rhel/6/prod.repo > /etc/yum.repos.d/mssql-release.repo
 
-#Uninstall if already installed Unix ODBC driver
+# Uninstall if already installed Unix ODBC driver
 sudo yum remove unixODBC-utf16 unixODBC-utf16-devel #to avoid conflicts
 
-#Install the  msodbcsql unixODBC-utf16 unixODBC-utf16-devel driver
+# Install the  msodbcsql unixODBC-utf16 unixODBC-utf16-devel driver
 sudo ACCEPT_EULA=Y yum install msodbcsql
 
 # optional: for bcp and sqlcmd
@@ -41,11 +41,11 @@ sudo odbcinst -i -s -f /home/pyuser/odbcadd.txt -l
 cat /etc/odbc.ini
 should contain a section called [MyMSSQLServer]
 
-#Set the path for unixODBC
+# Set the path for unixODBC
 export ODBCINI=/usr/local/etc/odbc.ini
 export ODBCSYSINI=/usr/local/etc
 
-#install the python driver for database connection
+# install the python driver for database connection
 pip install pypyodbc
 pip install pyodbc
 
