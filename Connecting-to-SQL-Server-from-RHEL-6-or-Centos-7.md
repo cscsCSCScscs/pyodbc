@@ -10,10 +10,14 @@ sudo yum remove unixODBC-utf16 unixODBC-utf16-devel #to avoid conflicts
 # Install the  msodbcsql unixODBC-utf16 unixODBC-utf16-devel driver
 sudo ACCEPT_EULA=Y yum install msodbcsql
 
-# optional: for bcp and sqlcmd
+#optional: for bcp and sqlcmd
+
 sudo ACCEPT_EULA=Y yum install mssql-tools
+
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+
 source ~/.bashrc
 
 # optional: for unixODBC development headers
@@ -32,13 +36,9 @@ sudo ln -s libodbc.so.2     libodbc.so.1
 vi /home/user/odbcadd.txt
 
 [MyMSSQLServer]
-
 Driver      = ODBC Driver 13 for SQL Server
-
 Description = My MS SQL Server
-
 Trace       = No
-
 Server      = 10.100.1.10
 
 # register the SQL Server database DSN information in /etc/odbc.ini
