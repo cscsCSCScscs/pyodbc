@@ -21,17 +21,24 @@ sudo yum install unixODBC-devel
 
 # the Microsoft driver expects unixODBC to be here /usr/lib64/libodbc.so.1, so add soft links to the '.so.2' files
 cd /usr/lib64
+
 sudo ln -s libodbccr.so.2   libodbccr.so.1
+
 sudo ln -s libodbcinst.so.2 libodbcinst.so.1
+
 sudo ln -s libodbc.so.2     libodbc.so.1
 
 # Prepare a temp file for defining the DSN to your database server
 vi /home/user/odbcadd.txt
 
 [MyMSSQLServer]
+
 Driver      = ODBC Driver 13 for SQL Server
+
 Description = My MS SQL Server
+
 Trace       = No
+
 Server      = 10.100.1.10
 
 # register the SQL Server database DSN information in /etc/odbc.ini
@@ -39,17 +46,21 @@ sudo odbcinst -i -s -f /home/pyuser/odbcadd.txt -l
 
 # check the DSN installation with:
 cat /etc/odbc.ini
+
 should contain a section called [MyMSSQLServer]
 
 # Set the path for unixODBC
 export ODBCINI=/usr/local/etc/odbc.ini
+
 export ODBCSYSINI=/usr/local/etc
 
 # install the python driver for database connection
 pip install pypyodbc
+
 pip install pyodbc
 
-
 Additionally You can check the following 2 website for connection
+
 https://janikarhunen.fi/connecting-to-sqlserver-from-python-app-on-centos-7.html
+
 https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server 
