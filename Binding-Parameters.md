@@ -186,4 +186,6 @@ object.  One of these is created for each connection string (but hashed to not e
 password).  If the cache is part of the connection info, each new connection with the same
 connection string could share it.
 
-I (Kleehammer) really thought I did this at one point and like the results.
+I (Kleehammer) really thought I did this at one point and liked the results.
+
+To help with issues like #260 where the same Python type (`str`) needs to be sent with two different SQL types (`SQL_VARCHAR` or `SQL_LONGVARCHAR`) based on the database's type, we could also allow conversion functions to be installed that would be passed both the Python type and the parameter type obtained from SQLDescribeParam and would be responsible for setting (or just overriding) the SQL type used to send.
