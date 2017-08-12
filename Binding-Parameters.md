@@ -27,6 +27,12 @@ thinks of the parameters, but this has two important issues:
 
 ### Issues In Detail
 
+#### SQLDescribeParam may not be supported
+
+It is important to note that SQLDescribeParam is not supported by a lot of drivers.  This is
+checked and stored in the "connection info" and made available at
+`cnxn->supports_describeparam`.
+
 #### SQL Server Cached Query Plans
 
 SQL Server creates and caches a new query plan for the same prepared SQL if the parameter
@@ -90,6 +96,14 @@ select count(*)
   from t1
  where s = (cast ? as char(10))
 ```
+
+#### Informix VARCHAR vs LONGVARCHAR
+
+According to issue #260, Informix requires varchar fields to be sent as type SQL_VARCHAR but
+text fields to be sent as SQL_LONGVARCHAR.
+
+As of version 4.0.17, the code uses SQLGetTypeInfo to determine the maximum sizes for varchar
+and uses SQL_LONGVARCHAR for anything longer than that.
 
 ### Solutions and Workarounds
 
@@ -161,3 +175,15 @@ lengths and send None as varchar:
 
     pyodbc.set_var_binding_length(1)
     pyodbc.set_none_binding(pyodbc.SQL_VARCHAR)
+
+#### Proposal 2
+
+Perhaps it would make sense to always take the "slow" approach and use SQLDescribeParam (when
+available), but optimize it by caching the information by SQL statement.
+
+An MRU cache could be used and shared among connections by associating it with the `CnxnInfo`
+object.  One of these is created for each connection string (but hashed to not expose the
+password).  If the cache is part of the connection info, each new connection with the same
+connection string could share it.
+
+I (Kleehammer) really thought I did this at one point and like the results.
