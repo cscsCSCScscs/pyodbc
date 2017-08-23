@@ -45,8 +45,8 @@ count = cursor.execute("delete from users where user_id=1").rowcount
 ```
 As suggested in the DB API, the last prepared statement is kept and reused if you execute the same SQL again, making executing the same SQL with different parameters will be more efficient.
 
-#### executemany(sql, *paras)
-Executes the same SQL statement for each set of parameters, returning None. The single `paras` parameter must be a sequence of sequences, or a generator of sequences.
+#### executemany(sql, *params)
+Executes the same SQL statement for each set of parameters, returning None. The single `params` parameter must be a sequence of sequences, or a generator of sequences.
 ```python
 params = [ ('A', 1), ('B', 2) ]
 executemany("insert into t(name, id) values (?, ?)", params)
