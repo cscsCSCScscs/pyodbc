@@ -196,3 +196,7 @@ can be configured independantly.
 
     cnxn.setencoding(str, encoding='utf-8')
     cnxn.setencoding(unicode, encoding='utf-8', ctype=pyodbc.SQL_CHAR)
+
+## Reference
+
+[How Python Does Unicode (blog post)](http://www.b-list.org/weblog/2017/sep/05/how-python-does-unicode)
