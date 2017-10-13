@@ -31,7 +31,8 @@ conn = pyodbc.connect("DSN=myDb")
 def handle_datetimeoffset(dto_value):
     # ref: https://github.com/mkleehammer/pyodbc/issues/134#issuecomment-281739794
     tup = struct.unpack("<6hI2h", dto_value)  # e.g., (2017, 3, 16, 10, 35, 18, 0, -6, 0)
-    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:07d} {:+03d}:{:02d}".format(*tup)
+    tweaked = [tup[i] // 100 if i == 6 else tup[i] for i in range(len(tup))]
+    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:07d} {:+03d}:{:02d}".format(*tweaked)
 
 
 crsr = conn.cursor()
@@ -51,4 +52,19 @@ which prints the string representation of the DATETIMEOFFSET value
 
 ```none
 2017-03-16 10:35:18.0000000 -06:00
+```
+Or, we could use this function to create a `datetime` object
+
+```python
+def handle_datetimeoffset(dto_value):
+    # ref: https://github.com/mkleehammer/pyodbc/issues/134#issuecomment-281739794
+    tup = struct.unpack("<6hI2h", dto_value)  # e.g., (2017, 3, 16, 10, 35, 18, 0, -6, 0)
+    return datetime(tup[0], tup[1], tup[2], tup[3], tup[4], tup[5], tup[6] // 1000,
+                    timezone(timedelta(hours=tup[7], minutes=tup[8])))
+```
+
+which would return
+
+```none
+datetime.datetime(2017, 3, 16, 10, 35, 18, 0, tzinfo=datetime.timezone(datetime.timedelta(-1, 64800)))
 ```
