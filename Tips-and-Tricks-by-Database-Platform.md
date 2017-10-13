@@ -33,3 +33,7 @@ See the [Calling Stored Procedures](https://github.com/mkleehammer/pyodbc/wiki/C
 #### Connecting to a named instance of SQL Server from a Linux client
 
 Microsoft's SQL Server ODBC Driver for Linux is unable to resolve SQL Server instance names. However, if the SQL Browser service is running on the target machine we can use the (free) third-party [sqlserverport](https://github.com/gordthompson/sqlserverport) module to look up the TCP port based on the instance name.
+
+#### DATETIMEOFFSET columns ("ODBC SQL type -155 is not yet supported")
+
+Use an Output Converter function to retrieve such values. See the examples on the [[Using an Output Converter function]] wiki page.
