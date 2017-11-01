@@ -3,9 +3,20 @@ The following features are beyond the requirements of [DB API 2.0](https://www.p
 
 ### fetchval
 
-The fetchval() convenience method returns the first column of the first row if there are results, otherwise it returns None.
+The `fetchval()` convenience method returns the first column of the first row if there are results, otherwise it returns None.
 
     count = cursor.execute('select count(*) from users').fetchval()
+
+### fast_executemany
+
+(New in version 4.0.19.) Simply adding
+
+```python
+crsr = cnxn.cursor()
+crsr.fast_executemany = True
+```
+
+can boost the performance of `executemany` operations by greatly reducing the number round-trips to the server. Note that this feature is "off" by default, and is currently only recommended for applications running on Windows that use Microsoft's ODBC Driver for SQL Server.
 
 ### Access Values By Name
 The DB API specifies that results must be tuple-like, so columns are normally accessed by indexing into the sequence (e.g. `row[0]`) and pyodbc supports this. However, columns can also be accessed by name:
