@@ -1,9 +1,6 @@
 ## TL;DR
 
-By default, pyodbc uses UTF-16LE and SQL_C_WCHAR for reading and writing all Unicode as
-recommended in the ODBC specification.  Unfortunately many drivers behave differently so
-connections may need to be configured.  I recommend creating a global connection factory where
-you can consolidate your connection string and configuration:
+By default, pyodbc uses UTF-16 assuming native byte-order (ie. UTF-16LE on little-endian machines like x86 and arm) and SQL_C_WCHAR for reading and writing all Unicode as recommended in the ODBC specification.  Unfortunately many drivers behave differently so connections may need to be configured.  I recommend creating a global connection factory where you can consolidate your connection string and configuration:
 
     def connect():
         cnxn = pyodbc.connect(_connection_string)
