@@ -49,4 +49,4 @@ Note that slicing rows returns tuples, not Row objects!
 
 ### Attributes
 #### cursor_description
-A copy of the Cursor.description object from the Cursor that created this row. This contains the column names and data types of the columns. See [Cursor.description](../Cursor#description)
+A copy of the Cursor.description object from the Cursor that created this row. This contains the column names and data types of the columns. See [Cursor.description](./Cursor#description)
