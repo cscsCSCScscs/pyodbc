@@ -37,3 +37,7 @@ Microsoft's SQL Server ODBC Driver for Linux is unable to resolve SQL Server ins
 #### DATETIMEOFFSET columns ("ODBC SQL type -155 is not yet supported")
 
 Use an Output Converter function to retrieve such values. See the examples on the [[Using an Output Converter function]] wiki page.
+
+#### SQL Server Numeric Precision v. Python Decimal Precision
+
+Python's decimal.Decimal type can represent floating point numbers with greater than 35 digits of precision, which is the maximum supported by SQL server. Binding parameters that exceed this precision will result in an invalid precision error from the driver ("HY104 [Microsoft][...]Invalid precision value"). 
