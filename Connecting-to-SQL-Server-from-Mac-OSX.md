@@ -1,4 +1,4 @@
-The following instructions assume you already have a SQL Server database running somewhere that your Mac has network access to.
+The following instructions assume you already have a SQL Server database running somewhere that your Mac has network access to.  Just FYI, Microsoft's instructions for installing the latest drivers are [here](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server).
 
 #### Install FreeTDS and unixODBC
 
@@ -20,14 +20,7 @@ host = mssqlhost.xyz.com
 port = 1433
 tds version = 7.3
 ```
-There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac (e.g. using [Docker](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)).  A TDS version of 7.3 should be OK for SQL Server 2008 and newer, but bear in mind that
-
-* you might need a different value for older versions of SQL Server
-* TDS version 8.0 is just an alias for TDS version 7.1, so
-  * TDS version "8.0" is **not** newer than TDS versions 7.2, 7.3, or 7.4, and
-  * specifying TDS version "8.0" is discouraged because of possible future compatibility issues.
-
-  (For more information on TDS protocol versions see [Choosing a TDS protocol version](http://www.freetds.org/userguide/choosingtdsprotocol.htm).)
+There are other key/value pairs that can be added but this shouldn't usually be necessary, see [here](http://www.freetds.org/userguide/freetdsconf.htm) for details. The `host` parameter should be either the network name (or IP address) of the database server, or "localhost" if SQL Server is running directly on your Mac (e.g. using [Docker](https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-docker)).  A TDS version of 7.3 should be OK for SQL Server 2008 and newer, but bear in mind you might need a different value for older versions of SQL Server.  For more information on TDS protocol versions see [Choosing a TDS protocol version](http://www.freetds.org/userguide/choosingtdsprotocol.htm).  Do not use TDS versions 8.0 or 9.0 though.  Oddly, they are not newer than version 7.4.  They are actually obsolete aliases for older TDS versions and their use is discouraged.
 
 Test the connection using the `tsql` utility, e.g. `tsql -S MYMSSQL -U myuser -P mypassword`.  If this works, you should see the following:
 
