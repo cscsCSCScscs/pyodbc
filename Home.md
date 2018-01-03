@@ -10,6 +10,7 @@
   * [Microsoft SQL Server from Red Hat 6 or CentOS-7](Connecting-to-SQL-Server-from-RHEL-6-or-Centos-7)
   * [Microsoft SQL Server from Mac OSX](Connecting-to-SQL-Server-from-Mac-OSX)
   * [MySQL](Connecting-to-MySQL)
+  * [Netezza](Connecting-to-Netezza)
   * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [PostgreSQL](Connecting-to-PostgreSQL)
   * [Teradata](Connecting-to-Teradata)
