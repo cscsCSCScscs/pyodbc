@@ -51,6 +51,7 @@ Server      = 10.100.1.10
 sudo odbcinst -i -s -f /home/user/odbcadd.txt -l
 
 # check the DSN installation with:
+odbcinst -j
 cat /etc/odbc.ini
 
 # should contain a section called [MyMSSQLServer]
