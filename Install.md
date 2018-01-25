@@ -38,3 +38,10 @@ sudo yum install python-devel
 sudo yum install unixODBC-devel
 sudo pip install pyodbc
 ~~~
+
+#### Fedora 27
+
+~~~
+sudo dnf install redhat-rpm-config gcc-c++ python3-devel unixODBC-devel
+pip3 install --user pyodbc
+~~~
