@@ -41,3 +41,16 @@ Use an Output Converter function to retrieve such values. See the examples on th
 #### SQL Server Numeric Precision v. Python Decimal Precision
 
 Python's decimal.Decimal type can represent floating point numbers with greater than 35 digits of precision, which is the maximum supported by SQL server. Binding parameters that exceed this precision will result in an invalid precision error from the driver ("HY104 [Microsoft][...]Invalid precision value"). 
+
+#### Using fast_executemany with a #temporary table
+
+`fast_executemany` can have difficulty identifying the column types of a #temporary table under older versions of "ODBC Driver x for SQL Server" where x < 17. However, it does work with "ODBC Driver 17 for SQL Server" if we include `ColumnEncryption=Enabled` in the connection string, e.g.,
+
+```
+cnxn_str = (
+    "Driver=ODBC Driver 17 for SQL Server;"
+    "Server=192.168.1.144,49242;"
+    "UID=sa;PWD=whatever;"
+    "Database=myDb;"
+    "ColumnEncryption=Enabled;"
+)
