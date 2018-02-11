@@ -30,3 +30,19 @@ cnxn.close()
 As you can see, no database transaction is ever explicitly opened in Python but they are explicitly committed. Also, it's important to remember that transactions are managed only at the Connection level, not the Cursor level. Cursors are merely vehicles to execute SQL statements and manage their results, nothing more.  (Yes, there is a convenience function `commit()` on the Cursor object but that simply calls `commit()` on the cursor's parent Connection object.)  Bear in mind too that when `commit()` is called on a connection, ALL the SQL statements from ALL the cursors on that connection are committed together (ditto for `rollback()`).
 
 When a connection is closed with the `close()` function, a rollback is always issued on the connection just in case. In the event that a Connection object goes out of scope before it is closed (e.g. because an exception occurs), the Connection object is automatically deleted by Python, and a rollback is issued as part of the deletion process.
+
+#### Specifying a Transaction Isolation level
+
+Database management systems that support transactions often support several levels of transaction isolation to control the effects of multiple processes performing simultaneous operations within their own transactions. ODBC supports four (4) levels of transaction isolation:
+
+- SQL_TXN_READ_UNCOMMITTED
+- SQL_TXN_READ_COMMITTED
+- SQL_TXN_REPEATABLE_READ
+- SQL_TXN_SERIALIZABLE
+
+You can specify one of these in your Python code using the `Connection#set_attr` method, e.g.,
+
+```python
+conn = pyodbc.connect(conn_str)
+conn.set_attr(pyodbc.SQL_ATTR_TXN_ISOLATION, pyodbc.SQL_TXN_SERIALIZABLE)
+```
