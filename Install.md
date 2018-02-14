@@ -45,3 +45,12 @@ sudo pip install pyodbc
 sudo dnf install redhat-rpm-config gcc-c++ python3-devel unixODBC-devel
 pip3 install --user pyodbc
 ~~~
+
+#### OpenSUSE
+
+Similar to Fedora, the following packages were required after a clean install of OpenSUSE Leap 42.3
+
+~~~
+sudo zypper install gcc-c++ python3-devel unixODBC-devel
+pip3 install --user pyodbc
+~~~
