@@ -70,7 +70,7 @@ with cnxn:
 
 [Cursor documentation](Cursor)
 
-Cursor objects are used to execute SQL statements. ODBC and pyodbc allow multiple cursors per connection, but not all databases support this. You can use SQLGetInfo to determine how many concurrent cursors can be supported: `cnxn.getInfo(pyodbc.SQL_MAX_CONCURRENT_ACTIVITIES)`
+Cursor objects are used to execute SQL statements. ODBC and pyodbc allow multiple cursors per connection, but not all databases support this. You can use SQLGetInfo to determine how many concurrent cursors can be supported: `cnxn.getinfo(pyodbc.SQL_MAX_CONCURRENT_ACTIVITIES)`
 
 The most important features of cursors are:
 
