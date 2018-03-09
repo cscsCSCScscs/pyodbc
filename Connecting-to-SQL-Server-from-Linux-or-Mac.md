@@ -10,7 +10,14 @@ Trace       = No
 Server      = mydbserver.mycompany.com
 ```
     
-In that file, leave the 'Driver' line exactly as specified above, but modify the rest of the file as necessary.  Then run the following commands:
+In that file, leave the 'Driver' line exactly as specified above, except with the correct driver version.  The driver version can be found like this:
+
+```bash
+$ ls /opt/microsoft/msodbcsql/lib64/
+libmsodbcsql-XX.Y.so.PP.QQ
+```
+
+Here XX is the version number to use in the INI file.  Modify the rest of the file as necessary.  Then run the following commands:
 
 ```bash
 # register the SQL Server database DSN information in /etc/odbc.ini
