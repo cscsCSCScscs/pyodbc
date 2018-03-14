@@ -14,6 +14,7 @@
   * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [PostgreSQL](Connecting-to-PostgreSQL)
   * [Teradata](Connecting-to-Teradata)
+  * [Vertica](Connecting-to-Vertica)
 * [pyodbc objects](Objects)
   * [The pyodbc module itself](Module)
   * [Connection](Connection)
