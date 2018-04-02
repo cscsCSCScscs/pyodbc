@@ -22,3 +22,13 @@ with
 ```python
 cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-16le')
 ```
+
+### Workaround for \x00 byte codes in Error Messages  
+Set UnicodeTranslationOption in ~/.odbcinst.ini to utf16:
+```
+UnicodeTranslationOption = utf16
+```
+and
+```python
+cnxn.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-16le')
+```
