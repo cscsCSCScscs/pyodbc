@@ -8,6 +8,8 @@ There are actually many SQL Server ODBC drivers written and distributed by Micro
 * {SQL Server Native Client 11.0} - released with SQL Server 2012
 * {ODBC Driver 11 for SQL Server} - supports SQL Server 2005 through 2014
 * {ODBC Driver 13 for SQL Server} - supports SQL Server 2005 through 2016
+* {ODBC Driver 13.1 for SQL Server} - supports SQL Server 2008 through 2016
+* {ODBC Driver 17 for SQL Server} - supports SQL Server 2008 through 2017
 
 Note that the "SQL Server Native Client ..." and earlier drivers are deprecated and should not be used for new development.
 
