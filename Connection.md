@@ -76,8 +76,8 @@ Register an output converter function that will be called whenever a value with 
 
 `add_output_converter(sqltype, func)`
 
-* sqltype: the integer SQL type value to convert, which can be one of the defined standard constants (e.g. pyodbc.SQL_VARCHAR) or a database-specific value (e.g. -151 for the SQL Server 2008 geometry data type).
-* func: the converter function which will be called with a single parameter, the value, and should return the converted value. If the value is NULL, the parameter will be None. Otherwise it will be a Python string.
+* `sqltype`: the integer SQL type value to convert, which can be one of the defined standard constants (e.g. `pyodbc.SQL_VARCHAR`) or a database-specific value (e.g. `-151` for the SQL Server 2008 geometry data type).
+* `func`: the converter function which will be called with a single parameter, the value, and should return the converted value. If the value is NULL then the parameter passed to the function will be `None`, otherwise it will be a `<class 'bytes'>` object.
 
 For an example, see [Using an Output Converter function](Using-an-Output-Converter-function).
 
