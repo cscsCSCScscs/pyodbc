@@ -79,4 +79,4 @@ EXEC @rv = [dbo].[another_test_sp];
 SELECT @rv AS return_value;
 """
 crsr.execute(sql)
-return_value = crsr.fetchone()[0]
+return_value = crsr.fetchval()
