@@ -16,7 +16,13 @@ crsr = cnxn.cursor()
 crsr.fast_executemany = True
 ```
 
-can boost the performance of `executemany` operations by greatly reducing the number round-trips to the server. Note that this feature is "off" by default, and is currently only recommended for applications running on Windows that use Microsoft's ODBC Driver for SQL Server. (Also see [this issue](https://github.com/mkleehammer/pyodbc/issues/295) regarding fast_executemany and temporary tables.)
+can boost the performance of `executemany` operations by greatly reducing the number round-trips to the server. 
+
+Notes: 
+
+- This feature is "off" by default, and is currently only recommended for applications running on Windows that use Microsoft's ODBC Driver for SQL Server. (Also see [this issue](https://github.com/mkleehammer/pyodbc/issues/295) regarding fast_executemany and temporary tables.)
+
+- For information on using fast_executemany with SQLAlchemy (and pandas) see the Stack Overflow question [here](https://stackoverflow.com/q/48006551/2144390).
 
 ### Access Values By Name
 The DB API specifies that results must be tuple-like, so columns are normally accessed by indexing into the sequence (e.g. `row[0]`) and pyodbc supports this. However, columns can also be accessed by name:
