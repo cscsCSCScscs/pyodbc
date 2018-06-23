@@ -12,7 +12,7 @@ The `fetchval()` convenience method returns the first column of the first row if
 (New in version 4.0.19.) Simply adding
 
 ```python
-crsr = cnxn.cursor()
+# crsr is a pyodbc.Cursor object
 crsr.fast_executemany = True
 ```
 
@@ -20,7 +20,7 @@ can boost the performance of `executemany` operations by greatly reducing the nu
 
 Notes: 
 
-- This feature is "off" by default, and is currently only recommended for applications running on Windows that use Microsoft's ODBC Driver for SQL Server. (Also see [this issue](https://github.com/mkleehammer/pyodbc/issues/295) regarding fast_executemany and temporary tables.)
+- This feature is "off" by default, and is currently only recommended for applications that use Microsoft's ODBC Driver for SQL Server. (Also see [this issue](https://github.com/mkleehammer/pyodbc/issues/295) regarding fast_executemany and temporary tables.)
 
 - For information on using fast_executemany with SQLAlchemy (and pandas) see the Stack Overflow question [here](https://stackoverflow.com/q/48006551/2144390).
 
