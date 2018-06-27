@@ -46,3 +46,5 @@ You can specify one of these in your Python code using the `Connection#set_attr`
 conn = pyodbc.connect(conn_str)
 conn.set_attr(pyodbc.SQL_ATTR_TXN_ISOLATION, pyodbc.SQL_TXN_SERIALIZABLE)
 ```
+
+Note that a particular database engine may not support all four isolation levels. For example, Microsoft Access only supports `SQL_TXN_READ_COMMITTED`.
