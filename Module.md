@@ -49,11 +49,12 @@ The connection string and keywords are put together to construct an ODBC connect
 Python 2 accepts both ANSI and Unicode strings.  (In Python 3 all strings are Unicode.)
 
     # a string
-    cnxn = connect('driver={SQL Server};server=localhost;database=test;uid=me;pwd=me2')
+    cnxn = pyodbc.connect('driver={SQL Server};server=localhost;database=test;uid=me;pwd=me2')
     # keywords
-    cnxn = connect(driver='{SQL Server}', server='localhost', database='test', uid='me', pwd='me2')
+    cnxn = pyodbc.connect(driver='{SQL Server}', server='localhost', database='test', uid='me', pwd='me2')
     # both
-    cnxn = connect('driver={SQL Server};server=localhost;database=test', uid='me', pwd='me2')
+    cnxn = pyodbc.connect('driver={SQL Server};server=localhost;database=test', uid='me', pwd='me2'
+    cnxn = pyodbc.connect('DSN=my_dsn', autocommit=True)
 
 The DB API recommends some keywords that are not usually used in ODBC connection strings, so
 they are converted:
