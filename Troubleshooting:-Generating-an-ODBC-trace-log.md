@@ -22,14 +22,17 @@ On the "Tracing" tab, click the "Start Tracing Now" button. Details of subsequen
 
 ### Linux
 
-To enable ODBC tracing under Linux (unixODBC), add the following two lines to the `[ODBC]` section of `odbcinst.ini` (usually found in the `/etc` directory).
+To enable ODBC tracing under Linux (unixODBC), add the following two lines to the `[ODBC]` section of `odbcinst.ini`.
 
 ```
 [ODBC]
 Trace = yes
-TraceFile = /home/gord/odbctrace.txt
+TraceFile = /tmp/odbctrace.txt
 ```
 
-### Notes
+NOTE: A [bug](https://github.com/lurcher/unixODBC/pull/14) in unixODBC 2.3.6 and earlier can interfere with logging under some ODBC drivers (e.g., "ODBC Driver 17 for SQL Server"). Check your installed version of unixODBC with the `odbcinst -j` command and upgrade if necessary.
+
+
+### General Notes
 
 Remember to turn off ODBC tracing after generating your log file. Logging ODBC activity slows down ODBC operations and the log file will quickly become very large.
