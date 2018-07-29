@@ -44,7 +44,7 @@ Python's decimal.Decimal type can represent floating point numbers with greater 
 
 #### Using fast_executemany with a #temporary table
 
-`fast_executemany` can have difficulty identifying the column types of a #temporary table under older versions of "ODBC Driver x for SQL Server" where x < 17. However, it does work with "ODBC Driver 17 for SQL Server" if we include `ColumnEncryption=Enabled` in the connection string, e.g.,
+`fast_executemany` can have difficulty identifying the column types of a #temporary table under older versions of "ODBC Driver x for SQL Server" where x < 17 ([#295](https://github.com/mkleehammer/pyodbc/issues/295)). However, it does work with "ODBC Driver 17 for SQL Server" if we include `ColumnEncryption=Enabled` in the connection string, e.g.,
 
 ```
 cnxn_str = (
