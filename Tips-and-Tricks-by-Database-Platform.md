@@ -34,9 +34,19 @@ See the [Calling Stored Procedures](https://github.com/mkleehammer/pyodbc/wiki/C
 
 Microsoft's SQL Server ODBC Driver for Linux is unable to resolve SQL Server instance names. However, if the SQL Browser service is running on the target machine we can use the (free) third-party [sqlserverport](https://github.com/gordthompson/sqlserverport) module to look up the TCP port based on the instance name.
 
-#### DATETIMEOFFSET columns ("ODBC SQL type -155 is not yet supported")
+#### DATETIMEOFFSET columns (e.g., "ODBC SQL type -155 is not yet supported")
 
 Use an Output Converter function to retrieve such values. See the examples on the [[Using an Output Converter function]] wiki page.
+
+Query parameters for DATETIMEOFFSET columns currently must be sent as strings. Note that SQL Server is rather fussy about the format of the string:
+
+```python
+dto_string = dto.strftime("%Y-%m-%d %H:%M:%S%z")  # 2018-08-02 00:28:12 -0600
+# Trying to use the above will fail with
+#   "Conversion failed when converting date and/or time from character string."
+# We need to add the colon for SQL Server to accept it
+dto_string = dto_string[:22] + ":" + dto_string[22:]  # 2018-08-02 00:28:12 -06:00
+```
 
 #### SQL Server Numeric Precision v. Python Decimal Precision
 
