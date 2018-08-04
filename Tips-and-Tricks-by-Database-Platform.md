@@ -41,14 +41,17 @@ Use an Output Converter function to retrieve such values. See the examples on th
 Query parameters for DATETIMEOFFSET columns currently must be sent as strings. Note that SQL Server is rather fussy about the format of the string:
 
 ```python
-dto_string = dto.strftime("%Y-%m-%d %H:%M:%S%z")  # 2018-08-02 00:28:12 -0600
+# sample data
+dto = datetime(2018, 8, 2, 0, 28, 12, tzinfo=timezone(timedelta(hours=-6)))
+
+dto_string = dto.strftime("%Y-%m-%d %H:%M:%S %z")  # 2018-08-02 00:28:12 -0600
 # Trying to use the above will fail with
 #   "Conversion failed when converting date and/or time from character string."
 # We need to add the colon for SQL Server to accept it
-dto_string = dto_string[:22] + ":" + dto_string[22:]  # 2018-08-02 00:28:12 -06:00
+dto_string = dto_string[:23] + ":" + dto_string[23:]  # 2018-08-02 00:28:12 -06:00
 ```
 
-#### SQL Server Numeric Precision v. Python Decimal Precision
+#### SQL Server Numeric Precision vs. Python Decimal Precision
 
 Python's decimal.Decimal type can represent floating point numbers with greater than 35 digits of precision, which is the maximum supported by SQL server. Binding parameters that exceed this precision will result in an invalid precision error from the driver ("HY104 [Microsoft][...]Invalid precision value"). 
 
