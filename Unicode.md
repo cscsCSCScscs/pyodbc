@@ -55,11 +55,10 @@ both C buffer types using UTF-8.
     cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
     cnxn.setencoding(encoding='utf-8')
 
-If you are using MySQL, you can add the character set to the connection string, but I'm not
-sure if this is necessary.
+If you are using MySQL you may also need add the character set to the connection string, especially if you will be using supplementary Unicode characters (e.g., emoji):
 
     # MySQL
-    cstring = 'DSN=mydsn;CharSet=utf8'
+    cstring = 'DSN=mydsn;charset=utf8mb4'  # or perhaps just utf8 for Unicode characters in the BMP
     cnxn = pyodbc.connect(cstring)
 
 #### Teradata
