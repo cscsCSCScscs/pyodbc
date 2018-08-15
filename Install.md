@@ -21,8 +21,8 @@ When installing pyodbc on Linux, `pip` will download and compile the pyodbc sour
 On Ubuntu systems, all you need to do is run
 
 ~~~
-sudo apt install python3-pip  # or `sudo apt install python-pip` for Python 2.x
-sudo apt install unixodbc-dev
+sudo apt-get install python3-pip  # or `sudo apt install python-pip` for Python 2.x
+sudo apt-get install unixodbc-dev
 sudo pip3 install pyodbc  # or `sudo pip install pyodbc` for Python 2.x
 ~~~
 
