@@ -26,6 +26,17 @@ sudo apt-get install unixodbc-dev
 sudo pip3 install pyodbc  # or `sudo pip install pyodbc` for Python 2.x
 ~~~
 
+#### Debian Stretch
+
+Similar to Ubuntu, you need to install `unixodbc-dev`, but you will also need to install `gcc` and `g++`. Note `gcc` package is automatically installed when installing `g++`
+
+~~~
+apt-get update
+apt-get install g++
+apt-get install unixodbc-dev
+pip install pyodbc
+~~~
+
 #### CentOS 7
 
 From a clean minimal install of CentOS 7, the following steps were required:
