@@ -57,9 +57,14 @@ Python's decimal.Decimal type can represent floating point numbers with greater 
 
 #### Using fast_executemany with a #temporary table
 
-`fast_executemany` can have difficulty identifying the column types of a #temporary table under older versions of "ODBC Driver x for SQL Server" where x < 17 ([#295](https://github.com/mkleehammer/pyodbc/issues/295)). However, it does work with "ODBC Driver 17 for SQL Server" if we include `ColumnEncryption=Enabled` in the connection string, e.g.,
+`fast_executemany` can have difficulty identifying the column types of a local #temporary table under some circumstances ([#295](https://github.com/mkleehammer/pyodbc/issues/295)). 
 
-```
+
+##### -- Workaround 1: ODBC Driver 17 for SQL Server and `ColumnEncryption=Enabled`
+
+Use "ODBC Driver 17 for SQL Server" (or newer) and include `ColumnEncryption=Enabled` in the connection string, e.g.,
+
+```python
 cnxn_str = (
     "Driver=ODBC Driver 17 for SQL Server;"
     "Server=192.168.1.144,49242;"
@@ -67,3 +72,22 @@ cnxn_str = (
     "Database=myDb;"
     "ColumnEncryption=Enabled;"
 )
+```
+
+##### -- Workaround 2: pyodbc 4.0.24 and `Cursor.setinputsizes`
+
+Upgrade to pyodbc 4.0.24 (or newer) and use `setinputsizes` to specify the parameter type, etc..
+
+```python
+cursor.execute("CREATE TABLE #issue295 (id INT IDENTITY PRIMARY KEY, txt NVARCHAR(50), dec DECIMAL(18,4))")
+sql = "INSERT INTO #issue295 (txt, dec) VALUES (?, ?)"
+params = [('Ώπα', 3.141)]
+# explicitly set parameter type/size/precision
+cursor.setinputsizes([(pyodbc.SQL_WVARCHAR, 50, 0), (pyodbc.SQL_DECIMAL, 18, 4)])
+cursor.fast_executemany = True
+cursor.executemany(sql, params)
+```
+
+##### -- Workaround 3: Use a global ##temporary table
+
+If neither of the previous workarounds is feasible, simply use a global ##temporary table instead of a local #temporary table.
