@@ -79,13 +79,18 @@ cnxn_str = (
 Upgrade to pyodbc 4.0.24 (or newer) and use `setinputsizes` to specify the parameter type, etc..
 
 ```python
-cursor.execute("CREATE TABLE #issue295 (id INT IDENTITY PRIMARY KEY, txt NVARCHAR(50), dec DECIMAL(18,4))")
+crsr.execute("""\
+CREATE TABLE #issue295 (
+    id INT IDENTITY PRIMARY KEY, 
+    txt NVARCHAR(50), 
+    dec DECIMAL(18,4)
+    )""")
 sql = "INSERT INTO #issue295 (txt, dec) VALUES (?, ?)"
 params = [('Ώπα', 3.141)]
 # explicitly set parameter type/size/precision
-cursor.setinputsizes([(pyodbc.SQL_WVARCHAR, 50, 0), (pyodbc.SQL_DECIMAL, 18, 4)])
-cursor.fast_executemany = True
-cursor.executemany(sql, params)
+crsr.setinputsizes([(pyodbc.SQL_WVARCHAR, 50, 0), (pyodbc.SQL_DECIMAL, 18, 4)])
+crsr.fast_executemany = True
+crsr.executemany(sql, params)
 ```
 
 ##### -- Workaround 3: Use a global ##temporary table
