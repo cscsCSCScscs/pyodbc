@@ -20,7 +20,9 @@ can boost the performance of `executemany` operations by greatly reducing the nu
 
 Notes: 
 
-- This feature is "off" by default, and is currently only recommended for applications that use Microsoft's ODBC Driver for SQL Server. (Also see [this issue](https://github.com/mkleehammer/pyodbc/issues/295) regarding fast_executemany and temporary tables.)
+- This feature is "off" by default, and is currently only recommended for applications that use Microsoft's ODBC Driver for SQL Server. 
+
+- See [this tip](https://github.com/mkleehammer/pyodbc/wiki/Tips-and-Tricks-by-Database-Platform#using-fast_executemany-with-a-temporary-table) regarding fast_executemany and temporary tables.
 
 - For information on using fast_executemany with SQLAlchemy (and pandas) see the Stack Overflow question [here](https://stackoverflow.com/q/48006551/2144390).
 
