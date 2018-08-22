@@ -35,4 +35,6 @@ NOTE: A [bug](https://github.com/lurcher/unixODBC/pull/14) in unixODBC 2.3.6 and
 
 ### General Notes
 
-Remember to turn off ODBC tracing after generating your log file. Logging ODBC activity slows down ODBC operations and the log file will quickly become very large.
+- Always review your trace logs before submitting them. They may contain your connection string, which might include the server address/port, user credentials, or other details you might not want to make public.
+
+- Remember to turn off ODBC tracing after generating your log file. Logging ODBC activity slows down ODBC operations and the log file will quickly become very large.
