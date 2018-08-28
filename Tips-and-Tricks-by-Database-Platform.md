@@ -53,7 +53,7 @@ dto_string = dto_string[:23] + ":" + dto_string[23:]  # 2018-08-02 00:28:12 -06:
 
 #### TIME columns
 
-Due to legacy considerations, pyodbc uses the ODBC `TIME_STRUCT` structure for `datetime.time` query parameters. `TIME_STRUCT` does not understand fractional seconds, so `datetime.time` values have their milliseconds truncated when passed to SQL Server.
+Due to legacy considerations, pyodbc uses the ODBC `TIME_STRUCT` structure for `datetime.time` query parameters. `TIME_STRUCT` does not understand fractional seconds, so `datetime.time` values have their fractional seconds truncated when passed to SQL Server.
 
 ```python
 crsr.execute("CREATE TABLE #tmp (id INT, t TIME)")
