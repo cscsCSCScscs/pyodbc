@@ -51,6 +51,34 @@ dto_string = dto.strftime("%Y-%m-%d %H:%M:%S %z")  # 2018-08-02 00:28:12 -0600
 dto_string = dto_string[:23] + ":" + dto_string[23:]  # 2018-08-02 00:28:12 -06:00
 ```
 
+#### TIME columns
+
+Due to legacy considerations, pyodbc uses the ODBC `TIME_STRUCT` structure for `datetime.time` query parameters. `TIME_STRUCT` does not understand fractional seconds, so `datetime.time` values have their milliseconds truncated when passed to SQL Server.
+
+```python
+crsr.execute("CREATE TABLE #tmp (id INT, t TIME)")
+t = datetime.time(hour=12, minute=23, second=34, microsecond=567890)
+crsr.execute("INSERT INTO #tmp (id, t) VALUES (1, ?)", t)
+rtn = crsr.execute("SELECT CAST(t AS VARCHAR) FROM #tmp WHERE id=1").fetchval()
+print(rtn)  # 12:23:34.0000000
+```
+
+The workaround is to pass the query parameter as a string
+
+```python
+crsr.execute("INSERT INTO #tmp (id, t) VALUES (1, ?)", str(t))
+rtn = crsr.execute("SELECT CAST(t AS VARCHAR) FROM #tmp WHERE id=1").fetchval()
+print(rtn)  # 12:23:34.5678900
+```
+
+Note that TIME columns *retrieved* by pyodbc have their microseconds intact
+
+```python
+rtn = crsr.execute("SELECT t FROM #tmp WHERE id=1").fetchval()
+print(repr(rtn))  # datetime.time(12, 23, 34, 567890)
+```
+
+
 #### SQL Server Numeric Precision vs. Python Decimal Precision
 
 Python's decimal.Decimal type can represent floating point numbers with greater than 35 digits of precision, which is the maximum supported by SQL server. Binding parameters that exceed this precision will result in an invalid precision error from the driver ("HY104 [Microsoft][...]Invalid precision value"). 
