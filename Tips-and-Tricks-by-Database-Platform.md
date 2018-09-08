@@ -24,6 +24,21 @@ The Access ODBC driver is not able to fully support some of the "complex" column
 
 There is a list of more general Microsoft Access specifications and limitations [here](http://office.microsoft.com/en-ca/access-help/access-2010-specifications-HA010341462.aspx).
 
+#### UnicodeDecodeError when calling Cursor.columns
+
+There is an issue with the Access ODBC driver that can cause a UnicodeDecodeError when trying to use the Cursor.columns method if the table definition in Access includes optional column "Description" information:
+
+```
+Field Name  Data Type   Description
+----------  ----------  --------------------
+ID          AutoNumber  identity primary key
+LastName    Text        Family name
+FirstName   Text        Given name(s)
+DOB         Date/Time   Date of Birth
+```
+
+For a discussion of the issue and possible workarounds, see [issue #328](https://github.com/mkleehammer/pyodbc/issues/328).
+
 ### Microsoft SQL Server
 
 #### Stored Procedures with output parameters and/or return values
