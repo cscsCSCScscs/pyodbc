@@ -16,14 +16,14 @@ Binary wheels are released for most versions on Windows and macOS.
 
 When installing pyodbc on Linux, `pip` will download and compile the pyodbc source code. This requires that some related components and source files be available for the compile to succeed. 
 
-#### Ubuntu 16.04
+#### Ubuntu 18.04
 
 On Ubuntu systems, all you need to do is run
 
 ~~~
-sudo apt-get install python3-pip  # or `sudo apt install python-pip` for Python 2.x
-sudo apt-get install unixodbc-dev
-sudo pip3 install pyodbc  # or `sudo pip install pyodbc` for Python 2.x
+sudo apt install python3-pip
+sudo apt install unixodbc-dev
+pip3 install --user pyodbc
 ~~~
 
 #### Debian Stretch
@@ -43,11 +43,8 @@ From a clean minimal install of CentOS 7, the following steps were required:
 
 ~~~
 sudo yum install epel-release
-sudo yum install python-pip
-sudo yum install gcc-c++
-sudo yum install python-devel
-sudo yum install unixODBC-devel
-sudo pip install pyodbc
+sudo yum install python-pip gcc-c++ python-devel unixODBC-devel
+pip install --user pyodbc
 ~~~
 
 #### Fedora 27
