@@ -102,7 +102,7 @@ Skips the next `count` records in the query by calling [SQLFetchScroll](https://
 For convenience, skip(0) is accepted and will do nothing.
 
 #### nextset()
-This method will make the cursor skip to the next available result set, discarding any remaining rows from the current result set. If there are no more result sets, the method returns None. Otherwise, it returns a True and subsequent calls to the fetch methods will return rows from the next result set.
+This method will make the cursor skip to the next available result set, discarding any remaining rows from the current result set. If there are no more result sets, the method returns False. Otherwise, it returns a True and subsequent calls to the fetch methods will return rows from the next result set.
 
 This method is primarily used if you have stored procedures that return multiple results.
 
@@ -111,8 +111,21 @@ Closes the cursor. A ProgrammingError exception will be raised if any operation 
 
 Cursors are closed automatically when they are deleted (typically when they go out of scope), so calling this is not usually necessary.
 
-#### setinputsizes(), setoutputsize()
-These are optional in the API and are not supported.
+#### setinputsizes(list_of_value_tuples)
+
+This optional method can be used to explicitly declare the types and sizes of query parameters. For example:
+
+```python
+sql = "INSERT INTO product (item, price) VALUES (?, ?)"
+params = [('bicycle', 499.99), ('ham', 17.95)]
+# specify that parameters are for NVARCHAR(50) and DECIMAL(18,4) columns
+crsr.setinputsizes([(pyodbc.SQL_WVARCHAR, 50, 0), (pyodbc.SQL_DECIMAL, 18, 4)])
+#
+crsr.executemany(sql, params)
+```
+
+#### setoutputsize()
+This is optional in the API and is not supported.
 
 #### callproc(procname [,parameters])
 This is not yet supported since there is no way for pyodbc to determine which parameters are input, output, or both.
