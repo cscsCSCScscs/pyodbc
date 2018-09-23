@@ -43,7 +43,7 @@ Database management systems that support transactions often support several leve
 You can specify one of these in your Python code using the `Connection#set_attr` method, e.g.,
 
 ```python
-conn = pyodbc.connect(conn_str)
+conn = pyodbc.connect(conn_str)  # autocommit defaults to False
 conn.set_attr(pyodbc.SQL_ATTR_TXN_ISOLATION, pyodbc.SQL_TXN_SERIALIZABLE)
 ```
 
