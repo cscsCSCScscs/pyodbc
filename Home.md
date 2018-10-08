@@ -13,6 +13,7 @@
   * [Netezza](Connecting-to-Netezza)
   * [Oracle from Red Hat or CentOS](Connecting-to-Oracle-from-RHEL-or-Centos)
   * [PostgreSQL](Connecting-to-PostgreSQL)
+  * [SQLite](Connecting-to-SQLite)
   * [Teradata](Connecting-to-Teradata)
   * [Vertica](Connecting-to-Vertica)
 * [pyodbc objects](Objects)
