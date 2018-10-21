@@ -16,6 +16,7 @@
   * [SQLite](Connecting-to-SQLite)
   * [Teradata](Connecting-to-Teradata)
   * [Vertica](Connecting-to-Vertica)
+  * [Hive from Ubuntu / Debian](Connecting-to-Hive-from-Ubuntu-Debian)
 * [pyodbc objects](Objects)
   * [The pyodbc module itself](Module)
   * [Connection](Connection)
