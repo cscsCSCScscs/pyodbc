@@ -29,3 +29,13 @@ In both cases, set it to something very large.  I use:
     cnxn.maxwrite = 1024 * 1024 * 1024
 
 I would consider making the default something very large, but the driver actually reports the value 255 and pyodbc needs to use the values provided.  I sent an email to the PostgreSQL ODBC driver maintainer (Feb 2017) recommending increasing it but was told to use MaxVarcharSize.
+
+## odbc.ini
+
+PostgreSQL has an option for returning boolean values as strings "0" and "1", or as booleans True and False.  This can be configured using the `BoolsAsChar` parameter in your odbc.ini file.  Set to 1 to return strings, 0 to return booleans, e.g. to return booleans:
+```
+[PostgreSQL]
+Driver            = your_PostgreSQL_driver
+Database          = your_database_name
+BoolsAsChar       = 0
+```
