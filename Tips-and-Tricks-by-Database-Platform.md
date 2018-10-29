@@ -103,15 +103,27 @@ Python's decimal.Decimal type can represent floating point numbers with greater 
 `fast_executemany` can have difficulty identifying the column types of a local #temporary table under some circumstances ([#295](https://github.com/mkleehammer/pyodbc/issues/295)). 
 
 
-##### -- Workaround 1: ODBC Driver 17 for SQL Server and `ColumnEncryption=Enabled`
+##### -- Workaround 1: ODBC Driver 17 for SQL Server and `UseFMTOnly=yes` or `ColumnEncryption=Enabled`
 
-Use "ODBC Driver 17 for SQL Server" (or newer) and include `ColumnEncryption=Enabled` in the connection string, e.g.,
+Use "ODBC Driver 17 for SQL Server" (or newer) and include `UseFMTOnly=yes` or `ColumnEncryption=Enabled` in the connection string, e.g.,
 
 ```python
 cnxn_str = (
     "Driver=ODBC Driver 17 for SQL Server;"
     "Server=192.168.1.144,49242;"
-    "UID=sa;PWD=whatever;"
+    "UID=sa;PWD=_whatever_;"
+    "Database=myDb;"
+    "UseFMTOnly=yes;"
+)
+```
+
+or
+
+```python
+cnxn_str = (
+    "Driver=ODBC Driver 17 for SQL Server;"
+    "Server=192.168.1.144,49242;"
+    "UID=sa;PWD=_whatever_;"
     "Database=myDb;"
     "ColumnEncryption=Enabled;"
 )
