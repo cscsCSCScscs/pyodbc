@@ -46,12 +46,30 @@ count = cursor.execute("delete from users where user_id=1").rowcount
 As suggested in the DB API, the last prepared statement is kept and reused if you execute the same SQL again, making executing the same SQL with different parameters will be more efficient.
 
 #### executemany(sql, *params)
+
 Executes the same SQL statement for each set of parameters, returning None. The single `params` parameter must be a sequence of sequences, or a generator of sequences.
 ```python
 params = [ ('A', 1), ('B', 2) ]
-executemany("insert into t(name, id) values (?, ?)", params)
+cursor.executemany("insert into t(name, id) values (?, ?)", params)
 ```
 This will execute the SQL statement twice, once with ('A', 1) and once with ('B', 2).
+
+Note, the behavior of executemany() is different whether [`fast_executemany`](https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany) is True or False:
+
+When `fast_executemany` is False (the default), the above code is equivalent to:
+```python
+params = [ ('A', 1), ('B', 2) ]
+for p in params:
+    cursor.execute("insert into t(name, id) values (?, ?)", p)
+```
+Hence, be careful if `autocommit` is True.  In that case, each record will be inserted and committed individually.  So if there is an error part-way through processing the sequence of records, you will end up with some of the records committed in the database and the rest not.  Hence, when using `executemany()` with `fast_executemany` False you may want to consider setting `autocommit` False first to ensure either all records are committed to the database or none are, e.g.:
+```python
+params = [ ('A', 1), ('B', 2) ]
+cursor.autocommit = False
+cursor.executemany("insert into t(name, id) values (?, ?)", params)
+cursor.commit()
+cursor.autocommit = True
+```
 
 #### fetchone()
 Returns the next row in the query, or None when no more data is available.
