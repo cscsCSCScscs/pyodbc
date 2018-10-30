@@ -28,17 +28,28 @@ If the version cannot be determined for some reason, you will see a warning abou
 ### Operating Systems
 
 #### Windows
-On Windows, you must use the appropriate Microsoft Visual C++ compiler for the version of pyodbc you wish to compile.  This is a Python requirement, not a pyodbc one. This page on the Python wiki provides information about compiling Python code on Windows: https://wiki.python.org/moin/WindowsCompilers
 
-To build Python 2.4 or 2.5 versions, you will need the Visual Studio 2003 .NET compiler. Unfortunately there is no free version of this.
+First of all, upgrade your Python `setuptools` module to the latest with `pip install --upgrade setuptools`.
 
-For Python 2.6, 2.7, 3.0, 3.1 and 3.2, use the Visual C++ 2008 compiler. There is a free version of this, Visual C++ 2008 Express.
+To compile pyodbc, you must use the appropriate Microsoft Visual C++ compiler for the version of Python you wish to compile.  See the following wiki page for reference: https://wiki.python.org/moin/WindowsCompilers
 
-For Python 3.3 and 3.4, use the Visual C++ 2010 compiler. There is a free version of this, Visual C++ 2010 Express, although that version does not inherently allow 64-bit builds to be compiled. To compile 64-bit builds with Visual C++ 2010 Express, follow these instructions: http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/
+- To build Python 2.4 or 2.5 versions, you will need the Visual Studio 2003 .NET compiler. Unfortunately there is no free version of this.
+- For Python 2.6, 2.7, 3.0, 3.1 and 3.2, use the Visual C++ 2008 compiler. There is a free version of this, Visual C++ 2008 Express.
+- For Python 3.3 and 3.4, use the Visual C++ 2010 compiler. There is a free version of this, Visual C++ 2010 Express, although that version does not inherently allow 64-bit builds to be compiled. To compile 64-bit builds with Visual C++ 2010 Express, follow these instructions: http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/
+- For Python 3.5 and 3.6, use Visual C++ 2014, VC 2017 works too.
+- For Python 3.7, use Visual C++ 2017.
 
-Once the build has been compiled, you can create a Windows installer executable by running:
+These instructions assume Windows 10.  If you don't already have _Visual Studio 2017_ installed, install _Build Tools for Visual Studio 2017_ by downloading from https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2017 and installing it.  If you need to check or modify this installation, do so by opening the "Visual Studio Installer" app from the Start menu.  In that app under the "Products" tab, you should see "Visual Studio Build Tools 2017".  Click "Modify" under "Visual Studio Build Tools 2017".  In the new window, under the "Workloads" tab, check the small checkbox on "Visual C++ build tools".  On the right you'll see the "Installation details", which should now include the optional elements: "Windows 10 SDK"; "Visual C++ tools for CMake"; and "Testing tools core features - Build Tools".
 
-`python setup.py bdist_wininst`
+To build pyodbc, from the Start menu within the "Visual Studio 2017" folder, open up an "x64 Native Tools Command Prompt for VS 2017" command prompt (NOT an ordinary command prompt).  Make sure you open it with administrative privileges by right-clicking on the icon, choosing "More" then "Run as administrator".
+
+Within that command prompt, `cd` to the top-level pyodbc directory, the one that includes setup.py, then:
+
+1) Run `python setup.py build`, which creates and populates the `build` subdirectory.
+2) Run `python setup.py bdist_wininst`, which creates and populates the `dist` subdirectory.
+3) Run `python setup.py install`, which installs your new pyodbc build into your Python environment.  This step requires admin privileges.
+
+Check your new version of pyodbc by running `python -c "import pyodbc; print(pyodbc.version)"`.
 
 #### Other
 To build on other operating systems, use the gcc compiler.
