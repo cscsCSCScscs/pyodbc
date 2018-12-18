@@ -85,6 +85,12 @@ For an example, see [Using an Output Converter function](Using-an-Output-Convert
 
 Removes all output converter functions.
 
+#### remove_output_converter()
+
+Remove a single output converter function previously registered with `add_output_converter`. *(New in version 4.0.25.)*
+
+`remove_output_converter(sqltype)`
+
 #### setencoding
 
     # Python 2
