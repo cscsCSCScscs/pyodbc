@@ -69,18 +69,18 @@ which would return
 datetime.datetime(2017, 3, 16, 10, 35, 18, 0, tzinfo=datetime.timezone(datetime.timedelta(-1, 64800)))
 ```
 
-### Removing an output converter function
+### Removing an Output Converter function
 
-To remove all output converter functions, simply do
+To remove all Output Converter functions, simply do:
 
 ```python
 cnxn.clear_output_converters()
 ```
 
-To remove a single output converter function (new in version 4.0.25), use `remove_output_converter` like so:
+To remove a single Output Converter function (new in version 4.0.25), use `remove_output_converter` like so:
 
 ```python
 cnxn.add_output_converter(pyodbc.SQL_WVARCHAR, decode_sketchy_utf16)
-rows = crsr.columns("Clients").fetchall():
+rows = crsr.columns("Clients").fetchall()
 cnxn.remove_output_converter(pyodbc.SQL_WVARCHAR)  # restore default behaviour
 ```
