@@ -2,9 +2,9 @@ Output Converter functions offer a flexible way to work with returned results th
 
 ```python
 import pyodbc
-conn = pyodbc.connect("DSN=myDb")
+cnxn = pyodbc.connect("DSN=myDb")
 
-crsr = conn.cursor()
+crsr = cnxn.cursor()
 # create test data
 crsr.execute("CREATE TABLE #dto_test (id INT PRIMARY KEY, dto_col DATETIMEOFFSET)")
 crsr.execute("INSERT INTO #dto_test (id, dto_col) VALUES (1, '2017-03-16 10:35:18 -06:00')")
@@ -13,7 +13,7 @@ value = crsr.execute("SELECT dto_col FROM #dto_test WHERE id=1").fetchval()
 print(value)
 
 crsr.close()
-conn.close()
+cnxn.close()
 ```
 
 ... results in the error
@@ -25,7 +25,7 @@ However, we can define an Output Converter function to decode the bytes returned
 ```python
 import struct
 import pyodbc
-conn = pyodbc.connect("DSN=myDb")
+cnxn = pyodbc.connect("DSN=myDb")
 
 
 def handle_datetimeoffset(dto_value):
@@ -35,17 +35,17 @@ def handle_datetimeoffset(dto_value):
     return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{:07d} {:+03d}:{:02d}".format(*tweaked)
 
 
-crsr = conn.cursor()
+crsr = cnxn.cursor()
 # create test data
 crsr.execute("CREATE TABLE #dto_test (id INT PRIMARY KEY, dto_col DATETIMEOFFSET)")
 crsr.execute("INSERT INTO #dto_test (id, dto_col) VALUES (1, '2017-03-16 10:35:18 -06:00')")
 
-conn.add_output_converter(-155, handle_datetimeoffset)
+cnxn.add_output_converter(-155, handle_datetimeoffset)
 value = crsr.execute("SELECT dto_col FROM #dto_test WHERE id=1").fetchval()
 print(value)
 
 crsr.close()
-conn.close()
+cnxn.close()
 ```
 
 which prints the string representation of the DATETIMEOFFSET value
@@ -67,4 +67,20 @@ which would return
 
 ```none
 datetime.datetime(2017, 3, 16, 10, 35, 18, 0, tzinfo=datetime.timezone(datetime.timedelta(-1, 64800)))
+```
+
+### Removing an output converter function
+
+To remove all output converter functions, simply do
+
+```python
+cnxn.clear_output_converters()
+```
+
+To remove a single output converter function (new in version 4.0.25), use `remove_output_converter` like so:
+
+```python
+cnxn.add_output_converter(pyodbc.SQL_WVARCHAR, decode_sketchy_utf16)
+rows = crsr.columns("Clients").fetchall():
+cnxn.remove_output_converter(pyodbc.SQL_WVARCHAR)  # restore default behaviour
 ```
