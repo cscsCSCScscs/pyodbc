@@ -10,6 +10,8 @@ For reference, the Python DB API for connections is [here](https://www.python.or
 #### autocommit
 True if the connection is in autocommit mode, False otherwise. As per the [Python DB API](https://www.python.org/dev/peps/pep-0249/), the default value is False (even though the ODBC default value is [True](https://msdn.microsoft.com/en-us/library/ms131281.aspx)). This value can be changed on a connection dynamically, and all subsequent SQL statements will be executed using the new setting.
 
+Auto-commit needs to be `True` to allow dropping of Databases.
+
 #### searchescape
 The ODBC search pattern escape character, as returned by [SQLGetInfo](https://msdn.microsoft.com/en-us/library/ms711681%28v=vs.85%29.aspx)(SQL\_SEARCH\_PATTERN\_ESCAPE), used to escape special characters such as '%' and ''. These are driver specific.
 
