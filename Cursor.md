@@ -65,10 +65,12 @@ for p in params:
 Hence, be careful if `autocommit` is True.  In that case, each record will be inserted and committed individually.  So if there is an error part-way through processing the sequence of records, you will end up with some of the records committed in the database and the rest not.  Hence, when using `executemany()` with `fast_executemany` False you may want to consider setting `autocommit` False first to ensure either all records are committed to the database or none are, e.g.:
 ```python
 params = [ ('A', 1), ('B', 2) ]
-cursor.autocommit = False
+cnxn =  pyodbc.connect(strConectionString)
+cnxn.autocommit = False
+cursor = cnxn.cursor()
 cursor.executemany("insert into t(name, id) values (?, ?)", params)
-cursor.commit()
-cursor.autocommit = True
+cnxn.commit()
+cnxn.autocommit = True
 ```
 
 #### fetchone()
