@@ -45,33 +45,47 @@ count = cursor.execute("delete from users where user_id=1").rowcount
 ```
 As suggested in the DB API, the last prepared statement is kept and reused if you execute the same SQL again, making executing the same SQL with different parameters will be more efficient.
 
-#### executemany(sql, *params)
+#### executemany(sql, *params), with fast_executemany=False (the default)
 
 Executes the same SQL statement for each set of parameters, returning None. The single `params` parameter must be a sequence of sequences, or a generator of sequences.
 ```python
 params = [ ('A', 1), ('B', 2) ]
 cursor.executemany("insert into t(name, id) values (?, ?)", params)
 ```
-This will execute the SQL statement twice, once with ('A', 1) and once with ('B', 2).
-
-Note, the behavior of executemany() is different whether [`fast_executemany`](https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany) is True or False:
-
-When `fast_executemany` is False (the default), the above code is equivalent to:
+This will execute the SQL statement twice, once with ('A', 1) and once with ('B', 2).  That is, the above code is essentially equivalent to:
 ```python
 params = [ ('A', 1), ('B', 2) ]
 for p in params:
     cursor.execute("insert into t(name, id) values (?, ?)", p)
 ```
-Hence, be careful if `autocommit` is True.  In that case, each record will be inserted and committed individually.  So if there is an error part-way through processing the sequence of records, you will end up with some of the records committed in the database and the rest not.  Hence, when using `executemany()` with `fast_executemany` False you may want to consider setting `autocommit` False first to ensure either all records are committed to the database or none are, e.g.:
+Hence, running executemany() with fast_executemany=False is generally not going to be much faster than running multiple execute() commands directly.
+
+Note, after running executemany(), the number of affected rows is NOT available in the `rowcount` attribute.
+
+Also, be careful if `autocommit` is True.  In that case, the provided SQL statement will be committed for every record in the parameter sequence.  So if there is an error part-way through processing the records, you will end up with some of the records committed in the database and the rest not, and it may be not be easy to tell which records have been committed.  Hence, you may want to consider setting `autocommit` to False (and explicitly `commit()`) to ensure either all the records are committed to the database or none are, e.g.:
 ```python
 params = [ ('A', 1), ('B', 2) ]
-cnxn =  pyodbc.connect(strConectionString)
+cnxn = pyodbc.connect(strConnectionString)
 cnxn.autocommit = False
 cursor = cnxn.cursor()
 cursor.executemany("insert into t(name, id) values (?, ?)", params)
-cnxn.commit()
+cnxn.commit()  # commit all the records
 cnxn.autocommit = True
 ```
+
+#### executemany(sql, *params), with fast_executemany=True
+
+Executes the SQL statement for the entire set of parameters, returning None. The single `params` parameter must be a sequence of sequences, or a generator of sequences.
+```python
+params = [ ('A', 1), ('B', 2) ]
+cursor.fast_executemany = True
+cursor.executemany("insert into t(name, id) values (?, ?)", params)
+```
+Here, all the parameters are sent to the database server in one bundle (along with the SQL statement), and the database executes the SQL against all the parameters as one database transaction.  Hence, this form of executemany() should be much faster than the default executemany().  However, there are limitations to it, see [`fast_executemany`](https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fast_executemany) for more details.
+
+Note, after running executemany(), the number of affected rows is NOT available in the `rowcount` attribute.
+
+Under the hood, there is one important difference when fast_executemany=True.  In that case, on the client side, pyodbc converts the Python parameter values to their ODBC "C" equivalents, based on the target column types in the database.  E.g., a string-based date parameter value of "2018-07-04" is converted to a C date type binary value by pyodbc before sending it to the database.  When fast_executemany=False, that date string is sent as-is to the database and the database does the conversion.  This can lead to some subtle differences in behavior depending on whether fast_executemany is True or False.
 
 #### fetchone()
 Returns the next row in the query, or None when no more data is available.
