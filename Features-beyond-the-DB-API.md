@@ -16,14 +16,13 @@ The `fetchval()` convenience method returns the first column of the first row if
 crsr.fast_executemany = True
 ```
 
-can boost the performance of `executemany` operations by greatly reducing the number round-trips to the server. 
+can boost the performance of `executemany` operations by greatly reducing the number of round-trips to the server. 
 
 Notes: 
-
 - This feature is "off" by default, and is currently only recommended for applications that use Microsoft's ODBC Driver for SQL Server. 
-
+- The parameter values are held in memory, so very large numbers of records (tens of millions or more) may cause memory issues.
+- Writing fractional seconds of `datetime.time` values is supported, unlike normal pyodbc [behavior](https://github.com/mkleehammer/pyodbc/wiki/Tips-and-Tricks-by-Database-Platform#time-columns)
 - See [this tip](https://github.com/mkleehammer/pyodbc/wiki/Tips-and-Tricks-by-Database-Platform#using-fast_executemany-with-a-temporary-table) regarding fast_executemany and temporary tables.
-
 - For information on using fast_executemany with SQLAlchemy (and pandas) see the Stack Overflow question [here](https://stackoverflow.com/q/48006551/2144390).
 
 ### Access Values By Name
