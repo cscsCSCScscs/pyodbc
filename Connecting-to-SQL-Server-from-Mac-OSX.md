@@ -11,7 +11,7 @@ brew install unixodbc freetds
 
 #### Edit the freetds.conf configuration file
 
-The `freetds.conf` file is usually located in directory `/usr/local/etc/`.  However, Homebrew will create this file as a soft link to the real file located here `/usr/local/Cellar/freetds/<version>/etc/freetds.conf`.  Check this location with `tsql -C`.  The default file already contains a bunch of stuff, but all you need to do is add your server information to the end, as follows:
+The `freetds.conf` file is usually located in directory `/usr/local/etc/`, which will be a symlink to the actual file as installed by Homebrew.  Check the specific location of the `freetds.conf` file by running `tsql -C`.  The default file already contains a standard example configuration, but all you need to do is add your server information to the end, as follows:
 
 ```
 [MYMSSQL]
