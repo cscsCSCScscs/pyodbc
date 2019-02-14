@@ -6,8 +6,7 @@ The connection to SQL Server will be made using the unixODBC driver manager and 
 
 ```
 brew update
-brew install unixodbc
-brew install freetds --with-unixodbc
+brew install unixodbc freetds
 ```
 
 #### Edit the freetds.conf configuration file
@@ -34,7 +33,7 @@ At this point you can run SQL queries, e.g. "SELECT @@VERSION" but you'll need t
 
 #### Edit the odbcinst.ini and odbc.ini configuration files
 
-Run `odbcinst -j` to get the location of the `odbcinst.ini` and `odbc.ini` files (probably in directory `/usr/local/Cellar/unixodbc/<version>/etc/`). Edit `odbcinst.ini` to include the following:
+Run `odbcinst -j` to get the location of the `odbcinst.ini` and `odbc.ini` files (probably in the directory `/usr/local/etc/`). Edit `odbcinst.ini` to include the following:
 
 ```
 [FreeTDS]
