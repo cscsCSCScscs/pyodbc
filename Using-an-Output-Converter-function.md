@@ -84,3 +84,14 @@ cnxn.add_output_converter(pyodbc.SQL_WVARCHAR, decode_sketchy_utf16)
 rows = crsr.columns("Clients").fetchall()
 cnxn.remove_output_converter(pyodbc.SQL_WVARCHAR)  # restore default behaviour
 ```
+
+### Temporarily replacing an Output Converter function
+
+Starting with version 4.0.26 we can also use `get_output_converter` to retrieve the currently active Output Converter function so we can temporarily replace it and then restore it afterwards.
+
+```python
+prev_converter = cnxn.get_output_converter(pyodbc.SQL_WVARCHAR)
+cnxn.add_output_converter(pyodbc.SQL_WVARCHAR, decode_sketchy_utf16)  # temporary replacement
+rows = crsr.columns("Clients").fetchall()
+cnxn.add_output_converter(pyodbc.SQL_WVARCHAR, prev_converter)  # restore previous behaviour
+```
