@@ -100,7 +100,7 @@ if row:
 
 #### fetchval()
 Returns the first column of the first row if there are results.
-for more info see [Features beyond the DB API](https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fetchval)
+For more info see [Features beyond the DB API](https://github.com/mkleehammer/pyodbc/wiki/Features-beyond-the-DB-API#fetchval)
 
 #### fetchall()
 Returns a list of all the remaining rows in the query.
