@@ -34,5 +34,6 @@
 * [Drivers and Driver Managers](Drivers-and-Driver-Managers)
 * [Building pyodbc from the source code](Building-pyodbc-from-source)
 * [Troubleshooting – Generating an ODBC trace log](https://github.com/mkleehammer/pyodbc/wiki/Troubleshooting-%E2%80%93-Generating-an-ODBC-trace-log)
+* [Running pydobc project unit tests](Running-pydobc-project-unit-tests)
 
 [Release notes](https://github.com/mkleehammer/pyodbc/releases) have been moved from the Wiki now that GitHub supports releases.  The [old archived page](Release-Notes) will eventually be removed.
