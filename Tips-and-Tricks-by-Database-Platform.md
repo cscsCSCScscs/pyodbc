@@ -41,6 +41,35 @@ For a discussion of the issue and possible workarounds, see [issue #328](https:/
 
 ### Microsoft SQL Server
 
+#### Authenticate using an Access Token from Azure Active Directory 
+
+The ODBC Driver for SQL Server, in addition to the authentication methods built-in to the driver such as username/password, Windows Integrated (Kerberos), [Azure Active Directory Password, Managed Service Identity](https://docs.microsoft.com/en-us/sql/connect/odbc/using-azure-active-directory), etc., also supports authenticating to Azure SQL and DW directly using an access token obtained from any of the authentication methods provided by Azure Active Directory; since pyODBC 4.0.24, this can be specified as the driver-specific pre-connect attribute **1256** using the following example code to supply the token in the correct format:
+
+(Python 2.x)
+
+```python
+token = "eyJ0eXAiOi...";
+exptoken = "";
+for i in token:
+  exptoken += i;
+  exptoken += chr(0);
+tokenstruct = struct.pack("=i", len(exptoken)) + exptoken;
+conn = pyodbc.connect(connstr, attrs_before = { 1256:bytearray(tokenstruct) });
+```
+
+(Python 3.x)
+
+```python
+token = b"eyJ0eXAiOi...";
+exptoken = b"";
+for i in token:
+  exptoken += bytes({i});
+  exptoken += bytes(1);
+tokenstruct = struct.pack("=i", len(exptoken)) + exptoken;
+conn = pyodbc.connect(connstr, attrs_before = { 1256:tokenstruct });
+```
+(See also: [original issue where this feature was requested](https://github.com/mkleehammer/pyodbc/issues/228))
+
 #### Stored Procedures with output parameters and/or return values
 
 See the [Calling Stored Procedures](https://github.com/mkleehammer/pyodbc/wiki/Calling-Stored-Procedures) page for an example of how to use a bit of T-SQL to retrieve these values.
