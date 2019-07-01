@@ -62,15 +62,18 @@ Hence, running executemany() with fast_executemany=False is generally not going 
 
 Note, after running executemany(), the number of affected rows is NOT available in the `rowcount` attribute.
 
-Also, be careful if `autocommit` is True.  In that case, the provided SQL statement will be committed for every record in the parameter sequence.  So if there is an error part-way through processing the records, you will end up with some of the records committed in the database and the rest not, and it may be not be easy to tell which records have been committed.  Hence, you may want to consider setting `autocommit` to False (and explicitly `commit()`) to ensure either all the records are committed to the database or none are, e.g.:
+Also, be careful if `autocommit` is True.  In this scenario, the provided SQL statement will be committed for each and every record in the parameter sequence.  So if an error occurs part-way through processing, you will end up with some of the records committed in the database and the rest not, and it may be not be easy to tell which records have been committed.  Hence, you may want to consider setting `autocommit` to False (and explicitly `commit()` / `rollback()`) to make sure either all the records are committed to the database or none are, e.g.:
 ```python
-params = [ ('A', 1), ('B', 2) ]
-cnxn = pyodbc.connect(strConnectionString)
-cnxn.autocommit = False
-cursor = cnxn.cursor()
-cursor.executemany("insert into t(name, id) values (?, ?)", params)
-cnxn.commit()  # commit all the records
-cnxn.autocommit = True
+try:
+    cnxn.autocommit = False
+    params = [ ('A', 1), ('B', 2) ]
+    cursor.executemany("insert into t(name, id) values (?, ?)", params)
+except pyodbc.DatabaseError as err:
+    cnxn.rollback()
+else:
+    cnxn.commit()
+finally:
+    cnxn.autocommit = True
 ```
 
 #### executemany(sql, *params), with fast_executemany=True
