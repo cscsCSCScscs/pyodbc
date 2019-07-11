@@ -180,3 +180,11 @@ crsr.executemany(sql, params)
 ##### -- Workaround 3: Use a global ##temporary table
 
 If neither of the previous workarounds is feasible, simply use a global ##temporary table instead of a local #temporary table.
+
+### Always Encrypted
+
+SQL Server 2016 and later support [client-side encryption and decryption](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine) of data, when used with the ODBC Driver 13.1 for SQL Server or later. Retrieving data from encrypted columns through pyODBC has no special considerations; however, inserting data into encrypted columns is subject to some [limitations](https://docs.microsoft.com/en-us/sql/connect/odbc/using-always-encrypted-with-the-odbc-driver) of the ODBC driver itself, the two most important in pyODBC usage being:
+
+- Data to be inserted into or compared with encrypted columns must be passed through a parameterised query; literals in the T-SQL directly will not work.
+
+- Due to the lack of server-side type conversion, it may be necessary to use the `setinputsizes()` function extension (see https://github.com/mkleehammer/pyodbc/pull/280 for details) on specific columns to cause pyODBC to send the correct data type to the server for insertion or comparison with encrypted data. If you receive 'Operand type clash' errors, this is likely to be the case.
