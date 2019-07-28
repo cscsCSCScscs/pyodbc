@@ -1,4 +1,4 @@
-Microsoft only produces Access ODBC drivers for the Windows platform. Third-party vendors may be able to provide Access ODBC drivers for non-Windows platforms.
+Microsoft only produces Access ODBC drivers for the Windows platform. Third-party vendors may be able to provide Access ODBC drivers for non-Windows platforms. ([This Stack Overflow answer](https://stackoverflow.com/a/25614063/2144390) also describes options for connecting to an Access database from Python on non-Windows platforms, but they do not involve pyodbc or ODBC.)
 
 There are actually two (2) different Access ODBC drivers from Microsoft:
 
