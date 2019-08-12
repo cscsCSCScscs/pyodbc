@@ -1,6 +1,6 @@
 ## TL;DR
 
-By default, pyodbc uses UTF-16 assuming native byte-order (ie. UTF-16LE on little-endian machines like x86 and arm) and SQL_C_WCHAR for reading and writing all Unicode as recommended in the ODBC specification.  Unfortunately many drivers behave differently so connections may need to be configured.  I recommend creating a global connection factory where you can consolidate your connection string and configuration:
+By default, pyodbc uses UTF-16 assuming native byte-order (i.e., UTF-16LE on little-endian machines like x86 and arm) and SQL_C_WCHAR for reading and writing all Unicode as recommended in the ODBC specification.  Unfortunately many drivers behave differently so connections may need to be configured.  I recommend creating a global connection factory where you can consolidate your connection string and configuration:
 
     def connect():
         cnxn = pyodbc.connect(_connection_string)
@@ -41,8 +41,7 @@ format.  This is compatible with pyodbc 3.x.
 #### MySQL and PostgreSQL
 
 These databases tend to use a single encoding and do not differentiate between "SQL_CHAR" and
-"SQL_WCHAR".  Therefore you must configure them to encode Unicode data as UTF-8 and to decode
-both C buffer types using UTF-8.
+"SQL_WCHAR".  Therefore when using the Unicode versions of their ODBC drivers you must configure them to encode Unicode data as UTF-8 and to decode both C buffer types using UTF-8.
 
     # Python 2.7
     cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
