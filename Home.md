@@ -29,6 +29,7 @@
 * [Managing database transactions](Database-Transaction-Management)
 * [Calling Stored Procedures](Calling-Stored-Procedures)
 * [Features beyond the DB API](Features-beyond-the-DB-API)
+* [Driver support for fast_executemany](Driver-support-for-fast_executemany)
 * [Tips and Tricks by Database Platform](Tips-and-Tricks-by-Database-Platform)
 * [Using an Output Converter function](Using-an-Output-Converter-function)
 * [Drivers and Driver Managers](Drivers-and-Driver-Managers)
