@@ -12,7 +12,7 @@ The following table describes how Python objects passed to Cursor.execute() as p
 | bool | bit | BIT |
 | datetime.date | date | SQL_TYPE_DATE |
 | datetime.time | time | SQL_TYPE_TIME |
-| datetime.datetime | timestamp | SQL_TIMESTAMP |
+| datetime.datetime | timestamp | SQL_TYPE_TIMESTAMP |
 | int | integer | SQL_BIGINT |
 | float | floating point | SQL_DOUBLE |
 | decimal | numeric | SQL_NUMERIC |
