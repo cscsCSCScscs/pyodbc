@@ -5,6 +5,8 @@ Not all ODBC drivers support *parameter arrays*, the internal ODBC mechanism tha
 | Microsoft Access | Microsoft Access Driver (*.mdb, *.accdb) | Access 2010 | Windows | crashes CPython | |
 | Microsoft SQL Server | ODBC Driver 17 for SQL Server | 17.x | Linux/Windows | works | [local temporary tables](https://github.com/mkleehammer/pyodbc/wiki/Tips-and-Tricks-by-Database-Platform#using-fast_executemany-with-a-temporary-table), [TVPs](https://github.com/mkleehammer/pyodbc/issues/601) |
 | Microsoft SQL Server | FreeTDS (libtdsodbc.so) | 01.00.0082 | Linux | crashes CPython | |
+| MySQL | MySQL ODBC 8.0 ANSI Driver | 8.0.15 | Linux | does not work | |
+| MySQL | MySQL ODBC 8.0 ANSI Driver | 8.0.17 | Windows | crashes CPython | |
 | MySQL | MySQL ODBC 8.0 Unicode Driver | 8.0.12 | Windows | no effect | |
 | PostgreSQL | PostgreSQL Unicode(x64) | 11.01.00 | Windows | no effect | |
 
