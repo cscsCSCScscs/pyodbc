@@ -27,6 +27,12 @@ crsr = cnxn.cursor()
 for table_info in crsr.tables(tableType='TABLE'):
     print(table_info.table_name)
 ```
+If you receive an error similar to: `[Microsoft][ODBC Microsoft Access Driver]General error Unable to open registry key Temporary (volatile) Ace DSN`, ways to troubleshoot:
+1. Check that you use the full path to the `.accdb` file. 
+2. Rename your `.accdb` file so it doesn't include any underscores (`_`).
+3. Check that you have 'read' access to the `.accdb` file.
+4. Check that your registry permits read access (see Microsoft's docs [here](https://docs.microsoft.com/en-us/office/troubleshoot/error-messages/fails-accessing-page-connected-access-database) except you may need to use `regedit.exe`)
+5. Check that another process or application does not have an "exclusive" lock on the file (see a Stackoverflow for Java's pyodbc [here](https://stackoverflow.com/questions/26244425/general-error-unable-to-open-registry-key-temporary-volatile-from-access)). 
 
 ## Unit Tests
 
