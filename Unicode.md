@@ -40,8 +40,10 @@ format.  This is compatible with pyodbc 3.x.
 
 #### MySQL and PostgreSQL
 
+> Note: For proper support of "supplementary" Unicode characters (those outside of the BMP, e.g., emoji) with MySQL (the so-called "utf8mb4" character set) you must use the "ANSI" — *not* the "Unicode" — version of the MySQL Connector/ODBC driver. For PostgreSQL ODBC, use the "Unicode" — not the "ANSI" — version of the driver.
+
 These databases tend to use a single encoding and do not differentiate between "SQL_CHAR" and
-"SQL_WCHAR".  Therefore when using the Unicode versions of their ODBC drivers you must configure them to encode Unicode data as UTF-8 and to decode both C buffer types using UTF-8.
+"SQL_WCHAR".  Therefore when using their ODBC drivers you must configure them to encode Unicode data as UTF-8 and to decode both C buffer types using UTF-8.
 
     # Python 2.7
     cnxn.setdecoding(pyodbc.SQL_CHAR, encoding='utf-8')
