@@ -88,7 +88,7 @@ If you don't want to define a DSN in `odbc.ini`, you can reference the driver en
 
 E.g.:
 
-```
+```python
 cnx = pyodbc.connect(
     server="my-server.com",
     database="mydb",
@@ -98,6 +98,7 @@ cnx = pyodbc.connect(
     port=1433,
     driver='FreeTDS'
 )
+```
 
 Note: in this case you may need to specify all necessary TDS parameters in `pyodbc.connect`.
 
@@ -107,7 +108,7 @@ If you want to avoid modifying both `odbc.ini` and `odbcinst.ini`, you can just 
 
 E.g.:
 
-```
+```python
 cnx = pyodbc.connect(
     server="my-server.com",
     database="mydb",
