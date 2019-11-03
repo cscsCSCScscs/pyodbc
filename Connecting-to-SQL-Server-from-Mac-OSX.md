@@ -80,3 +80,39 @@ print(rows)
 crsr.close()
 conn.close()
 ```
+
+
+#### Connecting without defining a DSN
+
+If you don't want to define a DSN in `odbc.ini`, you can reference the driver entry you added to `odbcinst.ini`.
+
+E.g.:
+```python
+cnx = pyodbc.connect(
+    server="my-server.com",
+    database="mydb",
+    user='myuser',
+    tds_version='7.4',
+    password="mypassword",
+    port=1433,
+    driver='FreeTDS'
+)
+
+Note: in this case you may need to specify all necessary TDS parameters in `pyodbc.connect`.
+
+#### Connecting without modifying `odbcinst.ini` or `odbc.ini`
+
+If you want to avoid modifying both `odbc.ini` and `odbcinst.ini`, you can just specify the driver file location in the `driver` param in `pyodbc.connect`.
+
+E.g.:
+```python
+cnx = pyodbc.connect(
+    server="my-server.com",
+    database="mydb",
+    user='myuser',
+    tds_version='7.4',
+    password="mypassword",
+    port=1433,
+    driver='/usr/local/lib/libtdsodbc.so'
+)
+```
