@@ -345,11 +345,11 @@ The Cursor object does support the Python context manager syntax (the `with` sta
 with cnxn.cursor() as crsr:
     do_stuff
 ```    
-is equivalent to:
+is essentially equivalent to:
 ```python
 crsr = cnxn.cursor()
 do_stuff
 if not cnxn.autocommit:
     cnxn.commit()  
 ```
-As you can see, `commit()` is called on the cursor's connection even if `autocommit` is False. Hence, the "context" is not so much the cursor itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`.
+As you can see, `commit()` is called on the cursor's connection even if `autocommit` is False. Hence, the "context" is not so much the cursor itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`. Also note, the cursor object is not explicitly closed when the context is exited.
