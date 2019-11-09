@@ -215,11 +215,11 @@ The Connection object does support the Python context manager syntax (the `with`
 with pyodbc.connect('mydsn') as cnxn:
     do_stuff
 ```    
-is equivalent to:
+is essentially equivalent to:
 ```python
 cnxn = pyodbc.connect('mydsn')
 do_stuff
 if not cnxn.autocommit:
     cnxn.commit()  
 ```
-As you can see, `commit()` is called even if `autocommit` is False. Hence, the "context" is not so much the connection itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`.
+As you can see, `commit()` is called even if `autocommit` is False. Hence, the "context" is not so much the connection itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`. Also note, the connection object is not explicitly closed when the context is exited.
