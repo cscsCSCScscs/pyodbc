@@ -208,17 +208,18 @@ object's bytes as-is to the database.  This is not recommended as you need to ma
 the internal format matches what the database sends.
 
 
-### Connection objects and the Python context manager syntax
+### Context manager
 
-The Python context manager syntax can be used with Connection objects, and the following code:
+The Connection object does support the Python context manager syntax (the `with` statement), but it's important to understand the "context" in this scenario. The following code:
 ```python
 with pyodbc.connect('mydsn') as cnxn:
     do_stuff
 ```    
-is exactly equivalent to:
+is equivalent to:
 ```python
 cnxn = pyodbc.connect('mydsn')
 do_stuff
 if not cnxn.autocommit:
     cnxn.commit()  
 ```
+As you can see, `commit()` is called even if `autocommit` is False. Hence, the "context" is not so much the connection itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`.
