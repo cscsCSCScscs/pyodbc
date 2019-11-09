@@ -338,16 +338,18 @@ Executes [SQLGetTypeInfo](http://msdn.microsoft.com/en-us/library/ms714632%28VS.
 1. num_prec_radix
 1. interval_precision
 
-### Cursor objects and the Python context manager syntax
-The Python context manager syntax can be used with Cursor objects, and the following code:
+### Context manager
+
+The Cursor object does support the Python context manager syntax (the `with` statement), but it's important to understand the "context" in this scenario. The following code:
 ```python
 with cnxn.cursor() as crsr:
     do_stuff
 ```    
-is exactly equivalent to:
+is equivalent to:
 ```python
 crsr = cnxn.cursor()
 do_stuff
 if not cnxn.autocommit:
     cnxn.commit()  
 ```
+As you can see, `commit()` is called on the cursor's connection even if `autocommit` is False. Hence, the "context" is not so much the cursor itself. Rather, it's better to think of it as a database transaction that will be committed without explicitly calling `commit()`.
