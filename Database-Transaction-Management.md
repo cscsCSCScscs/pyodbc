@@ -31,7 +31,7 @@ As you can see, no database transaction is ever explicitly opened using pyodbc b
 
 Just to re-emphasize, database transactions are managed through connections, not cursors. Cursors are merely vehicles to execute SQL statements and manage their results, nothing more. Yes, there is a convenience function `commit()` on the Cursor object but that simply calls `commit()` on the cursor's parent Connection object. Bear in mind too that when `commit()` is called on a connection, ALL the updates from ALL the cursors on that connection are committed together (ditto for `rollback()`). If you want to have separate concurrent transactions, you should probably create a separate connection object for each transaction.
 
-Note, when a connection is closed with the `close()` function, a rollback is always issued on the connection, just in case. When a Connection object goes out of scope before it's closed (e.g. because an exception occurs), the Connection object is automatically deleted by Python, and a rollback is issued as part of the deletion process.
+Unless you positively commit a transaction, the transaction will almost certainly get rolled back eventually. For example, when a connection is closed with the `close()` function, a rollback is always issued on the connection. When a Connection object goes out of scope before it's closed (e.g. because an exception occurs), the Connection object is automatically deleted by Python, and a rollback is issued as part of the deletion process.  The default behavior is to rollback transactions so always commit your transactions.
 
 #### Specifying a Transaction Isolation level
 
