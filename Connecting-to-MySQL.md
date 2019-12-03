@@ -1,11 +1,19 @@
-The official reference is here: http://dev.mysql.com/doc/connector-odbc/en/index.html
+The official reference for MySQL Connector/ODBC is [here](http://dev.mysql.com/doc/connector-odbc/en/index.html).
 
-Alternatively to official ODBC driver you may download [MySQL ODBC driver](https://www.devart.com/odbc/mysql/download.html) from Devart company which is perfectly working with the latest pyODBC and MySQL versions. 
+Connection string example:
 
-MySQL ODBC connection string example:
+```python
+connection-string = (
+    'DRIVER=MySQL ODBC 8.0 ANSI Driver;'
+    'SERVER=localhost;'
+    'DATABASE=mydb;'
+    'UID=root;'
+    'PWD=mypassword;'
+    'charset=utf8mb4;'
+)
 ```
-Login Prompt=False;User ID=root;Password=root;Data Source=localhost;Database=test;CHARSET=UTF8
-```
+
+Note: "ANSI" is not a typo. For full `utf8mb4` support including supplementary characters (like emoji) you need to use the "ANSI" version of the driver, not the "Unicode" one. See [this MySQL Connector/ODBC issue](https://bugs.mysql.com/bug.php?id=69021) for more information.
   
 ### Encodings
 
@@ -22,7 +30,7 @@ cnxn.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-8')
 cnxn.setencoding(encoding='utf-8')
 ```
 
-You may need to add the CHARSET keyword to your connection string.
+You may need to add the `charset` keyword to your connection string as in the example above.
 
 ### Socket Errors on OS/X
 
