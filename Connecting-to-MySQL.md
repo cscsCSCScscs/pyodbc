@@ -3,7 +3,7 @@ The official reference for MySQL Connector/ODBC is [here](http://dev.mysql.com/d
 Connection string example:
 
 ```python
-connection-string = (
+connection_string = (
     'DRIVER=MySQL ODBC 8.0 ANSI Driver;'
     'SERVER=localhost;'
     'DATABASE=mydb;'
