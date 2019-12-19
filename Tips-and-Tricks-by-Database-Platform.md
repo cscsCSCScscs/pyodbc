@@ -86,13 +86,13 @@ Query parameters for DATETIMEOFFSET columns currently must be sent as strings. N
 
 ```python
 # sample data
-dto = datetime(2018, 8, 2, 0, 28, 12, tzinfo=timezone(timedelta(hours=-6)))
+dto = datetime(2018, 8, 2, 0, 28, 12, 123456, tzinfo=timezone(timedelta(hours=-6)))
 
-dto_string = dto.strftime("%Y-%m-%d %H:%M:%S %z")  # 2018-08-02 00:28:12 -0600
+dto_string = dto.strftime("%Y-%m-%d %H:%M:%S.%f %z")  # 2018-08-02 00:28:12.123456 -0600
 # Trying to use the above will fail with
 #   "Conversion failed when converting date and/or time from character string."
 # We need to add the colon for SQL Server to accept it
-dto_string = dto_string[:23] + ":" + dto_string[23:]  # 2018-08-02 00:28:12 -06:00
+dto_string = dto_string[:30] + ":" + dto_string[30:]  # 2018-08-02 00:28:12.123456 -06:00
 ```
 
 #### TIME columns
