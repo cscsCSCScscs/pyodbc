@@ -48,7 +48,7 @@ Common third-party driver managers on Unix are as follows:
 unixODBC tries to be the definitive standard for ODBC on non-Windows platforms.
 It is available on all Unix OS's and Mac OSX (`brew install unixodbc`). It also provides the command line tools `odbcinst` and `isql` which are useful for manipulating the ODBC configuration files (see below) and making SQL calls without pyodbc. For documentation on these utilities, run `man odbcinst` or `man isql`.
 
-The website for unixODBC is here http://www.unixodbc.org. unixODBC is not open-source and the website does not have extensive documentation but the front page is very useful for the release notes about unixODBC itself.
+The website for unixODBC is http://www.unixodbc.org/. It does not have extensive documentation but the front page is very useful for the release notes about unixODBC itself. The unixODBC codebase is available on [SourceForge](https://sourceforge.net/projects/unixodbc/).
 
 On Unix platforms and Mac OSX, pyodbc has assumed unixODBC is being used rather than iODBC since version 3.0.8 (April 2015).
 
