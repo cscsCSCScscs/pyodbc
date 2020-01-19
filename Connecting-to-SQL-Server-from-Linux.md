@@ -3,7 +3,7 @@ Microsoft's instructions for installing their latest ODBC drivers onto a variety
 Create a temporary text file for defining the [ODBC DSN](https://support.microsoft.com/en-ca/help/966849/what-is-a-dsn-data-source-name) (Data Source Name) to your database, something like this:
 
 ```
-[MySQLServerDatabase]
+[MSSQLServerDatabase]
 Driver      = ODBC Driver 17 for SQL Server
 Description = Connect to my SQL Server instance
 Trace       = No
@@ -47,7 +47,7 @@ After saving your temporary config file you can create a "System DSN" by using t
 sudo odbcinst -i -s -f /path/to/your/temporary/dsn/file -l
 
 # check the DSN installation with:
-cat /etc/odbc.ini   # should contain a section called [MySQLServerDatabase]
+cat /etc/odbc.ini   # should contain a section called [MSSQLServerDatabase]
 ```
 
 If you do not have `sudo` permissions then you can create a "User DSN" like so:
@@ -57,12 +57,12 @@ If you do not have `sudo` permissions then you can create a "User DSN" like so:
 odbcinst -i -s -f /path/to/your/temporary/dsn/file -h
 
 # check the DSN installation with:
-cat ~/.odbc.ini   # should contain a section called [MySQLServerDatabase]
+cat ~/.odbc.ini   # should contain a section called [MSSQLServerDatabase]
 ```
 
 Connecting to the server is then done like this:
 
-    pyodbc.connect('DSN=MySQLServerDatabase;UID=myuid;PWD=mypwd')
+    pyodbc.connect('DSN=MSSQLServerDatabase;UID=myuid;PWD=mypwd')
 
 ### OS-specific notes:
 
