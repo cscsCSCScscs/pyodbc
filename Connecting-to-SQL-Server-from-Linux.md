@@ -69,3 +69,12 @@ Connecting to the server is then done like this:
 #### CentOS
 
 CentOS is derived from RedHat, and their major version numbers (i.e. 6 and 7) match those of RedHat, so just use the instructions for the relevant version of RedHat.
+
+#### Ubuntu
+
+On Ubuntu the easiest way is to use `FreeTDS` driver. Until https://bugs.launchpad.net/ubuntu/+source/freetds/+bug/1173083 is solved, you need to register the driver manually.
+
+    apt install tdsodbc
+    odbcinst -i -d -f /usr/share/tdsodbc/odbcinst.ini
+
+https://bugs.launchpad.net/ubuntu/+source/freetds/+bug/1173083
