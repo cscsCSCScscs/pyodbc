@@ -76,5 +76,3 @@ On Ubuntu the easiest way is to use `FreeTDS` driver. Until https://bugs.launchp
 
     apt install tdsodbc
     odbcinst -i -d -f /usr/share/tdsodbc/odbcinst.ini
-
-https://bugs.launchpad.net/ubuntu/+source/freetds/+bug/1173083
