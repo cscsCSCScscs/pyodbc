@@ -12,6 +12,8 @@ As always when installing modules, you should consider using [Python virtual env
 
 Binary wheels are released for most versions on Windows and macOS.
 
+On Windows, you should install [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) when using the precompiled binaries from pip.
+
 ### Installing on Linux
 
 When installing pyodbc on Linux, `pip` will download and compile the pyodbc source code. This requires that some related components and source files be available for the compile to succeed. 
