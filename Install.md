@@ -6,13 +6,21 @@ Typically, pyodbc is installed like any other Python package by running:
 pip install pyodbc
 ~~~
 
-from a Windows DOS prompt or Unix shell.  See the pip [documentation](https://pip.pypa.io/en/latest/user_guide.html "pip user guide") for more details about the pip utility.
+from a Windows DOS prompt or Unix shell, but don't forget the pre-requisites described below. See the pip [documentation](https://pip.pypa.io/en/latest/user_guide.html "pip user guide") for more details about the pip utility. As always when installing modules, you should consider using [Python virtual environments](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
 
-As always when installing modules, you should consider using [Python virtual environments](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+### Installing on Windows
 
-Binary wheels are released for most versions on Windows and macOS.
+Make sure you have the appropriate C++ compiler on your PC before installing pyodbc. Otherwise, on `import pyodbc`, you will probably get the error "ImportError: DLL load failed: The specified module could not be found.". Check your C++ compilers by pressing Start then typing "Apps & features". In the subsequent window, search for apps named "Microsoft Visual C++".
 
-On Windows, you should install [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) when using the precompiled binaries from pip.
+| pyodbc Version | Visual C++ Compiler | Installation |
+|:--------------:| ------------------- | ------------ |
+| 4.0.28+ | Microsoft Visual C++ 2015-2019 Redistributable | On [this](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) webpage, search for "Visual Studio 2015, 2017 and 2019". Download and install the appropriate .exe file, e.g. `vc_redist.x64.exe`. |
+
+Binary wheels for Windows are also available [here](https://pypi.org/project/pyodbc/#files).
+
+### Installing on MacOSX
+
+Binary wheels for MacOSX are [published](https://pypi.org/project/pyodbc/#files) for most Python versions, so no further action is needed before installing pyodbc.
 
 ### Installing on Linux
 
