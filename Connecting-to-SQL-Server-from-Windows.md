@@ -9,7 +9,7 @@ Microsoft have written and distributed multiple ODBC drivers for SQL Server:
 * {ODBC Driver 11 for SQL Server} - supports SQL Server 2005 through 2014
 * {ODBC Driver 13 for SQL Server} - supports SQL Server 2005 through 2016
 * {ODBC Driver 13.1 for SQL Server} - supports SQL Server 2008 through 2016
-* {ODBC Driver 17 for SQL Server} - supports SQL Server 2008 through 2017
+* {ODBC Driver 17 for SQL Server} - supports SQL Server 2008 through 2019
 
 Note that the "SQL Server Native Client ..." and earlier drivers are deprecated and should not be used for new development.
 
