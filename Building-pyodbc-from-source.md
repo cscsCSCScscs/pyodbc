@@ -44,9 +44,9 @@ To build pyodbc, from the Start menu within the "Visual Studio 2019" folder, ope
 
 Within that command prompt, `cd` to the top-level pyodbc directory, the one that includes setup.py, then:
 
+1) Make sure the `build` subdirectory is empty (if it exists at all).
 1) Run `python setup.py build`, which creates and populates the `build` subdirectory.
-2) Run `python setup.py bdist_wininst`, which creates and populates the `dist` subdirectory.
-3) Run `python setup.py install`, which installs your new pyodbc build into your Python environment.  This step requires admin privileges.
+1) Run `python setup.py install`, which installs your new pyodbc build into your Python environment.  This step requires admin privileges.
 
 Check your new version of pyodbc by running `python -c "import pyodbc; print(pyodbc.version)"`.
 
