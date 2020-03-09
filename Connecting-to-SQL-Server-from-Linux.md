@@ -72,7 +72,15 @@ CentOS is derived from RedHat, and their major version numbers (i.e. 6 and 7) ma
 
 #### Ubuntu
 
-On Ubuntu the easiest way is to use `FreeTDS` driver. Until https://bugs.launchpad.net/ubuntu/+source/freetds/+bug/1173083 is solved, you need to register the driver manually.
+On Ubuntu you also have the option of installing the FreeTDS ODBC driver from the Ubuntu repositories. Until [this issue](https://bugs.launchpad.net/ubuntu/+source/freetds/+bug/1173083) is resolved you need to register the driver manually:
 
     apt install tdsodbc
     odbcinst -i -d -f /usr/share/tdsodbc/odbcinst.ini
+
+Note also that
+
+1. Ubuntu repositories often install rather old versions of things like ODBC drivers so you may get a version with bugs that have been fixed in newer versions.
+
+2. Current versions of FreeTDS ODBC do not support some features like `fast_executemany` and table-valued parameters (TVPs).
+
+3. Using pyodbc with FreeTDS is not officially supported by Microsoft, whereas using pyodbc with "ODBC Driver xx for SQL Server" *is* officially supported.
