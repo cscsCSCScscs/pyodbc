@@ -29,8 +29,6 @@ If the version cannot be determined for some reason, you will see a warning abou
 
 #### Windows
 
-First of all, upgrade your Python `setuptools` module to the latest with `pip install --upgrade setuptools`.
-
 To compile pyodbc, you must use the appropriate Microsoft Visual C++ compiler for the version of Python you wish to compile.  See the following wiki page for reference: https://wiki.python.org/moin/WindowsCompilers
 
 - To build Python 2.4 or 2.5 versions, you will need the Visual Studio 2003 .NET compiler. Unfortunately there is no free version of this.
@@ -40,13 +38,15 @@ To compile pyodbc, you must use the appropriate Microsoft Visual C++ compiler fo
 
 These instructions assume Windows 10. If you don't already have _Visual Studio 2019_ installed, install _Build Tools for Visual Studio 2019_ by going to https://visualstudio.microsoft.com/downloads/, searching for "Build Tools for Visual Studio 2019" (expand all collapsible sections if necessary), downloading the executable, and running it. After the initial confirmations you should eventually see a window with a "Workloads" tab highlighted. In the "Desktop & Mobile" section, there should be a box labelled "C++ build tools". Click the checkbox in the top right of that box. On the right, make sure the "MSVC v142 - VS 2019 C++ x64/x86 build tools" and "Windows 10 SDK" are checked, then click Install.
 
-To build pyodbc, from the Start menu within the "Visual Studio 2019" folder, open up an "x64 Native Tools Command Prompt for VS 2019" command prompt (or "x86" for a 32-bit compilation, but NOT an ordinary command prompt). Make sure you open it with administrative privileges by right-clicking on the icon, choosing "More" then "Run as administrator".
+To build pyodbc, go to the Start menu, open the "Visual Studio 2019" folder, then open up an "x64 Native Tools Command Prompt for VS 2019" command prompt (or "x86" for a 32-bit compilation, but NOT an ordinary command prompt). If you need to open the command prompt with admin privileges (see below), do this by right-clicking on the icon, choosing "More" then "Run as administrator".
 
-Within that command prompt, `cd` to the top-level pyodbc directory, the one that includes setup.py, then:
+Within that command prompt:
 
+1) Run `pip install --upgrade setuptools` to get the latest version of the `setuptools` module.  `setuptools` searches your PC for the correct C++ compiler so it's important to have the latest version.
+1) `cd` to the top-level pyodbc directory, the one that includes `setup.py`.
 1) Make sure the `build` subdirectory is empty (if it exists at all).
 1) Run `python setup.py build`, which creates and populates the `build` subdirectory.
-1) Run `python setup.py install`, which installs your new pyodbc build into your Python environment.  This step requires admin privileges.
+1) Run `python setup.py install`, which installs your new pyodbc build into your Python environment based on the contents of the `build` directory.  This step may require admin privileges.
 
 Check your new version of pyodbc by running `python -c "import pyodbc; print(pyodbc.version)"`.
 
