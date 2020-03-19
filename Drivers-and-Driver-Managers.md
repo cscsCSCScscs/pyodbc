@@ -67,9 +67,9 @@ Sometimes, third-party drivers are available for certain RDBMS's.  For example, 
 
 The driver manager has to communicate with the database driver (and database), and before it can do that, it has to be able to find out what drivers and databases are available. This information is stored in two files on the app server - `odbcinst.ini` (for drivers) and `odbc.ini` (for database servers).
 
-You can usually find out where the `odbc.ini` and `odbcinst.ini` files are on a server by running `odbcinst -j`.  Typically they are in the `/etc/` directory, although they may also been stored as hidden files in your home directory, i.e. `~/.odbc.ini`.
+You can usually find out where the `odbcinst.ini` and `odbc.ini` files are on a server by running `odbcinst -j`.  Typically they are in the `/etc/` directory, although they may also been stored as hidden files in your home directory, i.e. `~/.odbc.ini`.
 
-### odbc.ini
+### odbcinst.ini
 
 Information about ODBC drivers on the app server is stored in the `odbcinst.ini` file.
 It contains a catalog of the drivers which have been installed, including their locations and their familiar names.  Here is an example of its contents:
@@ -89,7 +89,7 @@ UsageCount=1
 
 Here, the familiar name for the SQL Server driver is "ODBC Driver 17 for SQL Server", and "ODBC Driver for Vertica" for the Vertica driver.  The driver software module itself is referred to in the "Driver" line.  Typically, when database drivers are installed, the installation process adds a new catalog entry to the `odbcinst.ini` file so it shouldn't normally be necessary to manually edit this file.  Note, the driver is specific to an RDBMS, not a database instance.  Each driver can be used to connect to multiple database instances of the same RDBMS.
 
-### odbcinst.ini
+### odbc.ini
 
 Information about database connections on the app server is stored in the `odbc.ini` file.
 It contains a catalog of DSN's (Data Source Names), typically one for each database instance.  Each DSN includes a driver reference in the "Driver" line, which is the familiar name from the `odbcinst.ini` file, e.g.:
