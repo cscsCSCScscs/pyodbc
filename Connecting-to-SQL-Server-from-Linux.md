@@ -26,17 +26,22 @@ NOTES:
 
 1. Microsoft's ODBC drivers **do not** use a `Port = ` parameter. If you need to connect to a port other than the default (1433) you must append it to the `Server` argument with a comma, e.g.,
 
-```
-Server      = mydbserver.mycompany.com,49242
-```
+    ```
+    Server      = mydbserver.mycompany.com,49242
+    ```
 
-2. Microsoft's ODBC drivers for Linux cannot resolve instance names, so this won't work from a Linux client:
+1. Microsoft's ODBC drivers for Linux cannot resolve instance names, so this won't work from a Linux client:
 
-```
-Server      = mydbserver.mycompany.com\SQLEXPRESS
-```
+    ```
+    Server      = mydbserver.mycompany.com\SQLEXPRESS
+    ```
+    If you need to connect to a named instance you can use the (free) [sqlserverport](https://github.com/gordthompson/sqlserverport) module.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you need to connect to a named instance you can use the (free) [sqlserverport](https://github.com/gordthompson/sqlserverport) module.
+1. If you're connecting to your local database instance, use "localhost" or, if that doesn't work, try "127.0.0.1":
+
+    ```
+    Server      = 127.0.0.1
+    ```
 
 &nbsp;
 
