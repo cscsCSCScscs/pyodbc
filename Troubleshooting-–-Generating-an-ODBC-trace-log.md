@@ -22,7 +22,7 @@ On the "Tracing" tab, click the "Start Tracing Now" button. Details of subsequen
 
 ### Linux
 
-To enable ODBC tracing under Linux (unixODBC), add the following two lines to the `[ODBC]` section of `odbcinst.ini`.
+To enable ODBC tracing under Linux (unixODBC), add an `[ODBC]` section to `odbcinst.ini` and include the following two lines:
 
 ```
 [ODBC]
