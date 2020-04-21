@@ -14,6 +14,8 @@ connection_string = (
 ```
 
 Note: "ANSI" is not a typo. For full `utf8mb4` support including supplementary characters (like emoji) you need to use the "ANSI" version of the driver, not the "Unicode" one. See [this MySQL Connector/ODBC issue](https://bugs.mysql.com/bug.php?id=69021) for more information.
+
+Also Note: Be certain to **not** put any spaces around the equals signs (=) when creating the connection string (as shown above), otherwise you will receive errors about not being able to find the data source name or that no default driver was specified.
   
 ### Encodings
 
