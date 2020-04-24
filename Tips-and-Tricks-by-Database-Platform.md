@@ -48,25 +48,22 @@ The ODBC Driver for SQL Server, in addition to the authentication methods built-
 (Python 2.x)
 
 ```python
-token = "eyJ0eXAiOi...";
-exptoken = "";
+token = "eyJ0eXAiOi..."
+exptoken = ""
 for i in token:
-  exptoken += i;
-  exptoken += chr(0);
-tokenstruct = struct.pack("=i", len(exptoken)) + exptoken;
-conn = pyodbc.connect(connstr, attrs_before = { 1256:bytearray(tokenstruct) });
+    exptoken += i
+    exptoken += chr(0)
+tokenstruct = struct.pack("=i", len(exptoken)) + exptoken
+conn = pyodbc.connect(connstr, attrs_before = { 1256:bytearray(tokenstruct) })
 ```
 
 (Python 3.x)
 
 ```python
-token = b"eyJ0eXAiOi...";
-exptoken = b"";
-for i in token:
-  exptoken += bytes({i});
-  exptoken += bytes(1);
-tokenstruct = struct.pack("=i", len(exptoken)) + exptoken;
-conn = pyodbc.connect(connstr, attrs_before = { 1256:tokenstruct });
+token = b"eyJ0eXAiOi..."
+exptoken = b"".join(bytes([i, 0]) for i in token)
+tokenstruct = struct.pack("=i", len(exptoken)) + exptoken
+conn = pyodbc.connect(connstr, attrs_before = { 1256:tokenstruct })
 ```
 (See also: [original issue where this feature was requested](https://github.com/mkleehammer/pyodbc/issues/228))
 
