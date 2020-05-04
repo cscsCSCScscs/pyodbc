@@ -142,7 +142,7 @@ the epoch; see the documentation of the standard Python time module for details)
     pyodbc.setDecimalSeparator('.')
 
 Sets the decimal separator character used when parsing NUMERIC from the database.  The default
-is to use locale's "decimal_point" value or '.' if that fails.  This function can be used to
+is to use the current locale's "[decimal_point](https://docs.python.org/3/library/locale.html#locale.localeconv)" value when pyodbc was first imported or '.' if that failed.  This function can be used to
 override this.
 
 ## getDecimalSeparator
