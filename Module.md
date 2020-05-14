@@ -1,16 +1,16 @@
-# pyodbc Module
+For reference, the Python DB API for database modules is [here](https://www.python.org/dev/peps/pep-0249/#module-interface).
 
-For reference, the Python DB API for the pyodbc module is [here](https://www.python.org/dev/peps/pep-0249/#module-interface).
+## pyodbc Attributes
 
-## Attributes
+All these attributes can be read, e.g. `pyodbc.version` and some can be set, e.g. `pyodbc.pooling = False`.
 
 ### version
 
-The module version string in *major.minor.patch* format such as `"4.0.2"`.
+The module version string in *major.minor.patch* format such as `4.0.25`.
 
 ### apilevel
 
-The string constant `"2.0"` indicating this module supports the DB API level 2.0
+The string constant `2.0` indicating this module supports the DB API level 2.0.
 
 ### lowercase
 
@@ -20,9 +20,9 @@ useful when database columns have inconsistent capitalization.
 
 ### native_uuid
 
-A Boolean that determines whether SQL_GUID columns are returned as text (`False`, the default)
-or `uuid.UUID` (True) objects.  The default is False for backwards compatibility, but this may
-change in a future release.
+A Boolean that determines whether SQL_GUID columns, e.g. UNIQUEIDENTIFIER or UUID, are returned
+as text (with `False`, the default) or as `uuid.UUID` objects (with `True`).  The default is False for
+backwards compatibility, but this may change in a future release.
 
 ### pooling
 
@@ -37,69 +37,131 @@ connections and cursors may be used by different threads, just not at the same t
 
 ### paramstyle
 
-The string constant "qmark" to indicate parameters are identified using question marks.
+The string constant `qmark` to indicate parameters are identified using question marks.
 
-## connect
+## pyodbc Functions
 
-    connect(*connectionstring, **kwargs) --> Connection
+### connect()
+
+    connect(*connstring, **kwargs) --> Connection
 
 Creates and returns a new connection to the database.
 
-The connection string and keywords are put together to construct an ODBC connection string.
-Python 2 accepts both ANSI and Unicode strings.  (In Python 3 all strings are Unicode.)
+To create a database connection, an ODBC connection string is sent to the database driver.
+This string includes all the required connection parameters as key/value pairs separated
+by semi-colons, e.g.:
 
-    # a string
-    cnxn = pyodbc.connect('driver={SQL Server};server=localhost;database=test;uid=me;pwd=me2')
-    # keywords
-    cnxn = pyodbc.connect(driver='{SQL Server}', server='localhost', database='test', uid='me', pwd='me2')
-    # both
-    cnxn = pyodbc.connect('driver={SQL Server};server=localhost;database=test', uid='me', pwd='me2'
-    cnxn = pyodbc.connect('DSN=my_dsn', autocommit=True)
+    driver={PostgreSQL Unicode};server=localhost;database=test;uid=me;pwd=mypwd
 
-The DB API recommends some keywords that are not usually used in ODBC connection strings, so
-they are converted:
+The `connect()` function constructs this ODBC connection string from the provided parameters,
+concatenating the `connstring` parameter with key/value pairs from the kwargs.
+(Python 2 accepts both ANSI and Unicode strings.)
+Both `connstring` and the kwargs are optional, but one of them must be provided.
+Note, `connect()` does not attempt to parse any key/value pairs in the `connstring`
+parameter.  It uses that string exactly as given.
+Hence, the call:
 
-keyword   | converts to
-----------|------------
-host      | server
-user      | uid
-password  | pwd
+    cnxn = pyodbc.connect('DSN=MySQLDB;SCHEMA=DW', UID='me', PWD='mypwd')
 
+will cause `connect()` to generate an ODBC connection string of:
 
-Some keywords are reserved by pyodbc and are not passed to the odbc driver:
+    DSN=MySQLDB;SCHEMA=DW;UID=me;PWD=mypwd
+
+This string is then sent to the database driver to create the connection.
+
+The relevant connection keywords vary from database to database but are generally similar.
+See [here](https://www.connectionstrings.com/) for examples.  Typically, the keywords are
+case-insensitive but this depends on the database driver.
+Note, some kwarg keywords are converted by pyodbc to ODBC equivalents, and some kwarg keywords
+are reserved by pyodbc for specific purposes.
+
+#### converted kwarg keywords
+
+The DB API [recommends](https://www.python.org/dev/peps/pep-0249/#footnotes) the use of certain
+keywords that are not typically used in ODBC connection strings, so as a convenience when these
+keywords are provided as kwargs, the `connect()` function converts them to ODBC-style equivalents,
+as follows:
+
+kwarg keyword | is converted to
+--------------|----------------
+host          | server
+user          | uid
+password      | pwd
+
+Hence, the call:
+
+    cnxn = pyodbc.connect('driver={MySQL}', host='my1.xyz.com', database='DB1', user='admin', password='mypwd')
+
+will generate an ODBC connection string of:
+
+    driver={MySQL};server=my1.xyz.com;database=DB1;uid=me;pwd=mypwd
+
+#### reserved kwarg keywords
+
+Some kwarg keywords have a special meaning for pyodbc and are not added to the connection string, and hence not passed to the database driver:
 
 keyword | notes | default
 ------- | ----- | -------
-ansi | If True, the driver does not support Unicode and SQLDriverConnectA should be used. | False
+ansi | If True, indicates the driver does not support Unicode. | False
 attrs_before | A dictionary of connection attributes to set before connecting. |
-autocommit | If False, Connection.commit must be called; otherwise each statement is automatically commited | False
-encoding | Optional encoding for the connection string. | utf-16le
-readonly | If True, the connection is set to readonly | False
-timeout | A timeout for the connection, in seconds.  This causes the connection's SQL_ATTR_LOGIN_TIMEOUT to be set before the connection occurs. |
+autocommit | If True, causes a commit to be performed after each SQL statement. | False
+encoding | The encoding for the connection string. | utf-16le
+readonly | If True, the connection is set to read-only. | False
+timeout | The timeout for the connection attempt, in seconds. |
 
-### ansi</h4>
+##### ansi
 
-The ansi keyword should only be used to work around driver bugs. pyodbc will determine if the
-Unicode connection function (SQLDriverConnectW) exists and always attempt to call it. If the
+The `ansi` keyword should only be used to work around driver bugs. pyodbc will determine if the
+Unicode connection function (SQLDriverConnectW) exists and will always attempt to call it. If the
 driver returns IM001 indicating it does not support the Unicode version, the ANSI version is
-tried (SQLDriverConnectA). Any other SQLSTATE is turned into an exception. Setting ansi to true
+tried (SQLDriverConnectA). Any other SQLSTATE is turned into an exception. Setting `ansi` to True
 skips the Unicode attempt and only connects using the ANSI version. This is useful for drivers
 that return the wrong SQLSTATE (or if pyodbc is out of date and should support other
 SQLSTATEs).
 
-### attrs_before</h4>
+##### attrs_before
 
 The `attrs_before` keyword is an optional dictionary of connection attributes.  These will be
-set on the connection via SQLSetConnectAttr before a connection is made.
+set on the connection via [SQLSetConnectAttr](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function) before a connection is made.
 
-The dictionary keys must be the integer constant defined by ODBC or the driver.  Only integer
+The dictionary keys must be the integer constants defined by ODBC or the driver.  Only integer
 values are supported at this time.  Below is an example that sets the SQL_ATTR_PACKET_SIZE
 connection attribute to 32K.
 
     SQL_ATTR_PACKET_SIZE = 112
     cnxn = connect(cstring, attrs_before={ SQL_ATTR_PACKET_SIZE : 1024 * 32 })
 
-## dataSources
+##### autocommit
+
+If `autocommit` is False, database transactions must be explicitly committed (with
+[cnxn.commit()](Connection#commit)). Most of the time, you will probably want to set this attribute
+to True.  Note, when True, it's the database that commits after each SQL statement, not pyodbc.
+
+##### encoding
+
+The ODBC connection string must be sent to the driver as a byte sequence, hence the Python
+connection string must first be encoded using the optional named
+[encoding](https://docs.python.org/3/library/codecs.html#standard-encodings).
+
+##### readonly
+
+This causes the connection's
+[SQL_ATTR_ACCESS_MODE](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
+to be set to read-only (SQL_MODE_READ_ONLY) before the connection occurs.
+Not all database drivers and/or databases support this.
+
+##### timeout
+
+This causes the connection's
+[SQL_ATTR_LOGIN_TIMEOUT](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
+to be set before the connection occurs.
+If the connection cannot be established within the given timeout (in seconds), an OperationalError
+exception will be raised.  This timeout functionality is implemented by the database driver,
+not pyodbc, and not all drivers support this.
+Setting a timeout is optional.  Even if no timeout is provided, connection attempts will usually
+timeout after a default period of time anyway.
+
+### dataSources()
 
     dataSources() -> { DSN : Description }
 
@@ -110,43 +172,45 @@ merging the system one.
 
 On Windows, these will be the ones defined in the [ODBC Data Source Administrator](https://msdn.microsoft.com/en-us/library/ms188691.aspx).  On Unix, these will be the ones defined in the user's odbc.ini file (typically ~/.odbc.ini) and/or the system odbc.ini file (typically /etc/odbc.ini).
 
-## drivers
+### drivers()
 
     drivers() -> [ DriverName1, DriverName2, ... DriverNameN ]
 
 Returns a list of ODBC Drivers that are available to pyodbc. On Windows this list will be specific to the "platform" under which the Python script is running (i.e., 64-bit or 32-bit).
 
-## TimeFromTicks
+### TimeFromTicks()
 
     t = pyodbc.TimeFromTicks(tics)
 
 Returns a datetime.time object initialized from the given ticks value (number of seconds since
 the epoch; see the documentation of the standard Python time module for details).
 
-## DateFromTicks
+### DateFromTicks()
 
     d = pyodbc.DateFromTicks(d)
     
 Returns a datetime.date object initialized from the given ticks value (number of seconds since
 the epoch; see the documentation of the standard Python time module for details).
 
-## TimestampFromTicks
+### TimestampFromTicks()
 
     dt = pyodbc.TimestampFromTicks(d)
     
 Returns a datetime.datetime object initialized from the given ticks value (number of seconds since
 the epoch; see the documentation of the standard Python time module for details).
 
-## setDecimalSeparator
+### setDecimalSeparator()
 
     pyodbc.setDecimalSeparator('.')
 
-Sets the decimal separator character used when parsing NUMERIC from the database.  The default
-is to use the current locale's "[decimal_point](https://docs.python.org/3/library/locale.html#locale.localeconv)" value when pyodbc was first imported or '.' if that failed.  This function can be used to
-override this.
+Sets the decimal separator character used when parsing NUMERIC/DECIMAL values from the
+database, e.g. the "." in "1,234.56".  The default is to use the current locale's
+"[decimal_point](https://docs.python.org/3/library/locale.html#locale.localeconv)"
+value when pyodbc was first imported, or "." if the locale is not available.
+This function overrides the default.
 
-## getDecimalSeparator
+### getDecimalSeparator()
 
     print(pyodbc.getDecimalSeparator())
     
-Returns the decimal separator character used when parsing NUMERIC from the database.
+Returns the decimal separator character used when parsing NUMERIC/DECIMAL values from the database.
