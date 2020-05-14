@@ -1,12 +1,12 @@
 ### Connect to a Database
 
-Pass an ODBC connection string to the pyodbc [connect()](Module#connect) function which will return a Connection. Once you have a connection you can ask it for a Cursor. For example:
+Pass an ODBC connection string to the pyodbc [connect()](The-pyodbc-Module#connect) function which will return a Connection. Once you have a connection you can ask it for a Cursor. For example:
 
 ```python
 import pyodbc
 
 # Specifying the ODBC driver, server name, database, etc. directly
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=localhost;DATABASE=testdb;UID=me;PWD=pass')
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=testdb;UID=me;PWD=pass')
 
 # Using a DSN, but providing a password as well
 cnxn = pyodbc.connect('DSN=test;PWD=password')
@@ -14,7 +14,7 @@ cnxn = pyodbc.connect('DSN=test;PWD=password')
 # Create a cursor from the connection
 cursor = cnxn.cursor()
 ```
-There are lots of options when connecting, so see the [connect()](Module#connect) function and the [Connecting to Databases](Connecting-to-databases) section for more details.
+There are lots of options when connecting, so see the [connect()](The-pyodbc-Module#connect) function and the [Connecting to Databases](Connecting-to-databases) section for more details.
 
 Make sure you set the [encoding or decoding settings](Unicode) needed for your database and the version of Python you are using:
 
@@ -172,11 +172,10 @@ print('%s users' % row.user_count)
 
 #### Formatting Long SQL Statements
 
-There are many ways of formatting a Python string that encapsulates a long SQL statement. Using the triple-quote string format is the obvious way of doing this. Doing so does create a string with lots of blank space on the left, but white-space (including tabs and newlines) should be ignored by database SQL engines. If you still want to remove the blank space on the left, you can use the [`dedent()`](https://docs.python.org/3/library/textwrap.html#textwrap.dedent) function in the built-in `textwrap` module. For example:
+Long SQL statements are best encapsulated using the triple-quote string format. Doing so does create a string with lots of blank space on the left, but whitespace should be ignored by database SQL engines. If you still want to remove the blank space on the left, you can use the [`dedent()`](https://docs.python.org/3/library/textwrap.html#textwrap.dedent) function in the built-in `textwrap` module. For example:
 
 ```python
 import textwrap
-. . .
 sql = textwrap.dedent("""
     select p.date_of_birth,
            p.email,
@@ -208,24 +207,22 @@ However, `fetchval` is a better choice if the statement can return an empty set:
 
 ``` python
 # Careful!
-cursor.execute(
-    """
+cursor.execute("""
     select create_timestamp
     from photos
     where user_id = 1
     order by create_timestamp desc
     limit 1
-    """).fetchone()[0]
+""").fetchone()[0]
 
 # Preferred
-cursor.execute(
-    """
-    select max(updatetime), 0)
+cursor.execute("""
+    select create_timestamp
     from photos
     where user = 1
     order by create_timestamp desc
     limit 1
-    """).fetchval()
+""").fetchval()
 ```
 
 The first example will raise an exception if there are no rows for user_id 1.  The `fetchone()`
