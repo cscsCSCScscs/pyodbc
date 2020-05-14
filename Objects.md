@@ -2,7 +2,7 @@ The objects provided by pyodbc are defined by the [Python Database API Specifica
 
 ### The Module
 
-[module documentation](Module)
+[module documentation](The-pyodbc-Module)
 
 You start, of course, by importing the pyodbc module:
 
@@ -26,7 +26,7 @@ The module provides:
 The Connection object represents a single connection to the database and is obtained from the module's connect() function:
 
 ```python
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=localhost;DATABASE=mine;UID=me;PWD=pwd')
+cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=mine;UID=me;PWD=pwd')
 ```
 
 There are two primary features of the connection object:
@@ -36,16 +36,17 @@ There are two primary features of the connection object:
 
 #### commit
 
-Unless you have enabled autocommit (in the pyodbc.connect() function or with Connection.autocommit), all uncommitted work will be discarded when the Connection object is closed. You must call cnxn.commit() or your work will be lost!
+Unless you have enabled autocommit (in the pyodbc.connect() function or with cnxn.autocommit), all uncommitted work will be discarded when the Connection object is closed. You must call cnxn.commit() or your work will be lost!
 ```python
 cnxn = pyodbc.connect(...)
 # do work here...
 cnxn.commit()
 cnxn.close()
 ```
+
 #### exception handling
 
-The [standard Python implementation](www.python.org) uses reference counting for garbage collection, so as long as your connection and cursors are not used outside the current function, they will be closed automatically and immediatley when the function exits. Since connections automatically roll back changes (since the last commit call) when they are closed, you do not need a finally block to clean up errors:
+The [standard Python implementation](www.python.org) uses reference counting for garbage collection, so as long as your connection and cursors are not used outside the current function, they will be closed automatically and immediately when the function exits. Since connections automatically roll back changes (since the last commit call) when they are closed, you do not need a finally block to clean up errors:
 
 ```python
 cnxn   = pyodbc.connect(...)
