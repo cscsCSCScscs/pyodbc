@@ -19,7 +19,7 @@
   * [Teradata](Connecting-to-Teradata)
   * [Vertica](Connecting-to-Vertica)
 * [pyodbc objects](Objects)
-  * [The pyodbc module itself](Module)
+  * [The pyodbc module itself](The-pyodbc-Module)
   * [Connection](Connection)
   * [Cursor](Cursor)
   * [Row](Row)
