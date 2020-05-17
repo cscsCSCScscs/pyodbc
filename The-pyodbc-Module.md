@@ -43,37 +43,44 @@ The string constant `qmark` to indicate parameters are identified using question
 
 ### connect()
 
-    connect(*connstring, **kwargs) --> Connection
+    connect(*connstring, autocommit=False, timeout=0, readonly=False,
+            attrs_before=None, encoding='utf-16le', ansi=False, **kwargs)
 
-Creates and returns a new connection to the database.
+Creates and returns a new connection to the database, e.g.:
 
-To create a database connection, an ODBC connection string is sent to the database driver.
-This string includes all the required connection parameters as key/value pairs separated
-by semi-colons, e.g.:
+    cnxn = pyodbc.connect('DSN=SQLServer1;Database=test;UID=me;PWD=mypwd', autocommit=True)
+
+To create a database connection, pyodbc
+[passes](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function)
+an ODBC connection string to the local driver manager (e.g. unixODBC) which then calls
+the relevant database driver which in turn calls the database.
+Hence, this ODBC connection string
+[must include](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function#comments)
+all the necessary connection parameters as key/value pairs separated
+by semi-colons (the values can be enclosed with curly braces if necessary), e.g.:
 
     driver={PostgreSQL Unicode};server=localhost;database=test;uid=me;pwd=mypwd
 
-The `connect()` function constructs this ODBC connection string from the provided parameters,
-concatenating the `connstring` parameter with key/value pairs from the kwargs.
+The `connect()` function constructs this ODBC connection string by concatenating the
+`connstring` parameter with key/value pairs from the kwargs.
 (Python 2 accepts both ANSI and Unicode strings.)
 Both `connstring` and the kwargs are optional, but one of them must be provided.
 Note, `connect()` does not attempt to parse any key/value pairs in the `connstring`
 parameter.  It uses that string exactly as given.
 Hence, the call:
 
-    cnxn = pyodbc.connect('DSN=MySQLDB;SCHEMA=DW', UID='me', PWD='mypwd')
+    connect('DSN=MySQLDB;SCHEMA=DW', UID='me', PWD='mypwd')
 
 will cause `connect()` to generate an ODBC connection string of:
 
     DSN=MySQLDB;SCHEMA=DW;UID=me;PWD=mypwd
 
-This string is then sent to the database driver to create the connection.
+This string is then used to create the connection.
 
 The relevant connection keywords vary from database to database but are generally similar.
 See [here](https://www.connectionstrings.com/) for examples.  Typically, the keywords are
 case-insensitive but this depends on the database driver.
-Note, some kwarg keywords are converted by pyodbc to ODBC equivalents, and some kwarg keywords
-are reserved by pyodbc for specific purposes.
+Note, some kwarg keywords are converted by pyodbc to ODBC equivalents.
 
 #### converted kwarg keywords
 
@@ -90,17 +97,15 @@ password      | pwd
 
 Hence, the call:
 
-    cnxn = pyodbc.connect('driver={MySQL}', host='my1.xyz.com', database='DB1', user='admin', password='mypwd')
+    connect('driver=MySQL', host='my1.xyz.com', database='DB1', user='admin', password='mypwd')
 
 will generate an ODBC connection string of:
 
-    driver={MySQL};server=my1.xyz.com;database=DB1;uid=me;pwd=mypwd
+    driver=MySQL;server=my1.xyz.com;database=DB1;uid=me;pwd=mypwd
 
-#### reserved kwarg keywords
+#### other parameters
 
-Some kwarg keywords have a special meaning for pyodbc and are not added to the connection string, and hence not passed to the database driver:
-
-keyword | notes | default
+parameter | notes | default
 ------- | ----- | -------
 ansi | If True, indicates the driver does not support Unicode. | False
 attrs_before | A dictionary of connection attributes to set before connecting. |
@@ -111,21 +116,23 @@ timeout | The timeout for the connection attempt, in seconds. |
 
 ##### ansi
 
-The `ansi` keyword should only be used to work around driver bugs. pyodbc will determine if the
+The `ansi` parameter should only be used to work around driver bugs. pyodbc will determine if the
 Unicode connection function (SQLDriverConnectW) exists and will always attempt to call it. If the
 driver returns IM001 indicating it does not support the Unicode version, the ANSI version is
 tried (SQLDriverConnectA). Any other SQLSTATE is turned into an exception. Setting `ansi` to True
 skips the Unicode attempt and only connects using the ANSI version. This is useful for drivers
-that return the wrong SQLSTATE (or if pyodbc is out of date and should support other
-SQLSTATEs).
+that return the wrong SQLSTATE (or if pyodbc is out of date and should support other SQLSTATEs).
 
 ##### attrs_before
 
-The `attrs_before` keyword is an optional dictionary of connection attributes.  These will be
-set on the connection via [SQLSetConnectAttr](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function) before a connection is made.
+The `attrs_before` parameter is an optional dictionary of connection attributes.  These
+will be set on the connection via
+[SQLSetConnectAttr](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
+before a connection is attempted.
 
-The dictionary keys must be the integer constants defined by ODBC or the driver.  Only integer
-values are supported at this time.  Below is an example that sets the SQL_ATTR_PACKET_SIZE
+The dictionary keys must be the integer constants defined by ODBC or the driver.
+The dictionary values can be integers, bytes, bytearrays, or strings.
+Below is an example that sets the SQL_ATTR_PACKET_SIZE
 connection attribute to 32K.
 
     SQL_ATTR_PACKET_SIZE = 112
@@ -134,49 +141,51 @@ connection attribute to 32K.
 ##### autocommit
 
 If `autocommit` is False, database transactions must be explicitly committed (with
-[cnxn.commit()](Connection#commit)). Most of the time, you will probably want to set this attribute
-to True.  Note, when True, it's the database that commits after each SQL statement, not pyodbc.
+[cnxn.commit()](Connection#commit)). Most of the time, you will probably want to set this
+to True.
+Note, when True, it's the database that executes a commit after each SQL statement, not pyodbc.
 
 ##### encoding
 
 The ODBC connection string must be sent to the driver as a byte sequence, hence the Python
-connection string must first be encoded using the optional named
+string must first be encoded using the named
 [encoding](https://docs.python.org/3/library/codecs.html#standard-encodings).
 
 ##### readonly
 
 This causes the connection's
 [SQL_ATTR_ACCESS_MODE](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
-to be set to read-only (SQL_MODE_READ_ONLY) before the connection occurs.
-Not all database drivers and/or databases support this.
+attribute to be set to read-only (SQL_MODE_READ_ONLY) before the connection occurs.
+Not all drivers and/or databases support this.
 
 ##### timeout
 
 This causes the connection's
 [SQL_ATTR_LOGIN_TIMEOUT](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
-to be set before the connection occurs.
-If the connection cannot be established within the given timeout (in seconds), an OperationalError
-exception will be raised.  This timeout functionality is implemented by the database driver,
+attribute to be set before the connection is attempted.
+If the connection cannot be established within the given timeout (in seconds), an `OperationalError`
+exception will be raised.  Note, this timeout functionality is implemented by the database driver,
 not pyodbc, and not all drivers support this.
-Setting a timeout is optional.  Even if no timeout is provided, connection attempts will usually
-timeout after a default period of time anyway.
 
 ### dataSources()
 
     dataSources() -> { DSN : Description }
 
-Returns a dictionary mapping available DSNs to their descriptions.
+Returns a dictionary of the available DSNs and their descriptions.
+
+On Windows, these will be the ones defined in the [ODBC Data Source Administrator](https://msdn.microsoft.com/en-us/library/ms188691.aspx) and will be specific to the bitness of the Python being run (i.e. 32-bit or 64-bit).
+On Unix, these will be the ones defined in the user's odbc.ini file (typically ~/.odbc.ini) and/or the system odbc.ini file (typically /etc/odbc.ini).
 
 Note: unixODBC may have a bug that only returns items from the users odbc.ini file without
 merging the system one.
-
-On Windows, these will be the ones defined in the [ODBC Data Source Administrator](https://msdn.microsoft.com/en-us/library/ms188691.aspx).  On Unix, these will be the ones defined in the user's odbc.ini file (typically ~/.odbc.ini) and/or the system odbc.ini file (typically /etc/odbc.ini).
 
 ### drivers()
 
     drivers() -> [ DriverName1, DriverName2, ... DriverNameN ]
 
-Returns a list of ODBC Drivers that are available to pyodbc. On Windows this list will be specific to the "platform" under which the Python script is running (i.e., 64-bit or 32-bit).
+Returns a list of ODBC Drivers that are available to pyodbc.
+
+On Windows, this list will be specific to the bitness of the Python being run (i.e. 32-bit or 64-bit).
 
 ### TimeFromTicks()
 
