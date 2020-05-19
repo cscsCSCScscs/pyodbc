@@ -27,7 +27,7 @@ The following diagram illustrates how Python code typically communicates with da
 As you can see, there are a series of intermediary interfaces between the Python application code and the target database.
 When the Python application wants to communicate with a database, it makes calls to the `pyodbc` module, which in turn communicates with a
 [driver manager](https://docs.microsoft.com/en-us/sql/odbc/reference/the-driver-manager)
-(e.g. unixODBC).
+(e.g. unixODBC or odbc32.dll).
 The driver manager provides the API that conforms to the [ODBC standard](https://docs.microsoft.com/en-us/sql/odbc), which is common to all ODBC-compliant RDBMS's.
 For example, to open a connection to a database, `pyodbc` calls the
 [SQLDriverConnect](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function)
