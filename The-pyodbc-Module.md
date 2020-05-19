@@ -50,13 +50,13 @@ Creates and returns a new connection to the database, e.g.:
 
     cnxn = pyodbc.connect('DSN=SQLServer1;Database=test;UID=me;PWD=mypwd', autocommit=True)
 
-To create a database connection, pyodbc
+To create a connection to a database, pyodbc
 [passes](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function)
-an ODBC connection string to the local driver manager (e.g. unixODBC) which then calls
-the relevant database driver which in turn calls the database.
-Hence, this ODBC connection string
-[must include](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function#comments)
-all the necessary connection parameters as key/value pairs separated
+an "ODBC connection string" to the local driver manager (e.g. unixODBC or odbc32.dll) which
+then calls the relevant database driver which in turn calls the database to request a connection.
+Hence, this ODBC connection string must
+[include](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqldriverconnect-function#comments)
+all the necessary connection information.  This information is formatted as key/value pairs separated
 by semi-colons (the values can be enclosed with curly braces if necessary), e.g.:
 
     driver={PostgreSQL Unicode};server=localhost;database=test;uid=me;pwd=mypwd
