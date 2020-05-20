@@ -110,7 +110,7 @@ add_output_converter(sqltype, new_converter)
 add_output_converter(sqltype, prev_converter)  # restore previous behaviour
 ```
 
-### setencoding
+### setencoding()
 
     # Python 2
     cnxn.setencoding(type, encoding=None, ctype=None)
@@ -161,7 +161,7 @@ In Python 2.7, the value "raw" can be used as special encoding for `str` objects
 pass the string object's bytes as-is to the database.  This is not recommended as you need to
 make sure that the internal format matches what the database expects.
 
-### setdecoding
+### setdecoding()
 
       # Python 2
       cnxn.setdecoding(sqltype, encoding=None, ctype=None, to=None)
@@ -207,6 +207,18 @@ will create a `str` object directly from the bytes from the database with no con
 object's bytes as-is to the database.  This is not recommended as you need to make sure that
 the internal format matches what the database sends.
 
+### set_attr()
+
+      cnxn.set_attr(attr_id, value)
+
+Sets an attribute on the connection via
+[SQLSetConnectAttr](https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetconnectattr-function)
+.   The id must be an integer constant defined by ODBC or the driver.  Some common attributes
+and values are listed in the pyodbc module, e.g.:
+
+      cnxn.set_attr(pyodbc.SQL_ATTR_TXN_ISOLATION, pyodbc.SQL_TXN_REPEATABLE_READ)
+
+At this time, only integer values are supported and are always passed as SQLUINTEGER.
 
 ## Context Manager
 
