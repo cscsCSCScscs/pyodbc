@@ -59,12 +59,15 @@ It is available on all Unix OS's and Mac OSX (`brew install unixodbc`). It also 
 
 The website for unixODBC is http://www.unixodbc.org/. It does not have extensive documentation but the front page is very useful for the release notes about unixODBC itself. The unixODBC codebase is available on [SourceForge](https://sourceforge.net/projects/unixodbc/).
 
+Bear in mind, unixODBC's default encoding is UTF16 so you may need to tell your driver this by setting the `DriverManagerEncoding` parameter in odbcinst.ini, e.g. `DriverManagerEncoding=UTF-16`.  Check your driver's documentation.
+
 On Unix platforms and Mac OSX, `pyodbc` has assumed unixODBC is being used rather than iODBC since version 3.0.8 (April 2015).
 
 ### iODBC
 
 [iODBC](http://www.iodbc.org/) is another driver manager for Unix platforms. It used to be pre-installed as the default driver manager on Mac OSX, but since around early 2015, this is no longer the case.
 
+Bear in mind, iODBC's default encoding is UTF32 so you may need to tell your driver this by setting the `DriverManagerEncoding` parameter in odbcinst.ini, e.g. `DriverManagerEncoding=UTF-32`.  Check your driver's documentation.
 
 ## Drivers
 
