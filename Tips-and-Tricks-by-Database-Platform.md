@@ -82,14 +82,14 @@ Use an Output Converter function to retrieve such values. See the examples on th
 Query parameters for DATETIMEOFFSET columns currently must be sent as strings. Note that SQL Server is rather fussy about the format of the string:
 
 ```python
- sample data
+# sample data
 dto = datetime(2018, 8, 2, 0, 28, 12, 123456, tzinfo=timezone(timedelta(hours=-6)))
 
-dto_string = dto.strftime("%Y-%m-%d %H:%M:%S.%f %z")   2018-08-02 00:28:12.123456 -0600
- Trying to use the above will fail with
-   "Conversion failed when converting date and/or time from character string."
- We need to add the colon for SQL Server to accept it
-dto_string = dto_string[:30] + ":" + dto_string[30:]   2018-08-02 00:28:12.123456 -06:00
+dto_string = dto.strftime("%Y-%m-%d %H:%M:%S.%f %z")  # 2018-08-02 00:28:12.123456 -0600
+# Trying to use the above will fail with
+#   "Conversion failed when converting date and/or time from character string."
+# We need to add the colon for SQL Server to accept it
+dto_string = dto_string[:30] + ":" + dto_string[30:]  # 2018-08-02 00:28:12.123456 -06:00
 ```
 
 ### TIME columns
@@ -101,7 +101,7 @@ crsr.execute("CREATE TABLE #tmp (id INT, t TIME)")
 t = datetime.time(hour=12, minute=23, second=34, microsecond=567890)
 crsr.execute("INSERT INTO #tmp (id, t) VALUES (1, ?)", t)
 rtn = crsr.execute("SELECT CAST(t AS VARCHAR) FROM #tmp WHERE id=1").fetchval()
-print(rtn)   12:23:34.0000000
+print(rtn)  # 12:23:34.0000000
 ```
 
 The workaround is to pass the query parameter as a string
@@ -109,14 +109,14 @@ The workaround is to pass the query parameter as a string
 ```python
 crsr.execute("INSERT INTO #tmp (id, t) VALUES (1, ?)", str(t))
 rtn = crsr.execute("SELECT CAST(t AS VARCHAR) FROM #tmp WHERE id=1").fetchval()
-print(rtn)   12:23:34.5678900
+print(rtn)  # 12:23:34.5678900
 ```
 
 Note that TIME columns *retrieved* by pyodbc have their microseconds intact
 
 ```python
 rtn = crsr.execute("SELECT t FROM #tmp WHERE id=1").fetchval()
-print(repr(rtn))   datetime.time(12, 23, 34, 567890)
+print(repr(rtn))  # datetime.time(12, 23, 34, 567890)
 ```
 
 
@@ -168,7 +168,7 @@ CREATE TABLE #issue295 (
     )""")
 sql = "INSERT INTO #issue295 (txt, dec) VALUES (?, ?)"
 params = [('Ώπα', 3.141)]
- explicitly set parameter type/size/precision
+# explicitly set parameter type/size/precision
 crsr.setinputsizes([(pyodbc.SQL_WVARCHAR, 50, 0), (pyodbc.SQL_DECIMAL, 18, 4)])
 crsr.fast_executemany = True
 crsr.executemany(sql, params)
