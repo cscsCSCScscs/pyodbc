@@ -73,3 +73,15 @@ Similar to Fedora, the following packages were required after a clean install of
 sudo zypper install gcc-c++ python3-devel unixODBC-devel
 pip3 install --user pyodbc
 ~~~
+
+
+#### Amazon Linux 2
+
+Amazon Linux 2 is similar to Red Hat and CentOS
+
+~~~
+sudo yum install gcc-c++ python3-devel unixODBC-devel
+# replace <release_num> with the current release
+sudo ln -s /usr/libexec/gcc/x86_64-amazon-linux/<release_num>/cc1plus /usr/bin/
+pip3 install --user pyodbc
+~~~
