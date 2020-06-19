@@ -15,8 +15,8 @@ The following table describes how Python objects passed to Cursor.execute() as p
 | datetime.datetime | timestamp | SQL_TYPE_TIMESTAMP |
 | int | integer | SQL_BIGINT |
 | float | floating point | SQL_DOUBLE |
-| decimal | numeric | SQL_NUMERIC |
-| UUID.uuid | UUID / GUID | SQL_GUID |
+| decimal.Decimal | numeric | SQL_NUMERIC |
+| uuid.UUID | UUID / GUID | SQL_GUID |
 
 1. If the driver supports it, [SQLDescribeParam](https://msdn.microsoft.com/en-us/library/ms710188.aspx) is used to determine the appropriate type. If not supported, SQL_VARCHAR is used.
 
@@ -34,7 +34,7 @@ The following table describes how database results are converted to Python objec
 | NULL | any | None |
 | 1-byte text | SQL_CHAR | str via UTF-8 (1) |
 | 2-byte text | SQL_WCHAR | str via UTF-16LE (1) |
-| UUID / GUID | SQL_GUID | str or UUID.uuid (2) |
+| UUID / GUID | SQL_GUID | str or uuid.UUID (2) |
 | XML | SQL_XML | str via UTF-16LE (1) |
 | binary | SQL_BINARY, SQL_VARBINARY | bytes |
 | decimal, numeric | SQL_DECIMAL | decimal.Decimal |
@@ -47,7 +47,7 @@ The following table describes how database results are converted to Python objec
 | timestamp | SQL_TIMESTAMP | datetime.datetime |
 
 1. The encoding can be changed using Connect.setdecoding.  See the [Unicode page](Unicode).
-2. The default is `str`.  Setting pyodbc.native_uuid to True will cause them to be returned as UUID.uuid objects.
+2. The default is `str`.  Setting pyodbc.native_uuid to True will cause them to be returned as uuid.UUID objects.
 
 
 ## Python 2
@@ -68,8 +68,8 @@ The following table describes how database results are converted to Python objec
 | int | integer | SQL_INTEGER |
 | long | bigint | SQL_BIGINT |
 | float | double | SQL_DOUBLE |
-| decimal | numeric | SQL_NUMERIC |
-| UUID.uuid | UUID / GUID | SQL_GUID |
+| decimal.Decimal | numeric | SQL_NUMERIC |
+| uuid.UUID | UUID / GUID | SQL_GUID |
 
 1. If the driver supports it, [SQLDescribeParam](https://msdn.microsoft.com/en-us/library/ms710188.aspx) is used to determine the appropriate type. If not supported, SQL_VARCHAR is used.
 
@@ -88,7 +88,7 @@ The following table describes how database results are converted to Python objec
 | NULL | any | None |
 | 1-byte text | SQL_CHAR | unicode via UTF-8 (1) |
 | 2-byte text | SQL_WCHAR | unicode via UTF-16LE (1) |
-| UUID / GUID | SQL_GUID | unicode or UUID.uuid (2) |
+| UUID / GUID | SQL_GUID | unicode or uuid.UUID (2) |
 | XML | SQL_XML | unicode |
 | binary | SQL_BINARY, SQL_VARBINARY | bytearray |
 | decimal, numeric | SQL_DECIMAL, SQL_DECIMAL | decimal.Decimal |
@@ -101,7 +101,7 @@ The following table describes how database results are converted to Python objec
 | timestamp | SQL_TIMESTAMP | datetime.datetime |
 
 1. The encoding and the Python type can be changed using Connect.setdecoding.  See the [Unicode page](Unicode).
-2. The default is `unicode`.  Setting pyodbc.native_uuid to True will cause them to be returned as UUID.uuid objects.
+2. The default is `unicode`.  Setting pyodbc.native_uuid to True will cause them to be returned as uuid.UUID objects.
 
 Note that these are pyodbc 4.x data types.  Earlier versions returned `str` objects for
 SQL_CHAR buffers and performed no decoding.  SQL_WCHAR buffers were assumed to be UCS-2.
