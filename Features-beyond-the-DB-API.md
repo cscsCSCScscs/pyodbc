@@ -116,7 +116,7 @@ for row in cursor.tables():
 | SQLColumns | Cursor.columns | Returns a list of column names in specified tables. |
 | SQLStatistics | Cursor.statistics | Returns a list of statistics about a single table and the indexes associated with the table. |
 | SQLSpecialColumns | Cursor.rowIdColumns | Returns a list of columns that uniquely identify a row. |
-| SQLSpecialColumns | Cursor.rowVerColumns | Returns a list of columns that are automatically updated any any value in the row is updated. |
+| SQLSpecialColumns | Cursor.rowVerColumns | Returns a list of columns that are automatically updated when any value in the row is updated. |
 | SQLPrimaryKeys | Cursor.primaryKeys | Returns a list of column names that make up the primary key for a table. |
 | SQLForeignKeys | Cursor.foreignKeys | Returns a list of column names that are foreign keys in the specified table (columns in the specified table that refer to primary keys in other tables) or foreign keys in other tables that refer to the primary key in the specified table. |
 | SQLProcedures | Cursor.procedures | Returns information about the procedures in the data source. |
