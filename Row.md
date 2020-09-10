@@ -17,7 +17,7 @@ row = cursor.fetchone()
 print(row.album_id, row.photo_id)
 print(row[0], row[1])  # same as above, but less readable
 ```
-This will not work if the column name is an invalid Python label (e.g. contains a space or is a Python reserved word), but you can still access by name using `row.__getattribute__('My Value')`.
+This will not work if the column name is an invalid Python label (e.g. contains a space or is a Python reserved word), but you can still accessed by name using `row.__getattribute__('My Value')`.
 
 Having access to the cursor's description even after the cursor is closed makes Rows very convenient data structures - you can pass them around and they are self describing:
 ```python
