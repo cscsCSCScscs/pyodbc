@@ -34,7 +34,7 @@ To compile pyodbc, you must use the appropriate Microsoft Visual C++ compiler fo
 - To build Python 2.4 or 2.5 versions, you will need the Visual Studio 2003 .NET compiler. Unfortunately there is no free version of this.
 - For Python 2.6, 2.7, 3.0, 3.1 and 3.2, use the Visual C++ 2008 compiler (version 9). There is a free version of this, Visual C++ 2008 Express.
 - For Python 3.3 and 3.4, use the Visual C++ 2010 compiler (version 10). There is a free version of this, Visual C++ 2010 Express, although that version does not inherently allow 64-bit builds to be compiled. To compile 64-bit builds with Visual C++ 2010 Express, follow these instructions: http://blog.ionelmc.ro/2014/12/21/compiling-python-extensions-on-windows/
-- For Python 3.5, 3.6, 3.7, and 3.8 use the Visual C++ 2019 compiler (version 14).
+- For Python 3.5, 3.6, 3.7, and 3.8 use the Visual C++ 2019 compiler (version 16).
 
 These instructions assume Windows 10. If you don't already have _Visual Studio 2019_ installed, install _Build Tools for Visual Studio 2019_ by going to https://visualstudio.microsoft.com/downloads/, searching for "Build Tools for Visual Studio 2019" (expand all collapsible sections if necessary), downloading the executable, and running it. After the initial confirmations you should eventually see a window with a "Workloads" tab highlighted. In the "Desktop & Mobile" section, there should be a box labelled "C++ build tools". Click the checkbox in the top right of that box. On the right, make sure the "MSVC v142 - VS 2019 C++ x64/x86 build tools" and "Windows 10 SDK" are checked, then click Install.
 
