@@ -8,6 +8,7 @@ Not all ODBC drivers support *parameter arrays*, the internal ODBC mechanism tha
 | MySQL | MySQL ODBC 8.0 ANSI Driver | 8.0.15 | Linux | does not work | |
 | MySQL | MySQL ODBC 8.0 ANSI Driver | 8.0.17 | Windows | crashes CPython | |
 | MySQL | MySQL ODBC 8.0 Unicode Driver | 8.0.12 | Windows | no effect | |
+| Oracle | Oracle ODBC instant client 19.9 | 19.9 | Linux | **works** | |
 | PostgreSQL | PostgreSQL Unicode(x64) | 11.01.00 | Windows | no effect | |
 | SAP ASE (Sybase) | Adaptive Server Enterprise (ANSI) [libsybdrvodb-sqllen8.so] | 16.0.03.02 | Linux | **works** | tested using `charset=utf8` |
 | SAP ASE (Sybase) | FreeTDS [libtdsodbc.so] | 01.01.0036 | Linux | crashes CPython | |
