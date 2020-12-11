@@ -51,7 +51,7 @@ Description         = Test to SQLServer
 Driver              = FreeTDS
 Servername          = MYMSSQL
 ```
-Note, the "Driver" is the name of the entry in `odbcinst.ini`, and the "Servername" is the name of the entry in `freetds.conf` (not a network name). There are other key/value pairs that can be included, see [here](http://www.freetds.org/userguide/odbcconnattr.htm) for details.
+Note, the "Driver" is the name of the entry in `odbcinst.ini`, and the "Servername" is the name of the entry in `freetds.conf` (not a network name). There are other key/value pairs that can be included, see [here](http://www.freetds.org/userguide/OdbcConnAttr.html) for details.
 
 Check that all is OK by running `isql MYMSSQL myuser mypassword`. You should see the following:
 
