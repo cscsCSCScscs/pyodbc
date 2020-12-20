@@ -72,6 +72,7 @@ Notice that the result set(s) created by the stored procedure are returned first
 
 Similarly, for a SQL Server stored procedure with a RETURN value we can use something like this:
 
+
 ```python
 sql = """\
 DECLARE @rv int;
@@ -83,16 +84,17 @@ return_value = crsr.fetchval()
 
 下面这种方式 我觉得更方便 ，解决了我得问题 sqlserver2008测试可行
 ```python
-		cursor.execute("""\
-			SET NOCOUNT ON; 
-			EXEC [dbo].[pos_pr_select_itemstock] @as_item_no =?,@as_item_subno=?,@ai_branchid=?,@as_item_name=?,@as_item_subname=?,@as_clsno=?,@as_itembrand=?;
+cursor.execute("""\
+	SET NOCOUNT ON; 
+	EXEC [dbo].[pos_pr_select_itemstock] @as_item_no=?,@as_item_subno=?,@ai_branchid=?,@as_item_name=?,@as_item_subname=?,@as_clsno=?,@as_itembrand=?;
 		
-			""",('0002483','6901028062008',17,'','','',''))
+""",('0002483','6901028062008',17,'','','',''))
 
 		
 		rows = cursor.fetchall()
 		print(rows)
 ```
-结果如下：
+### 结果如下：
+
 [('011', '0002483', '苏烟（软五星红杉树）', '苏烟（软五星红杉树）', '6901028062008', Decimal('307.000'), Decimal('0.000'))]
-并不需要做其他处理 仅再调用存储过程上 增加 ：SET NOCOUNT ON;  就行了
+**并不需要做其他处理 仅再调用存储过程上 增加 ：SET NOCOUNT ON;  就行了**
