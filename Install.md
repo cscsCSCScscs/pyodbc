@@ -52,10 +52,18 @@ pip install pyodbc
 
 From a clean minimal install of CentOS 7, the following steps were required:
 
+###### Python 2
 ~~~
 sudo yum install epel-release
 sudo yum install python-pip gcc-c++ python-devel unixODBC-devel
 pip install --user pyodbc
+~~~
+
+###### Python 3
+~~~
+sudo yum install epel-release
+sudo yum install python3-pip gcc-c++ python3-devel unixODBC-devel
+pip3 install --user pyodbc
 ~~~
 
 #### Fedora 27
