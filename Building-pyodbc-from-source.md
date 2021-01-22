@@ -50,6 +50,14 @@ Within that command prompt:
 
 Check your new version of pyodbc by running `python -c "import pyodbc; print(pyodbc.version)"`.
 
+#### macOS
+
+You'll need the ODBC header files from unixODBC:
+
+```
+brew install unixodbc
+```
+
 #### Other
 To build on other operating systems, use the gcc compiler.
 
